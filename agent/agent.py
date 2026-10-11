@@ -424,6 +424,18 @@ def find_order(
     return _call(wrapper, hw_tools.find_order, query)
 
 
+@function_tool
+def get_store_info(
+    wrapper: RunContextWrapper[AuthContext],
+    store_id: int | None = None,
+    store: str | None = None,
+) -> dict[str, Any]:
+    """Look up a store's name, return window and store policy id, by store_id
+    (e.g. from an order) or by store name. Merchants may omit both to get their
+    own store."""
+    return _call(wrapper, hw_tools.get_store_info, store_id, store)
+
+
 # Progressive disclosure: a session exposes only the tools its role can use.
 # Fewer tools mean fewer wrong choices and cleaner evals. At dev scale the
 # only difference is that support staff, who have no orders of their own,
@@ -436,6 +448,7 @@ _COMMON_TOOLS = [
     issue_refund,
     cancel_order,
     escalate_to_human,
+    get_store_info,
 ]
 TOOLS_BY_ROLE = {
     "shopper": _COMMON_TOOLS + [list_my_orders, find_order],

@@ -24,8 +24,10 @@ from typing import Any
 
 from agent import db
 from agent.auth import AuthContext, can_cancel_order, permission_denied
+from agent.config import load_facts
 from agent.helpcenter import load_policy_docs
 from agent.killswitch import kill_switch
+from seed.eligibility import effective_return_window_days
 
 MAX_SEARCH_LIMIT = 25
 DEFAULT_ORDER_LIMIT = 20
@@ -335,3 +337,76 @@ def _title_score(title: str, query_tokens: list[str]) -> int:
     """
     title_tokens = [t for t in _words(title) if len(t) >= 3]
     return sum(any(_token_match(t, q) for q in query_tokens) for t in title_tokens)
+
+
+def get_store_info(
+    ctx: AuthContext, store_id: int | None = None, store: str | None = None
+) -> dict[str, Any]:
+    """Look up one store's public information and its return window. Risk tier: read.
+
+    Store details and store policies are public help-center content, so every
+    role may look up any store. A merchant who names no store gets their own
+    store (ctx.store_id); this is how "my store" maps to a store name.
+
+    Args:
+        ctx: The caller's auth context.
+        store_id: A store id, e.g. the store_id of an order.
+        store: A store name or slug, matched with agent.db.get_store_by_name.
+            Give at most one of store_id and store. If neither is given and
+            the caller is not a merchant, return "invalid_argument".
+
+    Returns:
+        {"ok": True, "store_id": int, "name": str, "slug": str,
+        "category": str, "return_window_days": int,
+        "return_window_source": "store_override" | "platform_default",
+        "restocking_fee_opt_in": bool, "policy_id": str | None} where
+        return_window_days is the window that applies to the store's orders
+        and policy_id is the store's own policy doc, or None if it has none.
+        If no store matches: {"ok": False, "error": "not_found", ...}.
+    """
+    if store_id is not None and store is not None:
+        return {
+            "ok": False,
+            "error": "invalid_argument",
+            "reason": "give either store_id or store, not both",
+        }
+    if store_id is None and store is None:
+        if ctx.role != "merchant" or ctx.store_id is None:
+            return {
+                "ok": False,
+                "error": "invalid_argument",
+                "reason": "name a store by store_id or store name",
+            }
+        store_id = ctx.store_id
+
+    with db.connection() as conn:
+        if store_id is not None:
+            found = db.get_store(conn, store_id)
+            requested = f"id {store_id}"
+        else:
+            found = db.get_store_by_name(conn, store)
+            requested = repr(store)
+    if found is None:
+        return {"ok": False, "error": "not_found", "reason": f"no store with {requested}"}
+
+    window = effective_return_window_days(
+        load_facts()["return_window_days"], found.return_window_days_override
+    )
+    policy_id = f"store-{found.slug}-policy"
+    if policy_id not in {doc.policy_id for doc in load_policy_docs()}:
+        policy_id = None
+    return {
+        "ok": True,
+        "store_id": found.id,
+        "name": found.name,
+        "slug": found.slug,
+        "category": found.category,
+        "return_window_days": window,
+        "return_window_source": (
+            "store_override"
+            if found.return_window_days_override is not None
+            else "platform_default"
+        ),
+        "restocking_fee_opt_in": found.restocking_fee_opt_in,
+        "policy_id": policy_id,
+    }
