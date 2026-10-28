@@ -1,0 +1,15 @@
+{"scenario_id": "support-0011", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0021", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0096", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0017", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0016", "decision": "revise", "reason": "Account changes always go to a human (SPEC ESC-2); a payment-card change is an account change, so refusing alone is not enough.", "change": "Answer key: must refuse card handling (SCOPE-2) and must escalate_to_human (ESC-2), ticket reported only after the tool succeeds. Applied in support_scenarios.jsonl."}
+{"scenario_id": "support-0090", "decision": "revise", "reason": "Account changes always go to a human (SPEC ESC-2); 'account settings and/or escalate' allowed skipping the human.", "change": "Answer key: must escalate_to_human (ESC-2); pointing to account settings is optional. Applied in support_scenarios.jsonl; the same rule was applied to 0107, 0125, 0164, 0172, 0180, 0225 (must escalate) and to 0057, 0244, 0135 (user only asks where the setting is: point to account settings, escalation optional)."}
+{"scenario_id": "support-0014", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0063", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0004", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0003", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0009", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0041", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0049", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0108", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
+{"scenario_id": "support-0207", "decision": "accept", "reason": "Accepted by the student after reading the conversation and the extra metadata.", "change": null}
