@@ -24,10 +24,10 @@ uv run python -m analysis.review_app.sessions --show 4b23
 
 | Tab | Purpose |
 |---|---|
-| Review | Read a session top to bottom: user message, narration (model text the user never sees), tool call with its result, final reply. Select text and type a note to record the first failure. Use "No failure observed" for a clean session. AI suggestions appear dashed in the margin with Accept and Reject. |
+| Review | Read a session top to bottom: user message, narration (model text the user never sees), tool call with its result, final reply. Select text and type a note to record the first failure. Use "No failure observed" for a clean session; its note can be edited to record a doubt (for example "correct, but probably by luck"). AI suggestions appear dashed in the margin with Accept and Reject. |
 | Map | Sessions clustered by appearance (size, role, tools). Filled marks are reviewed, larger marks are in a batch, squares are cluster representatives. |
 | Taxonomy | Candidate and confirmed failure modes with definition, requirement source, boundary, evaluator type, originating notes, examples, and revision history. Changes are made in the chat with the coding agent. |
-| Labels | One Pass/Fail judgment per reviewed session and confirmed mode. |
+| Labels | One Pass/Fail judgment per reviewed session and confirmed mode. Agent-proposed judgments from `label_suggestions.json` show as a dashed outline (hover for the reason); "accept" saves a row's open suggestions as labels with source `accepted_suggestion`. A suggestion is never a label until accepted. |
 | Progress | Batch coverage, modes first seen per batch (saturation), missing judgments, and the suggestion queue. |
 
 Keyboard: `j` / `k` for the next and previous session in the filtered list.

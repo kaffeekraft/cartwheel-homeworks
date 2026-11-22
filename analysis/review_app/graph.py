@@ -16,6 +16,7 @@ Run it from the repository root:
 
     uv run python -m analysis.review_app.graph            # k=8
     uv run python -m analysis.review_app.graph --k 6 --features size,role
+    uv run python -m analysis.review_app.graph --k 15 --exclude-prefix smoke- --exclude-prefix pilot-
 """
 
 from __future__ import annotations
@@ -147,7 +148,11 @@ def build_graph(
     k: int = 8,
     seed: int = 0,
     groups: tuple[str, ...] = DEFAULT_GROUPS,
+    excluded_prefixes: tuple[str, ...] = (),
 ) -> dict[str, Any]:
+    all_sessions = [
+        s for s in all_sessions if not (s.get("scenario_id") or "").startswith(excluded_prefixes or ("\0",))
+    ]
     raw, names = featurize(all_sessions, groups)
     x = standardize(raw)
     assign, centroids = kmeans(x, k, seed)
@@ -184,6 +189,7 @@ def build_graph(
         "clusters": clusters,
         "features": names,
         "feature_groups": list(groups),
+        "excluded_prefixes": list(excluded_prefixes),
         "k": k,
         "seed": seed,
         "built_at": datetime.now(timezone.utc).isoformat(),
@@ -199,6 +205,12 @@ def main() -> None:
         default=",".join(DEFAULT_GROUPS),
         help=f"comma-separated groups from {', '.join(FEATURE_GROUPS)}",
     )
+    parser.add_argument(
+        "--exclude-prefix",
+        action="append",
+        default=[],
+        help="leave sessions whose scenario_id starts with this out of the map (repeatable)",
+    )
     args = parser.parse_args()
     groups = tuple(g.strip() for g in args.features.split(",") if g.strip())
     unknown = set(groups) - set(FEATURE_GROUPS)
@@ -206,7 +218,13 @@ def main() -> None:
         parser.error(f"unknown feature groups: {', '.join(sorted(unknown))}")
 
     payload = session_store.load_cached()
-    graph = build_graph(payload["sessions"], k=args.k, seed=args.seed, groups=groups)
+    graph = build_graph(
+        payload["sessions"],
+        k=args.k,
+        seed=args.seed,
+        groups=groups,
+        excluded_prefixes=tuple(args.exclude_prefix),
+    )
     _state.write_json(_state.state_path("graph.json"), graph)
     print(f"{len(graph['nodes'])} sessions, {len(graph['features'])} features, k={args.k}")
     for c in sorted(graph["clusters"], key=lambda c: -c["size"]):

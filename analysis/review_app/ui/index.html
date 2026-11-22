@@ -23,6 +23,7 @@
     GET  /api/patterns, /api/graph        taxonomy and map (agent-written)
     GET/POST /api/suggestions             AI suggestions and decisions
     GET/POST /api/labels                  judgments (local + Langfuse)
+    GET  /api/label_suggestions           agent-proposed judgments (Part E), never labels until accepted
 -->
 <style>
 :root {
@@ -106,6 +107,8 @@ select, input[type=text], input:not([type]) { font: inherit; font-size: 13px; pa
 .btn.good.on { background: var(--reply); color: #fff; }
 .btn.bad { border-color: var(--bad); color: var(--bad); }
 .btn.bad.on { background: var(--bad); color: #fff; }
+.btn.sm.sug { outline: 2px dashed var(--ai); outline-offset: 1px; }
+.btn.ai { border-color: var(--ai); color: var(--ai); border-style: dashed; }
 .btn:disabled { opacity: .45; cursor: default; }
 
 .doc { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 16px; padding: 16px 20px 80px; position: relative; }
@@ -249,11 +252,12 @@ const S = {
   patterns: { modes: [] },
   suggestions: [],
   labels: {},          // mode -> session_id -> live record
+  labelSugg: {},       // mode -> session_id -> {label, turn, reason, basis}
   graph: { nodes: [], clusters: [] },
   current: null,       // selected session_id
   editing: null,       // annotation id being edited
   mapColor: 'cluster',
-  labelFilter: { batch: '', incomplete: false },
+  labelFilter: { batch: '', incomplete: false, sugg: false },
 };
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -463,7 +467,7 @@ function renderNotes() {
       ? `<textarea rows="3" data-edit="${esc(a.id)}">${esc(a.note)}</textarea><div class="meta"><button data-save="${esc(a.id)}">save</button><button data-cancel>cancel</button></div>`
       : `${a.quote ? `<div class="quote">“${esc(a.quote.length > 90 ? a.quote.slice(0, 90) + '…' : a.quote)}”</div>` : ''}<div>${esc(a.note)}</div>
          <div class="meta"><span>turn ${a.turn} · ${esc((a.edited_at || a.ts || '').slice(0, 16).replace('T', ' '))}${a.history?.length ? ' · edited' : ''}${a.source === 'accepted_suggestion' ? ' · accepted suggestion' : ''}</span>
-           ${nofail ? '' : `<button data-editbtn="${esc(a.id)}">edit</button>`}<button data-del="${esc(a.id)}">delete</button></div>
+           <button data-editbtn="${esc(a.id)}">edit</button><button data-del="${esc(a.id)}">delete</button></div>
          ${linked ? `<div class="meta">${linked}</div>` : ''}
          ${a.history?.length ? `<div class="hist">original: ${esc(a.history[0].note)}</div>` : ''}`;
     return `<div class="note${nofail ? ' nofail' : ''}" data-note="${esc(a.id)}" data-anchor-ref="${esc(a.anchor || '')}">${body}</div>`;
@@ -608,7 +612,7 @@ document.addEventListener('mousedown', (e) => { if (pop && !pop.contains(e.targe
 
 // ---------------------------------------------------------------- map tab
 // Cluster colors: hues spaced around the wheel at similar lightness, so neighbors in the list never look alike.
-const PALETTE = ['#1f6fd1', '#e07b00', '#12936b', '#d62f5a', '#8a4fd8', '#9a7a00', '#0f9bb8', '#c2410c', '#6b7280', '#b5179e'];
+const PALETTE = ['#1f6fd1', '#e07b00', '#12936b', '#d62f5a', '#8a4fd8', '#9a7a00', '#0f9bb8', '#c2410c', '#6b7280', '#b5179e', '#2e7d32', '#5c6bc0', '#ad1457', '#00838f', '#8d6e63'];
 const ROLE_COLOR = { shopper: 'var(--shopper)', merchant: 'var(--merchant)', support: 'var(--support)' };
 const STATUS_COLOR = { none: '#8a8a84', failure: '#d62f5a', no_failure: '#12936b' };
 const STATUS_LABEL = { none: 'not reviewed', failure: 'failure noted', no_failure: 'no failure observed' };
@@ -722,10 +726,10 @@ function renderTaxonomy() {
 }
 
 // ---------------------------------------------------------------- labels tab
-async function saveLabel(mode, sid, label, trace_id, comment) {
+async function saveLabel(mode, sid, label, trace_id, comment, source = 'human') {
   setStatus('saving label…');
   try {
-    const out = await post('/api/labels', { mode, session_id: sid, label, trace_id, comment });
+    const out = await post('/api/labels', { mode, session_id: sid, label, trace_id, comment, source });
     S.labels[mode] = S.labels[mode] || {};
     S.labels[mode][sid] = out.record;
     setStatus(out.record.langfuse_ok ? `saved ${mode} = ${label ? 'Fail' : 'Pass'} · Langfuse ✓` : `saved locally · LANGFUSE NOT WRITTEN: ${out.record.langfuse_error || 'not configured'}`, !out.record.langfuse_ok);
@@ -737,10 +741,11 @@ function failPopover(mode, sid, rect) {
   const linked = notesFor(sid).filter((a) => a.kind === 'failure');
   const prefer = linked.find((a) => modesOfNote(a.id).some((m) => m.name === mode)) || linked[0];
   const cur = S.labels[mode]?.[sid];
-  const defTurn = cur?.label === 1 ? s.trace_ids.indexOf(cur.trace_id) + 1 : (prefer?.turn || 1);
+  const g = cur ? null : suggFor(mode, sid);
+  const defTurn = cur?.label === 1 ? s.trace_ids.indexOf(cur.trace_id) + 1 : ((g?.label === 1 && g.turn) || prefer?.turn || 1);
   const p = openPop(`<b>${esc(mode)} = Fail</b> · session ${short(sid)}
     <label>Evidence in turn <select id="ev-turn">${s.trace_ids.map((t, i) => `<option value="${i + 1}"${i + 1 === defTurn ? ' selected' : ''}>${i + 1} (trace ${short(t)})</option>`).join('')}</select></label>
-    <label>Comment (stored with the score)<textarea rows="3" id="ev-comment">${esc(cur?.label === 1 ? cur.comment || '' : prefer?.note || '')}</textarea></label>
+    <label>Comment (stored with the score)<textarea rows="3" id="ev-comment">${esc(cur?.label === 1 ? cur.comment || '' : (g?.label === 1 ? g.reason : prefer?.note || ''))}</textarea></label>
     <div class="acts" style="display:flex;gap:6px"><button class="btn bad on" id="ev-save">Save Fail</button><button class="btn" id="ev-cancel">Cancel</button></div>`, rect, 'var(--bad)');
   p.querySelector('#ev-cancel').onclick = closePop;
   p.querySelector('#ev-save').onclick = () => {
@@ -749,6 +754,17 @@ function failPopover(mode, sid, rect) {
     closePop();
     saveLabel(mode, sid, 1, s.trace_ids[turn - 1], comment);
   };
+}
+const suggFor = (mode, sid) => S.labelSugg[mode]?.[sid] || null;
+const openSugg = (s) => confirmedModes().filter((m) => !S.labels[m.name]?.[s.session_id] && suggFor(m.name, s.session_id));
+// Accept a row: every suggested judgment without a live label becomes a label (source accepted_suggestion).
+async function acceptRow(sid) {
+  const s = S.byId.get(sid);
+  for (const m of openSugg(s)) {
+    const g = suggFor(m.name, sid);
+    const turn = g.label === 1 ? (g.turn || 1) : s.turn_count;
+    await saveLabel(m.name, sid, g.label, s.trace_ids[turn - 1], `[accepted suggestion: ${g.basis}] ${g.reason}`, 'accepted_suggestion');
+  }
 }
 function renderLabels() {
   const cm = confirmedModes();
@@ -761,15 +777,19 @@ function renderLabels() {
   let rows = reviewedSessions();
   if (f.batch) rows = rows.filter((s) => batchOf(s.session_id) === f.batch);
   if (f.incomplete) rows = rows.filter((s) => cm.some((m) => !S.labels[m.name]?.[s.session_id]));
+  if (f.sugg) rows = rows.filter((s) => openSugg(s).length);
+  const pendingSugg = reviewedSessions().reduce((n, s) => n + openSugg(s).length, 0);
   const total = reviewedSessions().length * cm.length;
   const done = reviewedSessions().reduce((n, s) => n + cm.filter((m) => S.labels[m.name]?.[s.session_id]).length, 0);
   const cell = (m, s) => {
     const r = S.labels[m.name]?.[s.session_id];
     const warn = r && r.langfuse_ok === false ? ` <span title="${esc(r.langfuse_error || 'not written to Langfuse')}" style="color:var(--bad)">⚠</span>` : '';
-    const turn = r?.label === 1 ? ` t${s.trace_ids.indexOf(r.trace_id) + 1}` : '';
-    return `<td class="cell" title="${esc(r?.comment || '')}">
-      <button class="btn sm bad${r?.label === 1 ? ' on' : ''}" data-fail="${esc(m.name)}" data-sid="${esc(s.session_id)}">Fail${turn}</button>
-      <button class="btn sm good${r?.label === 0 ? ' on' : ''}" data-pass="${esc(m.name)}" data-sid="${esc(s.session_id)}">Pass</button>${warn}</td>`;
+    const g = r ? null : suggFor(m.name, s.session_id);
+    const turn = r?.label === 1 ? ` t${s.trace_ids.indexOf(r.trace_id) + 1}` : (g?.label === 1 && g.turn ? ` t${g.turn}` : '');
+    const tip = r ? (r.comment || '') : (g ? `AI suggestion (${g.basis}): ${g.label ? 'Fail' : 'Pass'}. ${g.reason}` : '');
+    return `<td class="cell" title="${esc(tip)}">
+      <button class="btn sm bad${r?.label === 1 ? ' on' : ''}${g?.label === 1 ? ' sug' : ''}" data-fail="${esc(m.name)}" data-sid="${esc(s.session_id)}">Fail${turn}</button>
+      <button class="btn sm good${r?.label === 0 ? ' on' : ''}${g?.label === 0 ? ' sug' : ''}" data-pass="${esc(m.name)}" data-sid="${esc(s.session_id)}">Pass</button>${warn}</td>`;
   };
   $('view').innerHTML = `<div class="page" style="max-width:none">
     <h2>Labels</h2>
@@ -777,15 +797,19 @@ function renderLabels() {
       Pass on the session's last turn. Each judgment is appended to <code>analysis/state/labels/&lt;mode&gt;.jsonl</code> (1 = failure present) and written to Langfuse as a score.</p>
     <div class="toolbar"><span><b>${done}</b> of ${total} judgments</span>
       <select id="lb-batch"><option value="">all batches</option>${batches().map((b) => `<option value="${esc(b)}">${esc(b)}</option>`).join('')}</select>
-      <label><input type="checkbox" id="lb-inc"${f.incomplete ? ' checked' : ''}> only sessions with missing judgments</label></div>
-    <table class="tbl"><thead><tr><th>session</th><th>batch</th><th>notes</th>${cm.map((m) => `<th>${esc(m.name)}</th>`).join('')}</tr></thead>
+      <label><input type="checkbox" id="lb-inc"${f.incomplete ? ' checked' : ''}> only sessions with missing judgments</label>
+      <label><input type="checkbox" id="lb-sug"${f.sugg ? ' checked' : ''}> only sessions with open suggestions</label>
+      <span style="color:var(--ai)">${pendingSugg} suggested judgments open (dashed outline; hover for the reason)</span></div>
+    <table class="tbl"><thead><tr><th>session</th><th>batch</th><th>notes</th>${cm.map((m) => `<th>${esc(m.name)}</th>`).join('')}<th></th></tr></thead>
     <tbody>${rows.map((s) => `<tr><td>${sessLink(s.session_id)} <span class="chip role ${esc(s.role)}">${esc(s.role)}</span></td>
       <td>${esc(batchOf(s.session_id) || '—')}</td>
       <td style="max-width:320px;font-size:12.5px">${notesFor(s.session_id).map((a) => esc(a.note)).join(' · ')}</td>
-      ${cm.map((m) => cell(m, s)).join('')}</tr>`).join('')}</tbody></table></div>`;
+      ${cm.map((m) => cell(m, s)).join('')}
+      <td>${openSugg(s).length ? `<button class="btn sm ai" data-acceptrow="${esc(s.session_id)}" title="Save every dashed suggestion in this row as your label">accept ${openSugg(s).length}</button>` : ''}</td></tr>`).join('')}</tbody></table></div>`;
   $('lb-batch').value = f.batch;
   $('lb-batch').onchange = (e) => { f.batch = e.target.value; renderLabels(); };
   $('lb-inc').onchange = (e) => { f.incomplete = e.target.checked; renderLabels(); };
+  $('lb-sug').onchange = (e) => { f.sugg = e.target.checked; renderLabels(); };
 }
 
 // ---------------------------------------------------------------- progress tab
@@ -874,10 +898,11 @@ $('list').addEventListener('click', (e) => { const row = e.target.closest('.row'
 ['f-role', 'f-status', 'f-batch'].forEach((id) => $(id).addEventListener('change', renderList));
 $('f-q').addEventListener('input', renderList);
 $('view').addEventListener('click', (e) => {
-  const t = e.target.closest('[data-open],[data-editbtn],[data-save],[data-cancel],[data-del],[data-accept],[data-reject],[data-fail],[data-pass]') || e.target;
+  const t = e.target.closest('[data-open],[data-editbtn],[data-save],[data-cancel],[data-del],[data-accept],[data-reject],[data-fail],[data-pass],[data-acceptrow]') || e.target;
   if (t.dataset.open) { select(t.dataset.open); return; }
   if (t.dataset.accept) { acceptSuggestion(t.dataset.accept); return; }
   if (t.dataset.reject) { rejectSuggestion(t.dataset.reject); return; }
+  if (t.dataset.acceptrow) { acceptRow(t.dataset.acceptrow); return; }
   if (t.dataset.fail) { failPopover(t.dataset.fail, t.dataset.sid, t.getBoundingClientRect()); return; }
   if (t.dataset.pass) { const s = S.byId.get(t.dataset.sid); saveLabel(t.dataset.pass, s.session_id, 0, s.trace_ids[s.turn_count - 1], null); return; }
   if (t.dataset.editbtn) { S.editing = t.dataset.editbtn; renderNotes(); return; }
@@ -905,7 +930,7 @@ window.addEventListener('resize', layoutNotes);
 const lastSeen = {};
 async function poll() {
   if (pop || S.editing) return;
-  const sources = { patterns: '/api/patterns', suggestions: '/api/suggestions', manifest: '/api/manifest', graph: '/api/graph', labels: '/api/labels' };
+  const sources = { patterns: '/api/patterns', suggestions: '/api/suggestions', manifest: '/api/manifest', graph: '/api/graph', labels: '/api/labels', labelSugg: '/api/label_suggestions' };
   let changed = false;
   for (const [key, path] of Object.entries(sources)) {
     try {
@@ -918,6 +943,7 @@ async function poll() {
       if (key === 'manifest') S.manifest = data && data.sessions ? data : { unit: 'session', sessions: {} };
       if (key === 'graph') S.graph = data && data.nodes ? data : { nodes: [], clusters: [] };
       if (key === 'labels') S.labels = data || {};
+      if (key === 'labelSugg') S.labelSugg = data && !data.error ? data : {};
     } catch (e) { /* keep the last good copy */ }
   }
   if (changed && !pop && !S.editing && !window.getSelection().toString()) { renderBatchFilter(); render(); }

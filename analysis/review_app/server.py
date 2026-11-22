@@ -56,8 +56,10 @@ API_FILES: dict[str, tuple[str, Any]] = {
     "/api/patterns": ("patterns.json", {"modes": []}),
     "/api/suggestions": ("suggestions.json", []),
     "/api/manifest": ("sample_manifest.json", {"unit": "session", "sessions": {}}),
+    "/api/label_suggestions": ("label_suggestions.json", {}),
 }
-READ_ONLY = {"/api/graph"}  # written by graph.py, not by the browser
+# graph.json is written by graph.py; label_suggestions.json by the coding agent.
+READ_ONLY = {"/api/graph", "/api/label_suggestions"}
 
 # Set in ``main`` from ``--langfuse-ui``.
 LANGFUSE_UI = "http://localhost:3000"
