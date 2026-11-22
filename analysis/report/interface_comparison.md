@@ -8,7 +8,7 @@ I kept the reference's two-column layout, with the conversation on the left and 
 
 ## Changed after inspecting traces: one timeline per session
 
-In Langfuse I had to click through the spans one at a time. The reasoning was in the fourth span. Every LLM span repeated the system prompt and the full history, and I had to remember which span held the system prompt. I also could not tell whether a trace had follow-up turns.
+In Langfuse I had to click through the spans one at a time. The reasoning was in the fourth span. Every LLM span repeated the system prompt and the full history. I also could not tell whether a trace had follow-up turns.
 
 My interface shows each session as one scrolling timeline:
 
