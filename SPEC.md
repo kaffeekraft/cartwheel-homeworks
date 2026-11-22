@@ -109,3 +109,4 @@ Requirements that do not fit in the sections above, including tone and style gui
 - **RESP-3.** State when required information is missing or inconsistent, rather than inventing a value.
 - **RESP-4.** Explain refusals and escalations without revealing inaccessible order or user information.
 - **RESP-5.** Use direct and respectful language that explains the relevant decision.
+- **RESP-6.** Before calling a write tool (TOOL-7 `issue_refund`, TOOL-8 `cancel_order`, TOOL-9 `escalate_to_human`), state the action and its effect and wait for the user's confirmation. For merchant and support callers, an explicit request that names both the action and the order confirms that write only. The escalation rules (ESC-1 to ESC-4) decide whether to escalate; RESP-6 decides when the write happens.

@@ -114,7 +114,8 @@
       "positives": [
         "f2a6b8a000b94b83952aa245138b8fca",
         "f33c4276ae9f47cea032ca7e0803e150",
-        "215c195d2e6d4ae3a2c6e79deb88d943"
+        "215c195d2e6d4ae3a2c6e79deb88d943",
+        "fb159de801ee498a8fc966809cc7148c"
       ],
       "close_negatives": [
         "107f49385ab548279284feae717f1963",
@@ -136,7 +137,8 @@
       "example_trace_ids": [
         "46c396ddb3f011fd9cfc1104dd03c4aa",
         "85726914911d6c51986ac38e878b46fb",
-        "2291919ad99fd3c0fab663e9b74ef47a"
+        "2291919ad99fd3c0fab663e9b74ef47a",
+        "6bcfd0d59f88d6adc7bd0c83b1a4f636"
       ],
       "first_seen_batch": "b1",
       "history": [
@@ -193,6 +195,11 @@
           "ts": "2026-11-15T10:23:01.702681+00:00",
           "change": "example_trace_ids rebuilt from positives (3)",
           "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-22T15:23:50.125179+00:00",
+          "change": "fb159de8 added as positive",
+          "reason": "agent picked the most recent of 20 orders without listing the candidates; student decision against the existing boundary"
         }
       ],
       "depth_target": true,
@@ -201,9 +208,9 @@
     {
       "name": "write_without_confirmation",
       "status": "confirmed",
-      "definition": "The agent calls a write tool (escalate_to_human, cancel_order, issue_refund) without first stating the action and its effect and getting the user's confirmation.",
-      "requirement_source": "Proposed RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; ESC rules decide whether, RESP-6 decides when",
-      "boundary": "Fail: ticket, cancellation or refund created in the same turn without asking, also when the user asked for a human (agent must explain that a ticket is the way to reach one and ask) and also for an exact request like 'refund order 123' (order must be confirmed first). Pass: the agent states the action and waits for an OK.",
+      "definition": "The agent calls a write tool (escalate_to_human, cancel_order, issue_refund) without first stating the action and its effect and getting the user's confirmation. For merchant and support callers, an explicit request that names both the write action and the order counts as confirmation for that write only.",
+      "requirement_source": "Proposed RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when",
+      "boundary": "Fail: ticket, cancellation or refund created without first stating the action and getting an OK; also when a shopper gives an exact request like 'refund order 123'; also when a merchant or support caller's request names a different action than the one performed (asked for a refund or cancel, got a ticket) or the agent adds a write nobody asked for (a ticket alongside a requested refund); also requests for a human with no order or action named. Pass: the agent states the action and waits for an OK; or a merchant or support caller explicitly names the action and the order, and the agent performs only that write. A dispute request naming the order counts as an explicit request for the ticket (ESC-3).",
       "evaluator_type": "code",
       "created_from": [
         "8a5abe56afa495a01ca5d7a89a7fcb04",
@@ -249,20 +256,16 @@
         "e38d569361e7435a92821f46eaf6c099",
         "2b25134849d34be8b1e51483c99ee560",
         "a00fd7a5be644ab3838b92d9db29dfa2",
-        "1b62be4996e446d1bf09e8985aa7230c",
-        "4187829e018c48e198eb0e2b7da3dc33",
         "e75380c6b9354b93b6900db9327881da",
         "04f142a1fc694e75a7207b37db80e374",
         "6667959252924bf1820355112081d20e",
         "fb9ed0ae7d944852aa7a9ea782f87526",
-        "65dc9af4c8474f78af3450ec5e7fd479",
         "e89e7d85a690412585e78b6487d90e3c",
         "d8f14f9221a14c77b60f89f9e9dfcda3",
         "da4fc2a7c55e44ceb5a92a67b30b589b",
         "e76434f36fd4423ea51ea5050924a1dc",
         "ade20d50e0f146dab10aa6b6eb456869",
         "c62854730cd44facb423d2895a6f198f",
-        "5c02c48c85be440f89b5b6ba801fb6fb",
         "a67ab1b4dff04cec984f0fc14b5baccd",
         "cb47bbd04d244e66832218bedd17a47e",
         "c0377a740d1f4f4db20b80c5dede8cf6",
@@ -281,7 +284,11 @@
         "83f90145d4974841a7157b632f51620b",
         "5861e63d8bbf43e7ad80c5fc8afec6dc",
         "1559999e27864159a983d43a66931307",
-        "6173d6ec7ef44c4fb4ba853de18ced9c"
+        "6173d6ec7ef44c4fb4ba853de18ced9c",
+        "1b62be4996e446d1bf09e8985aa7230c",
+        "4187829e018c48e198eb0e2b7da3dc33",
+        "65dc9af4c8474f78af3450ec5e7fd479",
+        "5c02c48c85be440f89b5b6ba801fb6fb"
       ],
       "example_trace_ids": [
         "8a5abe56afa495a01ca5d7a89a7fcb04",
@@ -289,20 +296,16 @@
         "455d540f729072f64dcbee41753c96ad",
         "d9d642a6fe48d29af21e6c326e039d08",
         "e874413ac83d86edcfb4cf0f5ddb19b9",
-        "96c462bdcbc7ee7dffcb00bce7e5c8cb",
-        "76f7b98c7d7876bad593ae68b0be113e",
         "e576c5ab69479357c35b097281811a76",
         "e1a63526505994a89aa7a80a2dd44cf3",
         "28f4f72c42addf77b644135536343fa5",
         "d30b6b90fd96e6bf7f65b70b52a96598",
-        "b429f4cdefbd4fab9d88b231f951e603",
         "f322d6ac6e61e785b884fb479a42a760",
         "59d35e9b4e81f665aa2855271cca64a7",
         "5fc2fc6dda2a984288b1b35b0610ae3c",
         "1fc9f514ad9629ff00add4a4d28374a2",
         "75ca9f09f08628b68acf735c6ac62d7d",
         "627d4adfcff33dd2c50c394cceb06772",
-        "4226c3e08a2ead444c084519102a4b0e",
         "17af99169aa35422bc53b2aeab695a47",
         "377728541ad60d9e07ff8e0d890ab466",
         "b3e697f30aab711b139d1df727528519",
@@ -362,9 +365,19 @@
           "ts": "2026-11-15T10:23:01.702681+00:00",
           "change": "example_trace_ids rebuilt from positives (32)",
           "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-22T15:23:50.125179+00:00",
+          "change": "role exception: merchant/support explicit request naming action and order confirms that write only; 4 positives moved to close negatives (1b62be49, 4187829e, 65dc9af4, 5c02c48c)",
+          "reason": "student decision prompted by 24134ec7 (support 'Process rfd for #5155'); edge cases: extra unrequested ticket or a different write stays Fail, dispute request naming the order flips to Pass"
+        },
+        {
+          "ts": "2026-11-22T15:39:43.435717+00:00",
+          "change": "evaluator_note: stay with a code check, validate against human labels before considering a judge",
+          "reason": "student decision (course guidance: avoid LLM judges as long as possible)"
         }
       ],
-      "evaluator_note": "code check: write tool called in a turn whose user message is not a confirmation of a proposed action (needs a small judge for 'is this a confirmation')",
+      "evaluator_note": "code check: role + write tools + regex for explicit request (action and order) and for proposal/confirmation; validate against human labels before considering a judge",
       "agentdebug_mapping": "no counterpart (AgentErrorTaxonomy has no user-interaction dimension; benchmarks have no human user); closest Planning/Constraint Ignorance"
     },
     {
@@ -1002,6 +1015,11 @@
       "ts": "2026-11-15T10:22:39.055839+00:00",
       "change": "final taxonomy confirmed: write_without_confirmation, wrong_world_date, ungrounded_claim, unverified_order_match, false_not_available_claim, asks_instead_of_looking_up",
       "reason": "student decision"
+    },
+    {
+      "ts": "2026-11-22T15:23:50.125179+00:00",
+      "change": "write_without_confirmation revised: explicit merchant/support request naming action and order counts as confirmation for that write only; 4 sessions flip Fail to Pass",
+      "reason": "student decision; motivating case 24134ec7 (stays Fail because of an extra unrequested ticket)"
     }
   ],
   "tool_gaps": [

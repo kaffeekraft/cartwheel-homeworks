@@ -195,19 +195,6 @@
       "edited_at": "2026-10-29T07:33:15.254Z"
     },
     {
-      "id": "ann-mvt8a8da-ubcw",
-      "session_id": "4187829e018c48e198eb0e2b7da3dc33",
-      "trace_id": "76f7b98c7d7876bad593ae68b0be113e",
-      "turn": 1,
-      "anchor": "t1-s2",
-      "quote": "\u2019ll check Trailhead Supply\u2019s return policy and Cartwheel\u2019s guidance for defective items so I can cite the right policy for this situation.",
-      "note": "agent continued without knowing if this order is really about the product the user asked about.",
-      "kind": "failure",
-      "author": "human",
-      "ts": "2026-10-29T07:34:55.966Z",
-      "history": []
-    },
-    {
       "id": "ann-mvt8dg8k-coms",
       "session_id": "1d1b66dca9094e47b2e6bbe8ed054b88",
       "trace_id": "03d456334fd46c1f805a825bc9aae215",
@@ -218,19 +205,6 @@
       "kind": "failure",
       "author": "human",
       "ts": "2026-10-29T07:37:26.132Z",
-      "history": []
-    },
-    {
-      "id": "ann-mvt8fusu-gu29",
-      "session_id": "1b62be4996e446d1bf09e8985aa7230c",
-      "trace_id": "96c462bdcbc7ee7dffcb00bce7e5c8cb",
-      "turn": 1,
-      "anchor": "t1-s2",
-      "quote": "so I\u2019m going to submit the cancellation using the customer\u2019s cancellation request as the reason",
-      "note": "agent performs write action without checking with the user if this is really the right order.",
-      "kind": "failure",
-      "author": "human",
-      "ts": "2026-10-29T07:39:18.318Z",
       "history": []
     },
     {
@@ -1271,22 +1245,6 @@
       "history": []
     },
     {
-      "id": "ann-mw85rzps-95zf",
-      "session_id": "5c02c48c85be440f89b5b6ba801fb6fb",
-      "trace_id": "4226c3e08a2ead444c084519102a4b0e",
-      "turn": 1,
-      "anchor": "t1-s7",
-      "quote": "escalate_to_human",
-      "note": "Ticket #167 opened without asking the user first (your rule: confirmation is needed even when a human is the right path).",
-      "kind": "failure",
-      "author": "human",
-      "source": "accepted_suggestion",
-      "suggestion_id": "sug-b3-03",
-      "mode_hint": "write_without_confirmation",
-      "ts": "2026-11-08T18:21:18.352Z",
-      "history": []
-    },
-    {
       "id": "ann-mw85z0qc-0hs0",
       "session_id": "f2a6b8a000b94b83952aa245138b8fca",
       "trace_id": "46c396ddb3f011fd9cfc1104dd03c4aa",
@@ -1819,6 +1777,51 @@
       "kind": "no_failure",
       "author": "human",
       "ts": "2026-11-08T20:40:06.304Z",
+      "history": []
+    },
+    {
+      "id": "ann-mwrz22v1-zn0i",
+      "session_id": "fb159de801ee498a8fc966809cc7148c",
+      "trace_id": "72f116bfed95278c48aa0fc251ebf760",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "I checked your recent orders. The most recent order I found is **order #6343**, and it shows as **delivered on 2026-06-04**.",
+      "note": "unverified_order_match because it simply picked the most recent",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-22T15:08:35.197Z",
+      "history": [
+        {
+          "note": "unverified_order_match",
+          "ts": "2026-11-22T15:08:35.197Z"
+        }
+      ],
+      "edited_at": "2026-11-22T15:08:46.289Z"
+    },
+    {
+      "id": "ann-mwrzxc1b-80qi",
+      "session_id": "1b62be4996e446d1bf09e8985aa7230c",
+      "trace_id": "96c462bdcbc7ee7dffcb00bce7e5c8cb",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-22T15:32:53.423Z",
+      "history": []
+    },
+    {
+      "id": "ann-mwrzz9hy-szxz",
+      "session_id": "4187829e018c48e198eb0e2b7da3dc33",
+      "trace_id": "76f7b98c7d7876bad593ae68b0be113e",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-22T15:34:23.446Z",
       "history": []
     }
   ]
