@@ -1823,6 +1823,19 @@
       "author": "human",
       "ts": "2026-11-22T15:34:23.446Z",
       "history": []
+    },
+    {
+      "id": "ann-mws1efst-1tsq",
+      "session_id": "f528a71fca514120aa972172d14cb7f0",
+      "trace_id": "71936b99531e0074fb1332a0f5040223",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "If you want, send me the **order ID**, or I can look up your recent orders, and I\u2019ll check whether your specific order is eligible for a return/refund.",
+      "note": "agent asked instead of looking up.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-22T16:14:11.069Z",
+      "history": []
     }
   ]
 }

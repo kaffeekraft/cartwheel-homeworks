@@ -132,7 +132,8 @@
         "6173d6ec7ef44c4fb4ba853de18ced9c",
         "8cc06232b4964a1987f15a288bb187f4",
         "ae88e3a8d2474e698e96536ea380aded",
-        "c6e1f57155b8470cacda6634df86b56a"
+        "c6e1f57155b8470cacda6634df86b56a",
+        "df108d2354c14613a2b81325a42ed82d"
       ],
       "example_trace_ids": [
         "46c396ddb3f011fd9cfc1104dd03c4aa",
@@ -200,6 +201,11 @@
           "ts": "2026-11-22T15:23:50.125179+00:00",
           "change": "fb159de8 added as positive",
           "reason": "agent picked the most recent of 20 orders without listing the candidates; student decision against the existing boundary"
+        },
+        {
+          "ts": "2026-11-22T16:06:53.017701+00:00",
+          "change": "df108d23 added as close negative",
+          "reason": "shopper has 19 orders but names the store; only one order (#5571) is from Bright Socket Electronics and the agent verified it with get_store_info and get_order"
         }
       ],
       "depth_target": true,
