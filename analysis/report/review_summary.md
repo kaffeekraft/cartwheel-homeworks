@@ -73,12 +73,14 @@ I then applied the remaining proposals, so every confirmed mode except `unground
 
 | Change | Mode | Motivating annotation |
 |---|---|---|
-| **RESP-7**: reason about dates from the platform date (`WORLD_ASOF` in `seed/generate.py`, 2026-07-01); `refund_eligible` is authoritative | `wrong_world_date` | `ann-mvseglxu-8xhk` on `48713c37` ("it guessed today.") |
+| **RESP-7**: reason about dates from the current date the application provides, never guess one; `refund_eligible` is authoritative | `wrong_world_date` | `ann-mvseglxu-8xhk` on `48713c37` ("it guessed today.") |
 | **RESP-8**: without an order number and with several matching orders, list the candidates and let the user choose | `unverified_order_match` | `ann-mw4qdj6t-javk` on `f33c4276` (assumed the most recent Juniper order although there are 3) |
 | **RESP-9**: do not ask for what the tools can look up; look it up or offer the lookup | `asks_instead_of_looking_up` | `ann-mvscyoar-6n6n` on `fb159de8` ("it could have looked anyway and presented a list…") |
 | **ESC-2** rewritten: account changes go to a human, except payment-card and password changes, which are pointed to account settings citing `cw-account-security` | (conflict, no mode) | `ann-mvyab8qj-kohi` on `9c10732e` ("the SPEC conflict…"), with `ann-mvya6jde-p2ul` on `ade20d50` |
 
 The old ESC-2 ("account changes always go to a human") contradicted SCOPE-2 and `cw-account-security`, which send payment and password changes to self-service. `requirement_source` in `patterns.json` now names the new IDs, and the change is the last entry in its `revisions` list.
+
+The seeded world fixes the current date to `WORLD_ASOF` (2026-07-01, `seed/generate.py`); `SPEC.md` records this in its implementation table, not in RESP-7, because it is a test fixture. The `wrong_world_date` definition keeps 2026-07-01 because it labels seeded-world traces.
 
 RESP-7 states a requirement the current agent probably cannot meet: nothing in the traces shows that the agent is told the platform date. Changing the agent is later work (Homework 8); this homework only records the requirement.
 

@@ -4,7 +4,7 @@
       "name": "wrong_world_date",
       "status": "confirmed",
       "definition": "The agent reasons from a 'today' other than the platform date 2026-07-01 (stated or implied), or contradicts the order's refund_eligible field, so a deadline, window, payout or eligibility claim is wrong.",
-      "requirement_source": "RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative",
+      "requirement_source": "RESP-7: reason about dates from the current date the application provides; never guess; refund_eligible is authoritative",
       "boundary": "Fail: wrong explicit 'today', 'the window has passed now' when it has not on 2026-07-01, or eligibility contradicting refund_eligible. Pass: only repeats record dates, or date-based claims hold on 2026-07-01.",
       "evaluator_type": "judge",
       "created_from": [
@@ -96,6 +96,11 @@
           "ts": "2026-11-26T09:32:13.421747+00:00",
           "change": "requirement_source: 'RESP-3 + proposed revision: date reasoning uses the platform date; refund_eligible from get_order is authoritative' -> 'RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative'",
           "reason": "proposed revision added to SPEC.md"
+        },
+        {
+          "ts": "2026-11-26T10:30:21.247971+00:00",
+          "change": "requirement_source: 'RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative' -> 'RESP-7: reason about dates from the current date the application provides; never guess; refund_eligible is authoritative'",
+          "reason": "RESP-7 reworded to be deployment-independent; definition keeps 2026-07-01 because it labels seeded-world traces"
         }
       ],
       "evaluator_note": "code check for written-out dates after 2026-07-01 and the refund_eligible contradiction; LLM judge for implied 'now' claims",
@@ -1051,6 +1056,11 @@
       "ts": "2026-11-26T09:32:13.421747+00:00",
       "change": "SPEC.md revised: ESC-2 payment-card/password exception (cite cw-account-security); RESP-7 platform date, RESP-8 order confirmation, RESP-9 lookup before asking added; RESP-6 no longer proposed; requirement_source updated for 4 modes",
       "reason": "student decision to apply the proposed requirement revisions"
+    },
+    {
+      "ts": "2026-11-26T10:30:21.247971+00:00",
+      "change": "SPEC.md RESP-7 reworded: current date provided by the application instead of WORLD_ASOF; WORLD_ASOF moved to the implementation table",
+      "reason": "student decision: the seeded date is a test fixture, not a production requirement"
     }
   ],
   "tool_gaps": [

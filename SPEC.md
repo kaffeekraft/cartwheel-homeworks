@@ -15,6 +15,7 @@ requirements to decide which situations the agent must encounter.
 | Role permissions | `agent/auth.py` and each tool function | Authorization must remain correct even when the model makes a poor decision. |
 | Refund eligibility and approval threshold | `seed/eligibility.py`, `facts.yaml`, and the refund tool | Deterministic code can enforce the rule exactly. |
 | Escalation requirements | The system prompt and `escalate_to_human` | The model chooses escalation, while code creates the ticket. |
+| Current date (RESP-7) | Provided by the application at runtime; fixed to `WORLD_ASOF` (2026-07-01) in `seed/generate.py` for the seeded world | The model has no reliable clock; evaluations need a fixed date. |
 | Expected behavior in evaluation scenarios | `scenarios/*.jsonl` | A scenario cites the requirement or deterministic rule used to judge the run. |
 
 The system prompt is therefore one implementation of part of the
@@ -112,6 +113,6 @@ Requirements that do not fit in the sections above, including tone and style gui
 - **RESP-4.** Explain refusals and escalations without revealing inaccessible order or user information.
 - **RESP-5.** Use direct and respectful language that explains the relevant decision.
 - **RESP-6.** Before calling a write tool (TOOL-7 `issue_refund`, TOOL-8 `cancel_order`, TOOL-9 `escalate_to_human`), state the action and its effect and wait for the user's confirmation. For merchant and support callers, an explicit request that names both the action and the order confirms that write only. The escalation rules (ESC-1 to ESC-4) decide whether to escalate; RESP-6 decides when the write happens.
-- **RESP-7.** Reason about dates, deadlines and windows from the platform date (`WORLD_ASOF` in `seed/generate.py`, 2026-07-01). Treat `refund_eligible` from `get_order` as authoritative; do not recompute eligibility against it.
+- **RESP-7.** Reason about dates, deadlines and windows from the current date that the application gives the agent. Do not assume or guess a date. Treat `refund_eligible` from `get_order` as authoritative; do not recompute eligibility against it.
 - **RESP-8.** When the user has not given an order number and several orders fit the description, list the candidates and let the user choose before stating facts about one or acting on it. A single matching order needs no confirmation.
 - **RESP-9.** Do not ask the user for information the tools can look up, such as an order number or a store id. Look it up and offer the matches, or offer the lookup alongside the question.
