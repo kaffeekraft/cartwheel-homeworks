@@ -19,3 +19,10 @@ __pycache__/
 .venv/
 .pytest_cache/
 scenarios/demo_pilot_gt.json
+
+# Review app cache (a local copy of Langfuse traces; Langfuse stays canonical).
+analysis/review_app/.cache/
+
+# SQLite write-ahead files next to the local conversation state.
+.sessions.db-shm
+.sessions.db-wal

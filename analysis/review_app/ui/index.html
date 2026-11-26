@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartwheel Session Review</title>
+<!--
+  HW4 review app. One conversation (session) per page, read top to bottom:
+  user message -> narration (not shown to the user) -> tool call + result ->
+  final reply, turn by turn. Select text in the conversation to attach a
+  free-form open-coding note in the margin; "No failure observed" marks a
+  reviewed session without a failure.
+
+  Tabs: Review (open coding + suggestions), Map (clusters and coverage),
+  Taxonomy (modes as the agent organizes them; changes are made in chat),
+  Labels (one Pass/Fail per session and confirmed mode), Progress (batches,
+  discovery of new modes, missing judgments, suggestion queue).
+
+  API (analysis/review_app/server.py):
+    GET  /api/sessions                    cached sessions
+    GET/POST /api/annotations             open-code notes (local only)
+    GET  /api/manifest                    batch per session
+    GET  /api/patterns, /api/graph        taxonomy and map (agent-written)
+    GET/POST /api/suggestions             AI suggestions and decisions
+    GET/POST /api/labels                  judgments (local + Langfuse)
+    GET  /api/label_suggestions           agent-proposed judgments (Part E), never labels until accepted
+-->
+<style>
+:root {
+  --bg: #f6f6f3; --panel: #ffffff; --ink: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
+  --user: #2f6fb3; --user-bg: #eef4fb;
+  --reply: #2e7d4f; --reply-bg: #eef7f1;
+  --tool: #9a6b12; --tool-bg: #fbf6ea;
+  --narr: #8a8a84;
+  --note: #b4540a; --note-bg: #fff4e8; --mark: #ffe2b8;
+  --ai: #7a3fb0; --ai-bg: #f5effb;
+  --bad: #b3261e; --bad-bg: #fdecea;
+  --shopper: #1f6fd1; --merchant: #e07b00; --support: #12936b;
+  --focus: #2f6fb3;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button { font: inherit; cursor: pointer; }
+pre { margin: 0; white-space: pre-wrap; word-break: break-word; font: 12.5px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
+a { color: var(--user); }
+.link { color: var(--user); cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--user) 40%, transparent); }
+.mono { font-family: ui-monospace, monospace; }
+.muted { color: var(--muted); }
+
+/* layout */
+.app { display: grid; grid-template-rows: auto 1fr; height: 100vh; }
+.topbar { display: flex; align-items: center; gap: 16px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--line); }
+.topbar h1 { font-size: 15px; margin: 0; font-weight: 650; }
+.tabs { display: flex; gap: 4px; }
+.tabs button { border: 1px solid transparent; background: none; padding: 4px 10px; border-radius: 6px; color: var(--muted); }
+.tabs button.active { background: var(--bg); border-color: var(--line); color: var(--ink); font-weight: 600; }
+.tabs .count { font-size: 11px; background: var(--ai); color: #fff; border-radius: 8px; padding: 0 5px; margin-left: 4px; }
+.status { margin-left: auto; color: var(--muted); font-size: 12.5px; }
+.status.err { color: var(--bad); font-weight: 600; }
+.main { display: grid; grid-template-columns: 300px 1fr; min-height: 0; }
+.main.full { grid-template-columns: 1fr; }
+.main.full .sidebar { display: none; }
+
+/* sidebar */
+.sidebar { border-right: 1px solid var(--line); background: var(--panel); display: grid; grid-template-rows: auto auto 1fr; min-height: 0; }
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; border-bottom: 1px solid var(--line); }
+select, input[type=text], input:not([type]) { font: inherit; font-size: 13px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); min-width: 0; }
+.filters input { grid-column: 1 / -1; }
+.counter { padding: 6px 10px; font-size: 12.5px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.list { overflow-y: auto; }
+.row { padding: 7px 10px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.row:hover { background: var(--bg); }
+.row.active { background: var(--user-bg); box-shadow: inset 3px 0 0 var(--focus); }
+.row .l1 { display: flex; align-items: center; gap: 6px; font-size: 13px; flex-wrap: wrap; }
+.row .l2 { font-size: 12px; color: var(--muted); margin-top: 2px; padding-left: 20px; }
+.row .id { font-family: ui-monospace, monospace; }
+.icon { width: 14px; text-align: center; }
+.icon.failure { color: var(--note); } .icon.no_failure { color: var(--reply); } .icon.none { color: var(--muted); }
+
+/* chips */
+.chip { display: inline-block; font-size: 11.5px; line-height: 1.6; padding: 0 6px; border-radius: 9px; border: 1px solid var(--line); color: var(--muted); background: var(--panel); white-space: nowrap; }
+.chip.role { color: #fff; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+.chip.role.shopper { background: var(--shopper); } .chip.role.merchant { background: var(--merchant); } .chip.role.support { background: var(--support); }
+.chip.write { color: var(--tool); border-color: var(--tool); }
+.chip.error, .chip.fail { color: var(--bad); border-color: var(--bad); background: var(--bad-bg); }
+.chip.pass { color: var(--reply); border-color: var(--reply); background: var(--reply-bg); }
+.chip.batch { color: var(--user); border-color: var(--user); }
+.chip.ai { color: var(--ai); border-color: var(--ai); border-style: dashed; }
+.chip.mode { color: var(--note); border-color: var(--note); }
+.chip.st-confirmed { color: #fff; background: var(--reply); border-color: var(--reply); }
+.chip.st-candidate { color: var(--note); border-color: var(--note); }
+.chip.st-rejected, .chip.st-merged { text-decoration: line-through; }
+
+/* session view */
+.view { overflow-y: auto; min-height: 0; position: relative; }
+.empty { padding: 48px; color: var(--muted); }
+.header { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line); padding: 10px 20px; }
+.header .h1 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.header .sid { font-family: ui-monospace, monospace; font-size: 13px; }
+.header .h2 { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12.5px; color: var(--muted); }
+.header .actions { margin-left: auto; display: flex; gap: 6px; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 3px 10px; color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn.sm { padding: 0 7px; font-size: 12px; }
+.btn.good { border-color: var(--reply); color: var(--reply); }
+.btn.good.on { background: var(--reply); color: #fff; }
+.btn.bad { border-color: var(--bad); color: var(--bad); }
+.btn.bad.on { background: var(--bad); color: #fff; }
+.btn.sm.sug { outline: 2px dashed var(--ai); outline-offset: 1px; }
+.btn.ai { border-color: var(--ai); color: var(--ai); border-style: dashed; }
+.btn:disabled { opacity: .45; cursor: default; }
+
+.doc { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 16px; padding: 16px 20px 80px; position: relative; }
+.timeline { min-width: 0; }
+.margin { position: relative; }
+
+details.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; }
+details.panel > summary { padding: 6px 12px; cursor: pointer; color: var(--muted); font-size: 13px; }
+details.panel > .body { padding: 4px 12px 12px; opacity: .85; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; font-size: 13px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+
+.turn { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0; }
+.turn-head { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+.turn-head b { color: var(--ink); }
+.turn-head a { margin-left: auto; text-decoration: none; }
+.turn-body { padding: 10px 12px; display: grid; gap: 8px; }
+.end { text-align: center; color: var(--muted); font-size: 12px; letter-spacing: .08em; padding: 6px; border-top: 1px dashed var(--line); }
+
+.block { border-radius: 8px; padding: 8px 10px; border-left: 3px solid transparent; }
+.block .lbl { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+.block .txt { white-space: pre-wrap; word-break: break-word; }
+.block.user { background: var(--user-bg); border-left-color: var(--user); } .block.user .lbl { color: var(--user); }
+.block.reply { background: var(--reply-bg); border-left-color: var(--reply); } .block.reply .lbl { color: var(--reply); }
+.block.noreply { background: var(--bad-bg); border-left-color: var(--bad); color: var(--bad); }
+.block.narration { color: var(--narr); font-style: italic; padding: 2px 10px; }
+.block.narration .lbl { font-style: normal; color: var(--narr); font-weight: 500; }
+.block.tool { background: var(--tool-bg); border-left-color: var(--tool); }
+.block.tool .lbl { color: var(--tool); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.block.tool .io { display: grid; grid-template-columns: 52px 1fr; gap: 2px 8px; font-size: 12px; }
+.block.tool .io span { color: var(--muted); padding-top: 1px; }
+.block.tool pre.res { max-height: 260px; overflow: auto; }
+.block.has-note { outline: 2px solid var(--note); outline-offset: 1px; }
+.block.has-sugg { outline: 2px dashed var(--ai); outline-offset: 1px; }
+.block.has-note.has-sugg { outline-style: solid; }
+.block.flash { animation: flash 1.2s; }
+@keyframes flash { 0%, 60% { box-shadow: 0 0 0 4px var(--mark); } 100% { box-shadow: none; } }
+mark.q { background: var(--mark); color: inherit; border-radius: 2px; }
+
+/* margin notes */
+.note { position: absolute; left: 0; right: 0; background: var(--note-bg); border: 1px solid var(--note); border-left-width: 3px; border-radius: 6px; padding: 6px 8px; font-size: 13px; cursor: pointer; }
+.note.nofail { background: var(--reply-bg); border-color: var(--reply); }
+.note.sugg { background: var(--ai-bg); border: 1px dashed var(--ai); border-left: 3px dashed var(--ai); }
+.note .meta { font-size: 11px; color: var(--muted); display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+.note .meta button { border: none; background: none; color: var(--muted); padding: 0; font-size: 11px; text-decoration: underline; }
+.note .quote { font-size: 11.5px; color: var(--muted); font-style: italic; margin-bottom: 3px; }
+.note .head { font-size: 11px; color: var(--ai); font-weight: 600; margin-bottom: 2px; }
+.note textarea, .pop textarea { width: 100%; font: inherit; font-size: 13px; border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; resize: vertical; background: var(--panel); color: var(--ink); }
+.note .hist { font-size: 11.5px; color: var(--muted); margin-top: 4px; border-top: 1px dashed var(--line); padding-top: 3px; }
+.note .acts { display: flex; gap: 6px; margin-top: 5px; }
+
+/* popover */
+.pop { position: fixed; z-index: 20; width: 340px; background: var(--panel); border: 1px solid var(--note); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.15); padding: 8px; }
+.pop .hint { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.pop .quote { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 4px; max-height: 60px; overflow: hidden; }
+.pop label { font-size: 12.5px; display: block; margin: 4px 0; }
+
+/* full-width pages */
+.page { padding: 18px 24px 80px; max-width: 1280px; }
+.page h2 { font-size: 17px; margin: 0 0 4px; }
+.page h3 { font-size: 14.5px; margin: 22px 0 8px; }
+.page .lead { color: var(--muted); margin: 0 0 14px; max-width: 900px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; }
+.card .title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.card .title b { font-family: ui-monospace, monospace; font-size: 14px; }
+.card .def { margin: 6px 0; }
+.grid2 { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; font-size: 13px; }
+.grid2 > span:nth-child(odd) { color: var(--muted); }
+.tbl { border-collapse: collapse; font-size: 13px; background: var(--panel); }
+.tbl th, .tbl td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; }
+.tbl th { background: var(--bg); font-weight: 600; position: sticky; top: 0; z-index: 1; }
+.tbl td.num, .tbl th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tbl td.cell { white-space: nowrap; }
+.toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; font-size: 13px; }
+.stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; min-width: 130px; }
+.stat .v { font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.stat .k { font-size: 12px; color: var(--muted); }
+ul.plain { margin: 4px 0; padding-left: 18px; }
+ul.plain li { margin: 2px 0; }
+.hist-list { font-size: 12.5px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; margin-top: 6px; }
+
+/* map */
+.mapwrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; }
+svg.map { width: 100%; height: 600px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+svg.map circle, svg.map rect { cursor: pointer; }
+.legend .lg { display: grid; grid-template-columns: 14px 1fr; gap: 6px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+.legend .sw { width: 16px; height: 16px; border-radius: 50%; margin-top: 2px; color: #fff; font-size: 10px; font-weight: 700; line-height: 16px; text-align: center; }
+.legend h4 { margin: 14px 0 4px; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+svg.map text { font: 700 10px system-ui, sans-serif; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #18181a; --panel: #212124; --ink: #e8e8e4; --muted: #9a9a94; --line: #34343a;
+    --user: #7fb0e6; --user-bg: #1f2a36; --reply: #7cc79a; --reply-bg: #1d2b23; --tool: #d9ad55; --tool-bg: #2b2618;
+    --narr: #8d8d88; --note: #f0a050; --note-bg: #33261a; --mark: #6b4a1f; --ai: #c39cf0; --ai-bg: #2a2236;
+    --bad: #f08a80; --bad-bg: #3a1f1d; --focus: #7fb0e6; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <h1>Cartwheel session review</h1>
+    <div class="tabs" id="tabs">
+      <button data-tab="review" class="active">Review</button>
+      <button data-tab="map">Map</button>
+      <button data-tab="taxonomy">Taxonomy</button>
+      <button data-tab="labels">Labels</button>
+      <button data-tab="progress">Progress</button>
+    </div>
+    <div class="status" id="status">loading…</div>
+  </div>
+  <div class="main" id="main">
+    <aside class="sidebar">
+      <div class="filters">
+        <select id="f-role"><option value="">all roles</option><option>shopper</option><option>merchant</option><option>support</option></select>
+        <select id="f-status">
+          <option value="">any status</option>
+          <option value="none">○ not reviewed</option>
+          <option value="failure">✎ failure noted</option>
+          <option value="no_failure">✓ no failure observed</option>
+          <option value="suggested">⋯ pending suggestion</option>
+        </select>
+        <select id="f-batch" style="grid-column: 1 / -1"></select>
+        <input id="f-q" placeholder="search id, scenario, or text">
+      </div>
+      <div class="counter" id="counter"></div>
+      <div class="list" id="list"></div>
+    </aside>
+    <section class="view" id="view"><div class="empty">Loading sessions…</div></section>
+  </div>
+</div>
+
+<script>
+const S = {
+  tab: 'review',
+  data: null,          // /api/sessions payload
+  byId: new Map(),     // session_id -> session
+  annotations: [],     // open-code notes; on disk as {"annotations": [...]} (the helpers' shape)
+  manifest: { unit: 'session', sessions: {} },
+  patterns: { modes: [] },
+  suggestions: [],
+  labels: {},          // mode -> session_id -> live record
+  labelSugg: {},       // mode -> session_id -> {label, turn, reason, basis}
+  graph: { nodes: [], clusters: [] },
+  current: null,       // selected session_id
+  editing: null,       // annotation id being edited
+  mapColor: 'cluster',
+  labelFilter: { batch: '', incomplete: false, sugg: false },
+};
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const short = (id) => String(id || '').slice(0, 8);
+const json = (v) => (typeof v === 'string' ? v : JSON.stringify(v, null, 2));
+const now = () => new Date().toISOString();
+const uid = (p) => `${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+const sessLink = (sid, label) => `<span class="link mono" data-open="${esc(sid)}">${esc(label || short(sid))}</span>`;
+
+// ---------------------------------------------------------------- api
+async function get(path) {
+  const r = await fetch(path);
+  if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
+  return r.json();
+}
+async function post(path, body) {
+  const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || `HTTP ${r.status}`);
+  return out;
+}
+async function saveAnnotations() {
+  setStatus('saving…');
+  try { await post('/api/annotations', { annotations: S.annotations }); setStatus(`saved · ${S.annotations.length} notes`); }
+  catch (e) { setStatus(`SAVE FAILED: ${e.message}`, true); }
+}
+async function saveSuggestions() {
+  try { await post('/api/suggestions', S.suggestions); }
+  catch (e) { setStatus(`SUGGESTION SAVE FAILED: ${e.message}`, true); }
+}
+function setStatus(text, err = false) {
+  const el = $('status'); el.textContent = text; el.classList.toggle('err', err);
+}
+
+// ---------------------------------------------------------------- derived state
+const notesFor = (sid) => S.annotations.filter((a) => a.session_id === sid);
+const pendingFor = (sid) => S.suggestions.filter((g) => g.session_id === sid && (g.status || 'pending') === 'pending');
+function statusOf(sid) {
+  const notes = notesFor(sid);
+  if (notes.some((a) => a.kind === 'failure')) return 'failure';
+  if (notes.some((a) => a.kind === 'no_failure')) return 'no_failure';
+  return 'none';
+}
+const batchOf = (sid) => S.manifest.sessions?.[sid]?.batch || null;
+const modes = () => (S.patterns.modes || []).filter((m) => m && m.name);
+const confirmedModes = () => modes().filter((m) => m.status === 'confirmed');
+const modesOfNote = (id) => modes().filter((m) => (m.created_from_annotations || []).includes(id));
+const reviewedSessions = () => S.data.sessions.filter((s) => statusOf(s.session_id) !== 'none');
+const ICON = { none: '○', failure: '✎', no_failure: '✓' };
+
+function filtered() {
+  const role = $('f-role').value, st = $('f-status').value, batch = $('f-batch').value;
+  const q = $('f-q').value.trim().toLowerCase();
+  return S.data.sessions.filter((s) => {
+    if (role && s.role !== role) return false;
+    if (st === 'suggested' && !pendingFor(s.session_id).length) return false;
+    if (st && st !== 'suggested' && statusOf(s.session_id) !== st) return false;
+    if (batch === '__none' && batchOf(s.session_id)) return false;
+    if (batch && batch !== '__none' && batchOf(s.session_id) !== batch) return false;
+    if (q) {
+      const hay = [s.session_id, s.scenario_id, ...s.trace_ids, ...s.turns.map((t) => t.user)].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+const batches = () => [...new Set(Object.values(S.manifest.sessions || {}).map((m) => m.batch).filter(Boolean))].sort();
+
+// ---------------------------------------------------------------- sidebar
+function renderBatchFilter() {
+  const cur = $('f-batch').value;
+  $('f-batch').innerHTML = '<option value="">all sessions (pool)</option>'
+    + batches().map((b) => `<option value="${esc(b)}">batch: ${esc(b)}</option>`).join('')
+    + '<option value="__none">not in any batch</option>';
+  $('f-batch').value = cur;
+}
+function renderList() {
+  const rows = filtered();
+  const all = S.data.sessions;
+  const inSample = Object.keys(S.manifest.sessions || {}).length;
+  $('counter').textContent = `${reviewedSessions().length} reviewed · ${inSample} in sample · ${all.length} in pool · showing ${rows.length}`;
+  const cm = confirmedModes();
+  $('list').innerHTML = rows.map((s) => {
+    const sid = s.session_id, st = statusOf(sid), notes = notesFor(sid);
+    const nFail = notes.filter((a) => a.kind === 'failure').length, nSugg = pendingFor(sid).length;
+    const b = batchOf(sid);
+    let l2 = st === 'none' ? 'not reviewed' : st === 'no_failure' ? 'no failure observed' : `${nFail} note${nFail === 1 ? '' : 's'}`;
+    if (nSugg) l2 += ` · <span style="color:var(--ai)">${nSugg} suggestion${nSugg === 1 ? '' : 's'} pending</span>`;
+    if (cm.length && st !== 'none') {
+      const fails = cm.filter((m) => S.labels[m.name]?.[sid]?.label === 1).map((m) => m.name);
+      const done = cm.filter((m) => S.labels[m.name]?.[sid]).length;
+      l2 += `<br>${fails.length ? `Fail: ${esc(fails.join(', '))} · ` : ''}${done - fails.length} Pass${done < cm.length ? ` · ⚠ ${cm.length - done} unjudged` : ''}`;
+    }
+    return `<div class="row${sid === S.current ? ' active' : ''}" data-sid="${esc(sid)}">
+      <div class="l1"><span class="icon ${st}">${ICON[st]}</span><span class="id">${short(sid)}</span>
+        <span class="chip role ${esc(s.role)}">${esc(s.role)}</span><span>${s.turn_count} turn${s.turn_count > 1 ? 's' : ''}</span>
+        ${b ? `<span class="chip batch">${esc(b)}</span>` : ''}</div>
+      <div class="l2">${esc(s.scenario_id || 'no scenario')} · ${l2}</div></div>`;
+  }).join('') || '<div class="empty">No sessions match.</div>';
+}
+
+// ---------------------------------------------------------------- review tab
+function chips(badges) {
+  return (badges || []).map((b) => {
+    const cls = b === 'write' ? 'write' : b.startsWith('error') || b === 'no_reply' ? 'error' : '';
+    return `<span class="chip ${cls}">${esc(b)}</span>`;
+  }).join(' ');
+}
+function scenarioPanel(sc) {
+  if (!sc) return '<details class="panel"><summary>Scenario: none recorded</summary></details>';
+  const tuple = typeof sc.tuple === 'object' && sc.tuple ? sc.tuple : {};
+  const rows = typeof sc.tuple === 'string'
+    ? `<dt>tuple</dt><dd>${esc(sc.tuple)}</dd>`
+    : Object.entries(tuple).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(json(v))}</dd>`).join('');
+  const follow = Array.isArray(sc.followups) ? sc.followups.map((f) => `<li>${esc(f)}</li>`).join('') : esc(json(sc.followups));
+  return `<details class="panel"><summary>Scenario ${esc(sc.id)}: plan and expected behavior (open after your first read)</summary>
+    <div class="body"><dl class="kv">${rows}
+      <dt>group</dt><dd>${esc(sc.scenario_group)}${sc.data_quality_case_id ? ` · data quality case ${esc(sc.data_quality_case_id)}` : ''}</dd>
+      <dt>opening</dt><dd>${esc(sc.opening_message)}</dd>
+      <dt>follow-ups</dt><dd><ul style="margin:0;padding-left:18px">${follow}</ul></dd>
+      <dt>expected</dt><dd><pre>${esc(json(sc.expected))}</pre></dd></dl></div></details>`;
+}
+function renderSession() {
+  const s = S.byId.get(S.current);
+  if (!s) { $('view').innerHTML = '<div class="empty">Select a session on the left.</div>'; return; }
+  const base = S.data.trace_url_base;
+  const st = statusOf(s.session_id);
+  const turns = s.turns.map((t, i) => {
+    const n = i + 1, last = n === s.turn_count;
+    const steps = t.steps.map((step, j) => {
+      const a = `t${n}-s${j}`;
+      if (step.kind === 'narration') {
+        return `<div class="block narration" data-anchor="${a}"><div class="lbl">narration · not shown to user</div><div class="txt">${esc(step.text)}</div></div>`;
+      }
+      return `<div class="block tool" data-anchor="${a}"><div class="lbl">⚙ ${esc(step.name)} ${chips(step.badges)}</div>
+        <div class="io"><span>args</span><pre>${esc(json(step.arguments))}</pre><span>result</span><pre class="res">${esc(json(step.result))}</pre></div></div>`;
+    }).join('');
+    const reply = t.reply
+      ? `<div class="block reply" data-anchor="t${n}-reply"><div class="lbl">final reply · shown to user</div><div class="txt">${esc(t.reply)}</div></div>`
+      : `<div class="block noreply" data-anchor="t${n}-reply"><div class="lbl">no final reply</div><div class="txt">The run ended without an answer.</div></div>`;
+    return `<div class="turn" id="turn-${n}">
+      <div class="turn-head"><b>Turn ${n} of ${s.turn_count}</b><span>${esc(t.timestamp || '')}</span>
+        ${base ? `<a href="${esc(base + t.trace_id)}" target="_blank" rel="noopener">trace ${short(t.trace_id)} in Langfuse ↗</a>` : `<span>trace ${short(t.trace_id)}</span>`}</div>
+      <div class="turn-body">
+        <div class="block user" data-anchor="t${n}-user"><div class="lbl">user (${esc(s.role)})</div><div class="txt">${esc(t.user)}</div></div>
+        ${steps}${reply}
+      </div>${last ? '<div class="end">END OF SESSION</div>' : ''}</div>`;
+  }).join('');
+
+  $('view').innerHTML = `
+    <div class="header">
+      <div class="h1"><span class="chip role ${esc(s.role)}">${esc(s.role)}</span>
+        <span class="sid" title="${esc(s.session_id)}">session ${short(s.session_id)}</span>
+        <span class="chip">${s.turn_count} turn${s.turn_count > 1 ? 's' : ''}</span>
+        ${batchOf(s.session_id) ? `<span class="chip batch">batch ${esc(batchOf(s.session_id))}</span>` : ''}
+        <div class="actions">
+          <button class="btn good${st === 'no_failure' ? ' on' : ''}" id="nofail" ${st === 'failure' ? 'disabled title="this session already has a failure note"' : ''}>✓ No failure observed</button>
+          <button class="btn" id="prev" title="previous (k)">↑</button><button class="btn" id="next" title="next (j)">↓</button>
+        </div></div>
+      <div class="h2">scenario ${esc(s.scenario_id || '—')} · user ${esc(s.user_id || '—')} · prompt ${esc(s.prompt_version || '—')}
+        · tools: ${esc(s.tools.join(', ') || 'none')} ${chips(s.badges)}</div>
+    </div>
+    <div class="doc" id="doc">
+      <div class="timeline" id="timeline">
+        <details class="panel"><summary>System prompt for ${esc(s.role)} (${(s.system_prompt || '').length} chars, shown once)</summary><div class="body"><pre>${esc(s.system_prompt || '')}</pre></div></details>
+        ${scenarioPanel(s.scenario)}
+        ${turns}
+      </div>
+      <div class="margin" id="margin"></div>
+    </div>`;
+  $('nofail').onclick = toggleNoFailure;
+  $('prev').onclick = () => step(-1);
+  $('next').onclick = () => step(1);
+  $('doc').addEventListener('toggle', layoutNotes, true);
+  renderNotes();
+}
+
+function highlight(block, quote) {
+  if (!quote) return;
+  const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const i = node.nodeValue.indexOf(quote);
+    if (i < 0) continue;
+    const range = document.createRange();
+    range.setStart(node, i); range.setEnd(node, i + quote.length);
+    const mark = document.createElement('mark'); mark.className = 'q';
+    range.surroundContents(mark);
+    return;
+  }
+}
+function renderNotes() {
+  const s = S.byId.get(S.current); if (!s || !$('margin')) return;
+  document.querySelectorAll('.block.has-note, .block.has-sugg').forEach((b) => b.classList.remove('has-note', 'has-sugg'));
+  const notes = notesFor(s.session_id), suggs = pendingFor(s.session_id);
+  for (const a of notes) {
+    const block = a.anchor && document.querySelector(`[data-anchor="${a.anchor}"]`);
+    if (block) { block.classList.add('has-note'); if (!block.querySelector('mark.q')) highlight(block, a.quote); }
+  }
+  for (const g of suggs) {
+    const block = g.anchor && document.querySelector(`[data-anchor="${g.anchor}"]`);
+    if (block) block.classList.add('has-sugg');
+  }
+  const noteHtml = notes.map((a) => {
+    const nofail = a.kind === 'no_failure';
+    const linked = modesOfNote(a.id).map((m) => `<span class="chip mode">${esc(m.name)}</span>`).join(' ');
+    const body = S.editing === a.id
+      ? `<textarea rows="3" data-edit="${esc(a.id)}">${esc(a.note)}</textarea><div class="meta"><button data-save="${esc(a.id)}">save</button><button data-cancel>cancel</button></div>`
+      : `${a.quote ? `<div class="quote">“${esc(a.quote.length > 90 ? a.quote.slice(0, 90) + '…' : a.quote)}”</div>` : ''}<div>${esc(a.note)}</div>
+         <div class="meta"><span>turn ${a.turn} · ${esc((a.edited_at || a.ts || '').slice(0, 16).replace('T', ' '))}${a.history?.length ? ' · edited' : ''}${a.source === 'accepted_suggestion' ? ' · accepted suggestion' : ''}</span>
+           <button data-editbtn="${esc(a.id)}">edit</button><button data-del="${esc(a.id)}">delete</button></div>
+         ${linked ? `<div class="meta">${linked}</div>` : ''}
+         ${a.history?.length ? `<div class="hist">original: ${esc(a.history[0].note)}</div>` : ''}`;
+    return `<div class="note${nofail ? ' nofail' : ''}" data-note="${esc(a.id)}" data-anchor-ref="${esc(a.anchor || '')}">${body}</div>`;
+  });
+  const suggHtml = suggs.map((g) => `<div class="note sugg" data-anchor-ref="${esc(g.anchor || '')}">
+      <div class="head">AI suggestion · ${esc(g.mode || 'unnamed')}</div>
+      ${g.quote ? `<div class="quote">“${esc(g.quote.length > 90 ? g.quote.slice(0, 90) + '…' : g.quote)}”</div>` : ''}
+      <div>${esc(g.note || '')}</div>
+      ${g.reason ? `<div class="meta">why retrieved: ${esc(g.reason)}</div>` : ''}
+      <div class="acts"><button class="btn sm good" data-accept="${esc(g.id)}">Accept</button><button class="btn sm bad" data-reject="${esc(g.id)}">Reject…</button></div></div>`);
+  $('margin').innerHTML = [...noteHtml, ...suggHtml].join('');
+  layoutNotes();
+  const ta = document.querySelector('[data-edit]');
+  if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+}
+function layoutNotes() {
+  const doc = $('doc'); if (!doc) return;
+  const top0 = doc.getBoundingClientRect().top;
+  const notes = [...document.querySelectorAll('.note')].map((el) => {
+    const ref = el.dataset.anchorRef;
+    const block = ref && document.querySelector(`[data-anchor="${ref}"]`);
+    const y = block ? block.getBoundingClientRect().top - top0 - 16 : 0;
+    return { el, y };
+  }).sort((a, b) => a.y - b.y);
+  let floor = 0;
+  for (const n of notes) {
+    const y = Math.max(n.y, floor);
+    n.el.style.top = `${y}px`;
+    floor = y + n.el.offsetHeight + 8;
+  }
+}
+
+function clearNoFailure(sid) {
+  // A failure note replaces an earlier "no failure observed" mark.
+  S.annotations = S.annotations.filter((a) => !(a.session_id === sid && a.kind === 'no_failure'));
+}
+function addNote(anchor, quote, note, extra = {}) {
+  const s = S.byId.get(S.current);
+  const turn = Number(anchor.match(/^t(\d+)/)[1]);
+  clearNoFailure(s.session_id);
+  const ann = {
+    id: uid('ann'), session_id: s.session_id, trace_id: s.trace_ids[turn - 1], turn, anchor, quote, note,
+    kind: 'failure', author: 'human', ts: now(), history: [], ...extra,
+  };
+  S.annotations.push(ann);
+  saveAnnotations(); refresh();
+  return ann;
+}
+function toggleNoFailure() {
+  const s = S.byId.get(S.current);
+  const existing = S.annotations.find((a) => a.session_id === s.session_id && a.kind === 'no_failure');
+  if (existing) {
+    S.annotations = S.annotations.filter((a) => a !== existing);
+  } else {
+    S.annotations.push({
+      id: uid('ann'), session_id: s.session_id, trace_id: s.trace_ids[s.turn_count - 1], turn: s.turn_count,
+      anchor: null, quote: '', note: 'no failure observed', kind: 'no_failure', author: 'human', ts: now(), history: [],
+    });
+  }
+  saveAnnotations(); refresh();
+}
+function editNote(id, text) {
+  const a = S.annotations.find((x) => x.id === id);
+  text = text.trim();
+  if (a && text && text !== a.note) {
+    // Keep every earlier wording: the path from observation to category must stay inspectable.
+    a.history = [...(a.history || []), { note: a.note, ts: a.edited_at || a.ts }];
+    a.note = text; a.edited_at = now();
+    saveAnnotations();
+  }
+  S.editing = null; refresh();
+}
+function deleteNote(id) {
+  const a = S.annotations.find((x) => x.id === id);
+  if (!a || !confirm(`Delete this note?\n\n${a.note}`)) return;
+  S.annotations = S.annotations.filter((x) => x.id !== id);
+  saveAnnotations(); refresh();
+}
+
+// suggestions: accepting turns one into a human-confirmed note; rejecting keeps it with a reason
+function acceptSuggestion(id) {
+  const g = S.suggestions.find((x) => x.id === id); if (!g) return;
+  const s = S.byId.get(g.session_id);
+  const turn = g.turn || 1;
+  clearNoFailure(g.session_id);
+  const ann = {
+    id: uid('ann'), session_id: g.session_id, trace_id: g.trace_id || s.trace_ids[turn - 1], turn,
+    anchor: g.anchor || `t${turn}-reply`, quote: g.quote || '', note: g.note || `suggested: ${g.mode}`,
+    kind: 'failure', author: 'human', source: 'accepted_suggestion', suggestion_id: g.id, mode_hint: g.mode,
+    ts: now(), history: [],
+  };
+  S.annotations.push(ann);
+  Object.assign(g, { status: 'accepted', decided_at: now(), annotation_id: ann.id });
+  saveAnnotations(); saveSuggestions(); refresh();
+}
+function rejectSuggestion(id) {
+  const g = S.suggestions.find((x) => x.id === id); if (!g) return;
+  const reason = prompt(`Reject this suggestion for ${g.mode}?\nWhy does the mode not apply? (the boundary that excludes it)`);
+  if (!reason || !reason.trim()) return;
+  Object.assign(g, { status: 'rejected', decided_at: now(), decision_reason: reason.trim() });
+  saveSuggestions(); refresh();
+}
+
+// ---------------------------------------------------------------- selection -> popover (Review tab)
+let pop = null;
+function closePop() { if (pop) { pop.remove(); pop = null; } }
+function openPop(html, rect, border) {
+  closePop();
+  pop = document.createElement('div');
+  pop.className = 'pop';
+  if (border) pop.style.borderColor = border;
+  pop.innerHTML = html;
+  document.body.appendChild(pop);
+  pop.style.left = `${Math.min(Math.max(8, rect.left), window.innerWidth - 350)}px`;
+  pop.style.top = `${Math.min(rect.bottom + 6, window.innerHeight - pop.offsetHeight - 8)}px`;
+  return pop;
+}
+$('view').addEventListener('mouseup', () => setTimeout(() => {
+  if (S.tab !== 'review' || pop) return;
+  const sel = window.getSelection();
+  const quote = sel.toString().trim();
+  if (!quote || !sel.rangeCount) return;
+  const node = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentElement : sel.anchorNode;
+  const block = node.closest && node.closest('#timeline [data-anchor]');
+  if (!block) return;
+  const p = openPop(`<div class="quote">“${esc(quote.length > 160 ? quote.slice(0, 160) + '…' : quote)}”</div>
+    <textarea rows="3" placeholder="What went wrong here? Your own words, with the evidence."></textarea>
+    <div class="hint">Enter saves · Shift+Enter new line · Esc cancels</div>`, sel.getRangeAt(0).getBoundingClientRect());
+  const ta = p.querySelector('textarea');
+  ta.focus();
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePop();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const note = ta.value.trim();
+      if (note) addNote(block.dataset.anchor, quote, note);
+      closePop(); sel.removeAllRanges();
+    }
+  });
+}, 0));
+document.addEventListener('mousedown', (e) => { if (pop && !pop.contains(e.target)) closePop(); });
+
+// ---------------------------------------------------------------- map tab
+// Cluster colors: hues spaced around the wheel at similar lightness, so neighbors in the list never look alike.
+const PALETTE = ['#1f6fd1', '#e07b00', '#12936b', '#d62f5a', '#8a4fd8', '#9a7a00', '#0f9bb8', '#c2410c', '#6b7280', '#b5179e', '#2e7d32', '#5c6bc0', '#ad1457', '#00838f', '#8d6e63'];
+const ROLE_COLOR = { shopper: 'var(--shopper)', merchant: 'var(--merchant)', support: 'var(--support)' };
+const STATUS_COLOR = { none: '#8a8a84', failure: '#d62f5a', no_failure: '#12936b' };
+const STATUS_LABEL = { none: 'not reviewed', failure: 'failure noted', no_failure: 'no failure observed' };
+function renderMap() {
+  const g = S.graph;
+  if (!g.nodes?.length) {
+    $('view').innerHTML = `<div class="page"><h2>Map</h2><p class="lead">No map yet. Build it with
+      <code>uv run python -m analysis.review_app.graph</code>; the page picks it up within a few seconds.</p></div>`;
+    return;
+  }
+  const W = 1000, H = 600, pad = 30;
+  const xs = g.nodes.map((n) => n.x), ys = g.nodes.map((n) => n.y);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const sx = (x) => pad + ((x - x0) / (x1 - x0 || 1)) * (W - 2 * pad);
+  const sy = (y) => H - pad - ((y - y0) / (y1 - y0 || 1)) * (H - 2 * pad);
+  const reps = new Set(g.clusters.map((c) => c.representative));
+  const colorOf = (n) => {
+    const s = S.byId.get(n.session_id);
+    if (S.mapColor === 'role') return ROLE_COLOR[s?.role] || STATUS_COLOR.none;
+    if (S.mapColor === 'status') return STATUS_COLOR[statusOf(n.session_id)];
+    return PALETTE[n.cluster % PALETTE.length];
+  };
+  // Every mark carries its cluster number, so cluster stays readable when coloring by role or status.
+  const marks = g.nodes.map((n) => {
+    const s = S.byId.get(n.session_id); if (!s) return '';
+    const reviewed = statusOf(n.session_id) !== 'none', inSample = !!batchOf(n.session_id);
+    const c = colorOf(n), x = sx(n.x), y = sy(n.y), r = inSample ? 10 : 8;
+    const tip = `${short(n.session_id)} · ${s.role} · ${s.turn_count} turn(s) · cluster ${n.cluster}${reps.has(n.session_id) ? ' (representative)' : ''}\n`
+      + `${batchOf(n.session_id) ? 'batch ' + batchOf(n.session_id) + ' · ' : ''}${STATUS_LABEL[statusOf(n.session_id)]}\n${(s.turns[0]?.user || '').slice(0, 100)}`;
+    const fill = reviewed ? c : 'var(--panel)';
+    const sw = inSample ? 3.5 : 2.5;
+    const shape = reps.has(n.session_id)
+      ? `<rect x="${x - r}" y="${y - r}" width="${2 * r}" height="${2 * r}" rx="2" fill="${fill}" stroke="${c}" stroke-width="${sw}"/>`
+      : `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${c}" stroke-width="${sw}"/>`;
+    const label = `<text x="${x}" y="${y}" fill="${reviewed ? '#fff' : c}">${n.cluster}</text>`;
+    return `<g data-open="${esc(n.session_id)}" style="cursor:pointer"><title>${esc(tip)}</title>${shape}${label}</g>`;
+  }).join('');
+  const swatch = (color, text = '') => `<span class="sw" style="background:${color}">${esc(text)}</span>`;
+  const count = (pred) => g.nodes.filter(pred).length;
+  const clusterRows = g.clusters.slice().sort((a, b) => a.id - b.id).map((c) => {
+    const members = g.nodes.filter((n) => n.cluster === c.id);
+    const rev = members.filter((n) => statusOf(n.session_id) !== 'none').length;
+    const color = S.mapColor === 'cluster' ? PALETTE[c.id % PALETTE.length] : 'var(--muted)';
+    return `<div class="lg">${swatch(color, c.id)}
+      <div><b>cluster ${c.id}</b> · ${c.size} sessions · ${rev} reviewed<br><span class="muted">${esc(c.profile)}</span><br>
+      representative ${sessLink(c.representative)}</div></div>`;
+  }).join('');
+  const colorRows = S.mapColor === 'role'
+    ? Object.keys(ROLE_COLOR).map((role) => `<div class="lg">${swatch(ROLE_COLOR[role])}<div><b>${role}</b> · ${count((n) => S.byId.get(n.session_id)?.role === role)} sessions</div></div>`).join('')
+    : S.mapColor === 'status'
+      ? Object.keys(STATUS_COLOR).map((st) => `<div class="lg">${swatch(STATUS_COLOR[st])}<div><b>${STATUS_LABEL[st]}</b> · ${count((n) => statusOf(n.session_id) === st)} sessions</div></div>`).join('')
+      : '';
+  const legend = colorRows
+    ? `<h4>Color = ${S.mapColor === 'role' ? 'role' : 'review status'}</h4>${colorRows}<h4>Number in the mark = cluster</h4>${clusterRows}`
+    : `<h4>Color and number = cluster</h4>${clusterRows}`;
+  $('view').innerHTML = `<div class="page" style="max-width:none">
+    <h2>Map</h2>
+    <p class="lead">Each mark is one session; nearby sessions look alike (features: ${esc((g.feature_groups || []).join(', '))}; k=${g.k}).
+      Filled = reviewed, hollow = not reviewed, larger = in a batch, square = cluster representative. Hover for details, click to open.
+      Clusters describe what a session looks like, never whether it failed.</p>
+    <div class="toolbar">color by
+      <select id="map-color"><option value="cluster">cluster</option><option value="role">role</option><option value="status">review status</option></select>
+      <span class="muted">built ${esc((g.built_at || '').slice(0, 16).replace('T', ' '))}</span></div>
+    <div class="mapwrap"><svg class="map" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${marks}</svg>
+      <div class="legend">${legend}</div></div></div>`;
+  $('map-color').value = S.mapColor;
+  $('map-color').onchange = (e) => { S.mapColor = e.target.value; renderMap(); };
+}
+
+// ---------------------------------------------------------------- taxonomy tab
+function noteLine(a) {
+  return `<li>${sessLink(a.session_id)} turn ${a.turn}: “${esc(a.note)}”${a.history?.length ? ` <span class="muted">(originally: “${esc(a.history[0].note)}”)</span>` : ''}${a.source === 'accepted_suggestion' ? ' <span class="chip ai">accepted suggestion</span>' : ''}</li>`;
+}
+function renderTaxonomy() {
+  const all = modes();
+  const byId = new Map(S.annotations.map((a) => [a.id, a]));
+  const assigned = new Set(all.flatMap((m) => m.created_from_annotations || []));
+  const unassigned = S.annotations.filter((a) => a.kind === 'failure' && !assigned.has(a.id));
+  const order = { confirmed: 0, candidate: 1, merged: 2, rejected: 3 };
+  const cards = all.slice().sort((a, b) => (order[a.status] ?? 1) - (order[b.status] ?? 1) || a.name.localeCompare(b.name)).map((m) => {
+    const origin = (m.created_from_annotations || []).map((id) => byId.get(id)).filter(Boolean);
+    const lab = Object.values(S.labels[m.name] || {});
+    const fails = lab.filter((r) => r.label === 1).length;
+    const sugg = S.suggestions.filter((g) => g.mode === m.name);
+    const list = (ids) => (ids || []).map((sid) => sessLink(sid)).join(', ') || '<span class="muted">none yet</span>';
+    return `<div class="card"><div class="title"><b>${esc(m.name)}</b><span class="chip st-${esc(m.status || 'candidate')}">${esc(m.status || 'candidate')}</span>
+        ${m.evaluator_type ? `<span class="chip">${esc(m.evaluator_type === 'code' ? 'code check' : 'LLM judge')}</span>` : ''}
+        ${m.requirement_source ? `<span class="chip batch">${esc(m.requirement_source)}</span>` : ''}
+        ${m.merged_into ? `<span class="muted">→ merged into ${esc(m.merged_into)}</span>` : ''}</div>
+      <div class="def">${esc(m.definition || '(no definition yet)')}</div>
+      <div class="grid2">
+        <span>boundary</span><span>${esc(m.boundary || '—')}</span>
+        <span>positives</span><span>${(m.positives || []).length} · ${list(m.positives)}</span>
+        <span>close negatives</span><span>${(m.close_negatives || []).length} · ${list(m.close_negatives)}</span>
+        <span>labels</span><span>${lab.length ? `${fails} Fail · ${lab.length - fails} Pass` : '—'}</span>
+        <span>suggestions</span><span>${sugg.length ? `${sugg.filter((g) => g.status === 'accepted').length} accepted · ${sugg.filter((g) => g.status === 'rejected').length} rejected · ${sugg.filter((g) => (g.status || 'pending') === 'pending').length} pending` : '—'}</span>
+      </div>
+      <details><summary class="muted" style="cursor:pointer;margin-top:6px">${origin.length} originating human note${origin.length === 1 ? '' : 's'}</summary><ul class="plain">${origin.map(noteLine).join('')}</ul></details>
+      ${(m.history || []).length ? `<div class="hist-list">${m.history.map((h) => `<div>${esc((h.ts || '').slice(0, 16).replace('T', ' '))} · <b>${esc(h.change)}</b>${h.reason ? ` · ${esc(h.reason)}` : ''}</div>`).join('')}</div>` : ''}
+    </div>`;
+  }).join('');
+  $('view').innerHTML = `<div class="page">
+    <h2>Taxonomy</h2>
+    <p class="lead">Candidate failure modes grouped from your notes. Changes (rename, merge, split, confirm, reject) are made in the chat;
+      each change is recorded with its reason. Merge when one product change fixes both; split when the fixes differ.</p>
+    ${(S.patterns.revisions || []).length ? `<h3>Revisions</h3><div class="card"><div class="hist-list">${S.patterns.revisions.map((r) => `<div>${esc((r.ts || '').slice(0, 16).replace('T', ' '))} · <b>${esc(r.change)}</b>${r.reason ? ` · ${esc(r.reason)}` : ''}</div>`).join('')}</div></div>` : ''}
+    ${cards || '<div class="card muted">No modes yet. They appear after the first review batch, when your notes are grouped.</div>'}
+    <h3>Notes not yet in any mode (${unassigned.length})</h3>
+    <div class="card">${unassigned.length ? `<ul class="plain">${unassigned.map(noteLine).join('')}</ul>` : '<span class="muted">none</span>'}</div>
+  </div>`;
+}
+
+// ---------------------------------------------------------------- labels tab
+async function saveLabel(mode, sid, label, trace_id, comment, source = 'human') {
+  setStatus('saving label…');
+  try {
+    const out = await post('/api/labels', { mode, session_id: sid, label, trace_id, comment, source });
+    S.labels[mode] = S.labels[mode] || {};
+    S.labels[mode][sid] = out.record;
+    setStatus(out.record.langfuse_ok ? `saved ${mode} = ${label ? 'Fail' : 'Pass'} · Langfuse ✓` : `saved locally · LANGFUSE NOT WRITTEN: ${out.record.langfuse_error || 'not configured'}`, !out.record.langfuse_ok);
+  } catch (e) { setStatus(`LABEL SAVE FAILED: ${e.message}`, true); }
+  render();
+}
+function failPopover(mode, sid, rect) {
+  const s = S.byId.get(sid);
+  const linked = notesFor(sid).filter((a) => a.kind === 'failure');
+  const prefer = linked.find((a) => modesOfNote(a.id).some((m) => m.name === mode)) || linked[0];
+  const cur = S.labels[mode]?.[sid];
+  const g = cur ? null : suggFor(mode, sid);
+  const defTurn = cur?.label === 1 ? s.trace_ids.indexOf(cur.trace_id) + 1 : ((g?.label === 1 && g.turn) || prefer?.turn || 1);
+  const p = openPop(`<b>${esc(mode)} = Fail</b> · session ${short(sid)}
+    <label>Evidence in turn <select id="ev-turn">${s.trace_ids.map((t, i) => `<option value="${i + 1}"${i + 1 === defTurn ? ' selected' : ''}>${i + 1} (trace ${short(t)})</option>`).join('')}</select></label>
+    <label>Comment (stored with the score)<textarea rows="3" id="ev-comment">${esc(cur?.label === 1 ? cur.comment || '' : (g?.label === 1 ? g.reason : prefer?.note || ''))}</textarea></label>
+    <div class="acts" style="display:flex;gap:6px"><button class="btn bad on" id="ev-save">Save Fail</button><button class="btn" id="ev-cancel">Cancel</button></div>`, rect, 'var(--bad)');
+  p.querySelector('#ev-cancel').onclick = closePop;
+  p.querySelector('#ev-save').onclick = () => {
+    const turn = Number(p.querySelector('#ev-turn').value);
+    const comment = p.querySelector('#ev-comment').value.trim() || null;
+    closePop();
+    saveLabel(mode, sid, 1, s.trace_ids[turn - 1], comment);
+  };
+}
+const suggFor = (mode, sid) => S.labelSugg[mode]?.[sid] || null;
+const openSugg = (s) => confirmedModes().filter((m) => !S.labels[m.name]?.[s.session_id] && suggFor(m.name, s.session_id));
+// Accept a row: every suggested judgment without a live label becomes a label (source accepted_suggestion).
+async function acceptRow(sid) {
+  const s = S.byId.get(sid);
+  for (const m of openSugg(s)) {
+    const g = suggFor(m.name, sid);
+    const turn = g.label === 1 ? (g.turn || 1) : s.turn_count;
+    await saveLabel(m.name, sid, g.label, s.trace_ids[turn - 1], `[accepted suggestion: ${g.basis}] ${g.reason}`, 'accepted_suggestion');
+  }
+}
+function renderLabels() {
+  const cm = confirmedModes();
+  if (!cm.length) {
+    $('view').innerHTML = `<div class="page"><h2>Labels</h2><p class="lead">No confirmed modes yet. Labeling starts in Part E,
+      once the taxonomy is stable and its modes are confirmed in the Taxonomy tab.</p></div>`;
+    return;
+  }
+  const f = S.labelFilter;
+  let rows = reviewedSessions();
+  if (f.batch) rows = rows.filter((s) => batchOf(s.session_id) === f.batch);
+  if (f.incomplete) rows = rows.filter((s) => cm.some((m) => !S.labels[m.name]?.[s.session_id]));
+  if (f.sugg) rows = rows.filter((s) => openSugg(s).length);
+  const pendingSugg = reviewedSessions().reduce((n, s) => n + openSugg(s).length, 0);
+  const total = reviewedSessions().length * cm.length;
+  const done = reviewedSessions().reduce((n, s) => n + cm.filter((m) => S.labels[m.name]?.[s.session_id]).length, 0);
+  const cell = (m, s) => {
+    const r = S.labels[m.name]?.[s.session_id];
+    const warn = r && r.langfuse_ok === false ? ` <span title="${esc(r.langfuse_error || 'not written to Langfuse')}" style="color:var(--bad)">⚠</span>` : '';
+    const g = r ? null : suggFor(m.name, s.session_id);
+    const turn = r?.label === 1 ? ` t${s.trace_ids.indexOf(r.trace_id) + 1}` : (g?.label === 1 && g.turn ? ` t${g.turn}` : '');
+    const tip = r ? (r.comment || '') : (g ? `AI suggestion (${g.basis}): ${g.label ? 'Fail' : 'Pass'}. ${g.reason}` : '');
+    return `<td class="cell" title="${esc(tip)}">
+      <button class="btn sm bad${r?.label === 1 ? ' on' : ''}${g?.label === 1 ? ' sug' : ''}" data-fail="${esc(m.name)}" data-sid="${esc(s.session_id)}">Fail${turn}</button>
+      <button class="btn sm good${r?.label === 0 ? ' on' : ''}${g?.label === 0 ? ' sug' : ''}" data-pass="${esc(m.name)}" data-sid="${esc(s.session_id)}">Pass</button>${warn}</td>`;
+  };
+  $('view').innerHTML = `<div class="page" style="max-width:none">
+    <h2>Labels</h2>
+    <p class="lead">One judgment per reviewed session and confirmed mode. Fail is stored on the trace of the turn holding the evidence,
+      Pass on the session's last turn. Each judgment is appended to <code>analysis/state/labels/&lt;mode&gt;.jsonl</code> (1 = failure present) and written to Langfuse as a score.</p>
+    <div class="toolbar"><span><b>${done}</b> of ${total} judgments</span>
+      <select id="lb-batch"><option value="">all batches</option>${batches().map((b) => `<option value="${esc(b)}">${esc(b)}</option>`).join('')}</select>
+      <label><input type="checkbox" id="lb-inc"${f.incomplete ? ' checked' : ''}> only sessions with missing judgments</label>
+      <label><input type="checkbox" id="lb-sug"${f.sugg ? ' checked' : ''}> only sessions with open suggestions</label>
+      <span style="color:var(--ai)">${pendingSugg} suggested judgments open (dashed outline; hover for the reason)</span></div>
+    <table class="tbl"><thead><tr><th>session</th><th>batch</th><th>notes</th>${cm.map((m) => `<th>${esc(m.name)}</th>`).join('')}<th></th></tr></thead>
+    <tbody>${rows.map((s) => `<tr><td>${sessLink(s.session_id)} <span class="chip role ${esc(s.role)}">${esc(s.role)}</span></td>
+      <td>${esc(batchOf(s.session_id) || '—')}</td>
+      <td style="max-width:320px;font-size:12.5px">${notesFor(s.session_id).map((a) => esc(a.note)).join(' · ')}</td>
+      ${cm.map((m) => cell(m, s)).join('')}
+      <td>${openSugg(s).length ? `<button class="btn sm ai" data-acceptrow="${esc(s.session_id)}" title="Save every dashed suggestion in this row as your label">accept ${openSugg(s).length}</button>` : ''}</td></tr>`).join('')}</tbody></table></div>`;
+  $('lb-batch').value = f.batch;
+  $('lb-batch').onchange = (e) => { f.batch = e.target.value; renderLabels(); };
+  $('lb-inc').onchange = (e) => { f.incomplete = e.target.checked; renderLabels(); };
+  $('lb-sug').onchange = (e) => { f.sugg = e.target.checked; renderLabels(); };
+}
+
+// ---------------------------------------------------------------- progress tab
+function renderProgress() {
+  const all = S.data.sessions;
+  const reviewed = reviewedSessions();
+  const traces = reviewed.reduce((n, s) => n + s.turn_count, 0);
+  const fail = reviewed.filter((s) => statusOf(s.session_id) === 'failure').length;
+  // A mode is "first seen" in the batch of its earliest originating note.
+  const byId = new Map(S.annotations.map((a) => [a.id, a]));
+  const firstSeen = {};
+  for (const m of modes().filter((m) => m.status !== 'rejected' && m.status !== 'merged')) {
+    const origin = (m.created_from_annotations || []).map((id) => byId.get(id)).filter(Boolean).sort((a, b) => a.ts.localeCompare(b.ts));
+    if (origin.length) { const b = batchOf(origin[0].session_id) || '(no batch)'; (firstSeen[b] = firstSeen[b] || []).push(m.name); }
+  }
+  const batchRows = [...batches(), '(no batch)'].map((b) => {
+    const members = b === '(no batch)' ? reviewed.filter((s) => !batchOf(s.session_id)) : all.filter((s) => batchOf(s.session_id) === b);
+    const rev = members.filter((s) => statusOf(s.session_id) !== 'none');
+    if (b === '(no batch)' && !members.length && !firstSeen[b]) return '';
+    return `<tr><td>${esc(b)}</td><td class="num">${members.length}</td><td class="num">${rev.length}</td>
+      <td class="num">${rev.reduce((n, s) => n + s.turn_count, 0)}</td>
+      <td class="num">${rev.filter((s) => statusOf(s.session_id) === 'failure').length}</td>
+      <td class="num">${rev.filter((s) => statusOf(s.session_id) === 'no_failure').length}</td>
+      <td>${(firstSeen[b] || []).map((n) => `<span class="chip mode">${esc(n)}</span>`).join(' ') || '<span class="muted">0</span>'}</td></tr>`;
+  }).join('');
+  const cm = confirmedModes();
+  const missing = cm.length ? reviewed.filter((s) => cm.some((m) => !S.labels[m.name]?.[s.session_id])) : [];
+  const pending = S.suggestions.filter((g) => (g.status || 'pending') === 'pending');
+  const decided = S.suggestions.filter((g) => g.status === 'accepted' || g.status === 'rejected');
+  const byMode = {};
+  pending.forEach((g) => (byMode[g.mode || 'unnamed'] = byMode[g.mode || 'unnamed'] || []).push(g));
+  $('view').innerHTML = `<div class="page">
+    <h2>Progress</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">${reviewed.length}</div><div class="k">sessions reviewed (${traces} traces)</div></div>
+      <div class="stat"><div class="v">${Object.keys(S.manifest.sessions || {}).length}</div><div class="k">sessions in sample</div></div>
+      <div class="stat"><div class="v">${fail}</div><div class="k">with a failure note</div></div>
+      <div class="stat"><div class="v">${modes().filter((m) => m.status === 'candidate' || m.status === 'confirmed').length}</div><div class="k">active modes (${cm.length} confirmed)</div></div>
+      <div class="stat"><div class="v">${cm.length ? missing.length : '—'}</div><div class="k">sessions with missing judgments</div></div>
+      <div class="stat"><div class="v">${pending.length}</div><div class="k">suggestions pending</div></div>
+    </div>
+    <h3>Batches and discovery of new modes</h3>
+    <table class="tbl"><thead><tr><th>batch</th><th class="num">sessions</th><th class="num">reviewed</th><th class="num">traces</th><th class="num">failure</th><th class="num">no failure</th><th>modes first seen here</th></tr></thead>
+      <tbody>${batchRows || '<tr><td colspan="7" class="muted">No batches yet.</td></tr>'}</tbody></table>
+    <p class="muted" style="font-size:12.5px">When the last batch adds no new modes, the taxonomy is close to stable (theoretical saturation).</p>
+    ${cm.length ? `<h3>Missing judgments (${missing.length} sessions)</h3><div class="card">${missing.map((s) => `${sessLink(s.session_id)} <span class="muted">(${cm.filter((m) => !S.labels[m.name]?.[s.session_id]).map((m) => m.name).join(', ')})</span>`).join('<br>') || '<span class="muted">none</span>'}</div>` : ''}
+    <h3>Suggestion queue (${pending.length} pending · ${decided.filter((g) => g.status === 'accepted').length} accepted · ${decided.filter((g) => g.status === 'rejected').length} rejected)</h3>
+    ${Object.entries(byMode).map(([mode, list]) => `<div class="card"><div class="title"><b>${esc(mode)}</b><span class="muted">${list.length} pending</span></div>
+      <table class="tbl" style="margin-top:6px;width:100%"><tbody>${list.map((g) => `<tr><td>${sessLink(g.session_id)} t${g.turn || '?'}</td>
+        <td>${esc(g.note || '')}${g.reason ? `<br><span class="muted" style="font-size:12px">why retrieved: ${esc(g.reason)}</span>` : ''}</td>
+        <td class="cell"><button class="btn sm good" data-accept="${esc(g.id)}">Accept</button> <button class="btn sm bad" data-reject="${esc(g.id)}">Reject…</button></td></tr>`).join('')}</tbody></table></div>`).join('') || '<div class="card muted">No pending suggestions.</div>'}
+    ${decided.length ? `<h3>Decided suggestions</h3><table class="tbl"><thead><tr><th>session</th><th>mode</th><th>decision</th><th>reason / note</th></tr></thead><tbody>
+      ${decided.map((g) => `<tr><td>${sessLink(g.session_id)}</td><td>${esc(g.mode)}</td><td><span class="chip ${g.status === 'accepted' ? 'pass' : 'fail'}">${esc(g.status)}</span></td><td>${esc(g.decision_reason || g.note || '')}</td></tr>`).join('')}</tbody></table>` : ''}
+  </div>`;
+}
+
+// ---------------------------------------------------------------- navigation and events
+function render() {
+  document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === S.tab));
+  const pend = S.suggestions.filter((g) => (g.status || 'pending') === 'pending').length;
+  const pb = document.querySelector('#tabs [data-tab="progress"]');
+  pb.innerHTML = `Progress${pend ? `<span class="count">${pend}</span>` : ''}`;
+  $('main').classList.toggle('full', S.tab !== 'review');
+  if (S.tab === 'review') { renderList(); renderSession(); }
+  else if (S.tab === 'map') renderMap();
+  else if (S.tab === 'taxonomy') renderTaxonomy();
+  else if (S.tab === 'labels') renderLabels();
+  else renderProgress();
+}
+const refresh = render;
+function select(sid) {
+  S.current = sid; S.editing = null; S.tab = 'review'; closePop();
+  history.replaceState(null, '', `#s=${sid}`);
+  render();
+  $('view').scrollTop = 0;
+  document.querySelector('.row.active')?.scrollIntoView({ block: 'nearest' });
+}
+function step(delta) {
+  const rows = filtered(); if (!rows.length) return;
+  const i = rows.findIndex((s) => s.session_id === S.current);
+  select(rows[Math.min(rows.length - 1, Math.max(0, i + delta))].session_id);
+}
+
+$('tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { S.tab = b.dataset.tab; closePop(); render(); } });
+$('list').addEventListener('click', (e) => { const row = e.target.closest('.row'); if (row) select(row.dataset.sid); });
+['f-role', 'f-status', 'f-batch'].forEach((id) => $(id).addEventListener('change', renderList));
+$('f-q').addEventListener('input', renderList);
+$('view').addEventListener('click', (e) => {
+  const t = e.target.closest('[data-open],[data-editbtn],[data-save],[data-cancel],[data-del],[data-accept],[data-reject],[data-fail],[data-pass],[data-acceptrow]') || e.target;
+  if (t.dataset.open) { select(t.dataset.open); return; }
+  if (t.dataset.accept) { acceptSuggestion(t.dataset.accept); return; }
+  if (t.dataset.reject) { rejectSuggestion(t.dataset.reject); return; }
+  if (t.dataset.acceptrow) { acceptRow(t.dataset.acceptrow); return; }
+  if (t.dataset.fail) { failPopover(t.dataset.fail, t.dataset.sid, t.getBoundingClientRect()); return; }
+  if (t.dataset.pass) { const s = S.byId.get(t.dataset.sid); saveLabel(t.dataset.pass, s.session_id, 0, s.trace_ids[s.turn_count - 1], null); return; }
+  if (t.dataset.editbtn) { S.editing = t.dataset.editbtn; renderNotes(); return; }
+  if (t.dataset.save) { editNote(t.dataset.save, document.querySelector(`[data-edit="${t.dataset.save}"]`).value); return; }
+  if (t.hasAttribute && t.hasAttribute('data-cancel')) { S.editing = null; renderNotes(); return; }
+  if (t.dataset.del) { deleteNote(t.dataset.del); return; }
+  const note = e.target.closest('.note');
+  if (note && note.dataset.anchorRef && !S.editing && !e.target.closest('button')) {
+    const block = document.querySelector(`[data-anchor="${note.dataset.anchorRef}"]`);
+    if (block) { block.scrollIntoView({ block: 'center', behavior: 'smooth' }); block.classList.remove('flash'); void block.offsetWidth; block.classList.add('flash'); }
+  }
+});
+$('view').addEventListener('keydown', (e) => {
+  if (e.target.dataset.edit && e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); editNote(e.target.dataset.edit, e.target.value); }
+  if (e.target.dataset.edit && e.key === 'Escape') { S.editing = null; renderNotes(); }
+});
+document.addEventListener('keydown', (e) => {
+  if (S.tab !== 'review' || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if (e.key === 'j') step(1);
+  if (e.key === 'k') step(-1);
+});
+window.addEventListener('resize', layoutNotes);
+
+// ---------------------------------------------------------------- polling: the agent writes taxonomy, suggestions, manifest, map
+const lastSeen = {};
+async function poll() {
+  if (pop || S.editing) return;
+  const sources = { patterns: '/api/patterns', suggestions: '/api/suggestions', manifest: '/api/manifest', graph: '/api/graph', labels: '/api/labels', labelSugg: '/api/label_suggestions' };
+  let changed = false;
+  for (const [key, path] of Object.entries(sources)) {
+    try {
+      const data = await get(path);
+      const sig = JSON.stringify(data);
+      if (lastSeen[key] === sig) continue;
+      lastSeen[key] = sig; changed = true;
+      if (key === 'patterns') S.patterns = Array.isArray(data.modes) ? data : { modes: [] };
+      if (key === 'suggestions') S.suggestions = Array.isArray(data) ? data : (data.suggestions || []);
+      if (key === 'manifest') S.manifest = data && data.sessions ? data : { unit: 'session', sessions: {} };
+      if (key === 'graph') S.graph = data && data.nodes ? data : { nodes: [], clusters: [] };
+      if (key === 'labels') S.labels = data || {};
+      if (key === 'labelSugg') S.labelSugg = data && !data.error ? data : {};
+    } catch (e) { /* keep the last good copy */ }
+  }
+  if (changed && !pop && !S.editing && !window.getSelection().toString()) { renderBatchFilter(); render(); }
+}
+
+// ---------------------------------------------------------------- boot
+(async function boot() {
+  try {
+    const [data, ann] = await Promise.all([get('/api/sessions'), get('/api/annotations')]);
+    S.data = data;
+    data.sessions.forEach((s) => S.byId.set(s.session_id, s));
+    S.annotations = Array.isArray(ann) ? ann : (ann.annotations || []);
+    await poll();
+    renderBatchFilter();
+    const fromHash = new URLSearchParams(location.hash.slice(1)).get('s');
+    S.current = S.byId.has(fromHash) ? fromHash : null;
+    setStatus(`${data.session_count} sessions from ${data.source}${data.fallback_reason ? ' (FALLBACK: ' + data.fallback_reason + ')' : ''} · ${S.annotations.length} notes`, !!data.fallback_reason);
+    render();
+    setInterval(poll, 4000);
+  } catch (e) {
+    setStatus(`load failed: ${e.message}`, true);
+    $('view').innerHTML = `<div class="empty">Could not load: ${esc(e.message)}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1884 @@
+{
+  "nodes": [
+    {
+      "session_id": "3e4cbed55ea84a97a3259d5110062413",
+      "x": 1.3271,
+      "y": 1.1411,
+      "cluster": 1,
+      "distance": 3.1183
+    },
+    {
+      "session_id": "7e2e006383c64d1abbba438df689b65d",
+      "x": -4.1019,
+      "y": -1.1773,
+      "cluster": 12,
+      "distance": 2.2536
+    },
+    {
+      "session_id": "e86dc775d3e84045858fccb18d073c6c",
+      "x": 0.5209,
+      "y": -1.2044,
+      "cluster": 5,
+      "distance": 2.5049
+    },
+    {
+      "session_id": "ac38172b05b74387ad88e153d8126564",
+      "x": -3.7523,
+      "y": -1.1839,
+      "cluster": 12,
+      "distance": 1.9505
+    },
+    {
+      "session_id": "9e9a564d95bb4a6c9b226498bddc1723",
+      "x": -3.4969,
+      "y": -1.2536,
+      "cluster": 0,
+      "distance": 1.7512
+    },
+    {
+      "session_id": "1e5860b7d56842e78177e7bdc9b7f147",
+      "x": 2.6727,
+      "y": 0.7901,
+      "cluster": 1,
+      "distance": 2.5562
+    },
+    {
+      "session_id": "3b969c3d839148be848babc8b3636e0e",
+      "x": 2.4327,
+      "y": -1.3049,
+      "cluster": 5,
+      "distance": 1.5644
+    },
+    {
+      "session_id": "b2440f69297c419cb8a334663d1c4be2",
+      "x": -2.9665,
+      "y": 2.0861,
+      "cluster": 2,
+      "distance": 2.7199
+    },
+    {
+      "session_id": "4c45cf3aeacf4d97931b9eefac9dbd75",
+      "x": -0.5091,
+      "y": -0.6551,
+      "cluster": 8,
+      "distance": 2.3708
+    },
+    {
+      "session_id": "f0e68f59a5dd4acc9976815ea52d2678",
+      "x": 1.5368,
+      "y": -2.062,
+      "cluster": 9,
+      "distance": 2.7128
+    },
+    {
+      "session_id": "a32fc91dda78480e8c26c75ab5e940c6",
+      "x": -4.1285,
+      "y": -1.2323,
+      "cluster": 4,
+      "distance": 3.492
+    },
+    {
+      "session_id": "e55e0d2e663049fcaad38bd1811c6219",
+      "x": 1.9791,
+      "y": 1.1141,
+      "cluster": 3,
+      "distance": 2.2934
+    },
+    {
+      "session_id": "1fb356a9298a444896960074e528a302",
+      "x": 2.182,
+      "y": -1.1096,
+      "cluster": 9,
+      "distance": 2.585
+    },
+    {
+      "session_id": "d485c44e417a4851954f86adc0bf17c5",
+      "x": 2.3709,
+      "y": 1.0252,
+      "cluster": 1,
+      "distance": 2.2605
+    },
+    {
+      "session_id": "ef945fcd04b44cd7b68be94e5d994fc7",
+      "x": 0.5148,
+      "y": 1.2895,
+      "cluster": 3,
+      "distance": 2.5411
+    },
+    {
+      "session_id": "9c10732ed88e4c7eb5218781fedc52ee",
+      "x": 2.2382,
+      "y": -1.1142,
+      "cluster": 9,
+      "distance": 2.441
+    },
+    {
+      "session_id": "fca3ef4e36f64933bd8b06cec53eefb7",
+      "x": -0.3995,
+      "y": 1.5644,
+      "cluster": 3,
+      "distance": 3.6034
+    },
+    {
+      "session_id": "539d5dfe0d7d4ebe8bcd8d0d9894d4cc",
+      "x": -1.8012,
+      "y": -0.2664,
+      "cluster": 7,
+      "distance": 2.1497
+    },
+    {
+      "session_id": "eb2d28f3c5f84bfd93423ac7ca060c68",
+      "x": 3.1525,
+      "y": 0.7836,
+      "cluster": 1,
+      "distance": 2.44
+    },
+    {
+      "session_id": "5289a39a466640a7820e8534268b3780",
+      "x": -1.7528,
+      "y": 1.8457,
+      "cluster": 6,
+      "distance": 2.0584
+    },
+    {
+      "session_id": "a9809db2ec7c459293a9efb40ce680e7",
+      "x": -0.2161,
+      "y": 1.7086,
+      "cluster": 6,
+      "distance": 3.3651
+    },
+    {
+      "session_id": "677f8af2c13a411ca12a187632b60845",
+      "x": -3.6294,
+      "y": -1.764,
+      "cluster": 12,
+      "distance": 2.6545
+    },
+    {
+      "session_id": "d16204414ef64b64bac40dc76e95b6b9",
+      "x": 1.0993,
+      "y": 1.1205,
+      "cluster": 3,
+      "distance": 2.8332
+    },
+    {
+      "session_id": "46b55a51305b4791a0f4812d7229f3a2",
+      "x": 1.8896,
+      "y": -2.0697,
+      "cluster": 13,
+      "distance": 1.0543
+    },
+    {
+      "session_id": "079dbc8ade464409ae947af63101f683",
+      "x": 2.5618,
+      "y": -1.338,
+      "cluster": 5,
+      "distance": 1.2527
+    },
+    {
+      "session_id": "48951a5058924823b347372d5e544a1c",
+      "x": 2.1512,
+      "y": 1.1797,
+      "cluster": 3,
+      "distance": 2.4737
+    },
+    {
+      "session_id": "d4528c60a4964170bb94aeb315b8e7f4",
+      "x": 1.9739,
+      "y": -1.0901,
+      "cluster": 9,
+      "distance": 2.0092
+    },
+    {
+      "session_id": "4b0b5350e1f44972b34af92b8120c021",
+      "x": -3.5085,
+      "y": -1.2402,
+      "cluster": 12,
+      "distance": 2.2955
+    },
+    {
+      "session_id": "3bebd82d6eaf44f4940625622cce4c64",
+      "x": -2.3952,
+      "y": -0.2717,
+      "cluster": 7,
+      "distance": 1.5345
+    },
+    {
+      "session_id": "fad80e318c5149a29c70dd51f37ef289",
+      "x": -3.0992,
+      "y": 1.0659,
+      "cluster": 2,
+      "distance": 2.8927
+    },
+    {
+      "session_id": "faed7cd33fc149d1b2c7f6ec9e7e7482",
+      "x": -1.6301,
+      "y": 0.9941,
+      "cluster": 11,
+      "distance": 3.6579
+    },
+    {
+      "session_id": "120ae78dfc5f4d4c894a34ef31ff81d7",
+      "x": 1.6815,
+      "y": -0.7521,
+      "cluster": 9,
+      "distance": 2.6898
+    },
+    {
+      "session_id": "d89eedf5a0de4756b35fd15e17d2c9b5",
+      "x": 1.5359,
+      "y": -0.74,
+      "cluster": 9,
+      "distance": 2.1366
+    },
+    {
+      "session_id": "347e0ef95d7b442683d4a2d63b2bfe6f",
+      "x": 0.7101,
+      "y": -1.0846,
+      "cluster": 9,
+      "distance": 2.6536
+    },
+    {
+      "session_id": "6b118cd034e449f79daf4545dafdfe44",
+      "x": -2.256,
+      "y": -0.4922,
+      "cluster": 7,
+      "distance": 4.1913
+    },
+    {
+      "session_id": "1306ee520dfc41689ae95aead1016195",
+      "x": -2.1107,
+      "y": 1.9892,
+      "cluster": 2,
+      "distance": 1.6131
+    },
+    {
+      "session_id": "08cd53185a5440b3b341a7c25cdb866b",
+      "x": 2.3445,
+      "y": 0.9536,
+      "cluster": 3,
+      "distance": 3.1223
+    },
+    {
+      "session_id": "f528a71fca514120aa972172d14cb7f0",
+      "x": -0.7855,
+      "y": -0.4349,
+      "cluster": 7,
+      "distance": 3.1838
+    },
+    {
+      "session_id": "0b137c553b4f4a2b9e560ba5ff46632f",
+      "x": 1.6043,
+      "y": -1.1393,
+      "cluster": 9,
+      "distance": 1.7796
+    },
+    {
+      "session_id": "c86a3614a96a450392fe310233860735",
+      "x": 1.6462,
+      "y": -1.1427,
+      "cluster": 9,
+      "distance": 1.7898
+    },
+    {
+      "session_id": "6443d34e5d3240128a9a901d9c1a9f89",
+      "x": 2.1528,
+      "y": 0.9635,
+      "cluster": 1,
+      "distance": 1.7984
+    },
+    {
+      "session_id": "d8f14f9221a14c77b60f89f9e9dfcda3",
+      "x": -3.328,
+      "y": -1.7442,
+      "cluster": 12,
+      "distance": 2.6657
+    },
+    {
+      "session_id": "840afdd808bd478a9a5870d3e9c61fae",
+      "x": -2.8089,
+      "y": -0.2121,
+      "cluster": 7,
+      "distance": 2.1917
+    },
+    {
+      "session_id": "6080b79b5855433da93a2aa492be3fdf",
+      "x": 2.497,
+      "y": -1.355,
+      "cluster": 5,
+      "distance": 1.6395
+    },
+    {
+      "session_id": "0b59cd083b7546a7b97b995528147cac",
+      "x": 0.5707,
+      "y": -0.4051,
+      "cluster": 7,
+      "distance": 3.4457
+    },
+    {
+      "session_id": "fd9949210f8f4700be38e3e1c9b0f257",
+      "x": 0.1032,
+      "y": -0.3887,
+      "cluster": 7,
+      "distance": 2.3253
+    },
+    {
+      "session_id": "b401cadf4f8648089546adfba8cf4761",
+      "x": 0.9203,
+      "y": -1.1703,
+      "cluster": 5,
+      "distance": 2.2135
+    },
+    {
+      "session_id": "ead0063fbde943e89752a91f9e771095",
+      "x": -2.7551,
+      "y": -0.8088,
+      "cluster": 12,
+      "distance": 3.3329
+    },
+    {
+      "session_id": "64bab8014aef4927a249713cd00ef07e",
+      "x": -1.7261,
+      "y": 2.0021,
+      "cluster": 2,
+      "distance": 2.1032
+    },
+    {
+      "session_id": "5e8e46008c1e40edac32696491a02c0e",
+      "x": -2.2052,
+      "y": -0.2426,
+      "cluster": 7,
+      "distance": 1.7998
+    },
+    {
+      "session_id": "0c92a22d192c492fa753d91fdd9a09db",
+      "x": 2.2675,
+      "y": -1.3353,
+      "cluster": 5,
+      "distance": 2.0293
+    },
+    {
+      "session_id": "403a2d2aab064ca0be2f92fef82b7ac6",
+      "x": -0.3949,
+      "y": -2.657,
+      "cluster": 14,
+      "distance": 2.3271
+    },
+    {
+      "session_id": "2210e172216e43d0a45d372083a4ce2a",
+      "x": -4.0748,
+      "y": -1.1688,
+      "cluster": 0,
+      "distance": 1.7283
+    },
+    {
+      "session_id": "a0ab4683f39d4ff898277e976f19ebd8",
+      "x": -0.544,
+      "y": -0.6522,
+      "cluster": 8,
+      "distance": 2.2223
+    },
+    {
+      "session_id": "1b8a27611ae2408b8583b3ed9686e44b",
+      "x": -0.8473,
+      "y": 1.8976,
+      "cluster": 2,
+      "distance": 2.7576
+    },
+    {
+      "session_id": "257dc453301440bc86e0ae628b7db553",
+      "x": -1.6672,
+      "y": 1.8375,
+      "cluster": 6,
+      "distance": 2.4428
+    },
+    {
+      "session_id": "b1dcf05f41cf4be4972df03c2fb41d32",
+      "x": 2.7131,
+      "y": -1.1319,
+      "cluster": 9,
+      "distance": 1.699
+    },
+    {
+      "session_id": "df108d2354c14613a2b81325a42ed82d",
+      "x": -4.1653,
+      "y": -1.1498,
+      "cluster": 0,
+      "distance": 2.7798
+    },
+    {
+      "session_id": "ab6007521e524610a16001d7badec845",
+      "x": -3.5329,
+      "y": -1.1573,
+      "cluster": 12,
+      "distance": 1.9052
+    },
+    {
+      "session_id": "bedf0adf32764604a22301da9f153d57",
+      "x": 1.9402,
+      "y": -1.3306,
+      "cluster": 5,
+      "distance": 2.2628
+    },
+    {
+      "session_id": "6e8381b760364ad190d794cc8cacbef9",
+      "x": -1.7806,
+      "y": -0.2778,
+      "cluster": 7,
+      "distance": 2.0878
+    },
+    {
+      "session_id": "6548f37004c04318a02053b4410d3b0c",
+      "x": -0.5755,
+      "y": 1.6518,
+      "cluster": 2,
+      "distance": 2.7829
+    },
+    {
+      "session_id": "5d1d9d9d3ea043738069738076e2c35f",
+      "x": -1.547,
+      "y": 1.8384,
+      "cluster": 6,
+      "distance": 2.4471
+    },
+    {
+      "session_id": "4187829e018c48e198eb0e2b7da3dc33",
+      "x": -2.9483,
+      "y": 2.0392,
+      "cluster": 2,
+      "distance": 1.7934
+    },
+    {
+      "session_id": "d4ece83f9e4e42abba32f2b434558bc2",
+      "x": -5.1667,
+      "y": 1.0394,
+      "cluster": 4,
+      "distance": 3.6757
+    },
+    {
+      "session_id": "1d1b66dca9094e47b2e6bbe8ed054b88",
+      "x": 1.7824,
+      "y": 1.1304,
+      "cluster": 3,
+      "distance": 1.6098
+    },
+    {
+      "session_id": "403d5873d5454835a3b8314ea2ea0679",
+      "x": 1.8705,
+      "y": 0.9869,
+      "cluster": 1,
+      "distance": 2.3021
+    },
+    {
+      "session_id": "5c02c48c85be440f89b5b6ba801fb6fb",
+      "x": -1.3899,
+      "y": 1.9231,
+      "cluster": 2,
+      "distance": 2.4493
+    },
+    {
+      "session_id": "7f2eac52d7d84778b6f4668d5bba18ef",
+      "x": 3.0641,
+      "y": 0.7909,
+      "cluster": 1,
+      "distance": 2.3697
+    },
+    {
+      "session_id": "7e2661e05e604193834d35eb4cefcd62",
+      "x": 1.6279,
+      "y": -0.7477,
+      "cluster": 9,
+      "distance": 2.4505
+    },
+    {
+      "session_id": "10fb1f53a87c4016bda38dfeca355d26",
+      "x": 2.2095,
+      "y": 1.3523,
+      "cluster": 1,
+      "distance": 3.2709
+    },
+    {
+      "session_id": "24ce5b4418354e0496cd2e82aab4c4dc",
+      "x": 3.3719,
+      "y": 0.9617,
+      "cluster": 1,
+      "distance": 2.9874
+    },
+    {
+      "session_id": "3b72ad69a063495c99a983c9d471ca6c",
+      "x": -0.664,
+      "y": 1.6422,
+      "cluster": 2,
+      "distance": 2.3819
+    },
+    {
+      "session_id": "c40c9ff5d3d84ab2a1253cfbb2407c92",
+      "x": 0.6404,
+      "y": 1.7374,
+      "cluster": 6,
+      "distance": 1.8605
+    },
+    {
+      "session_id": "0a70d83ca39b4bd9a3e89ba383e27b40",
+      "x": 2.5663,
+      "y": 1.1647,
+      "cluster": 3,
+      "distance": 1.7156
+    },
+    {
+      "session_id": "1b62be4996e446d1bf09e8985aa7230c",
+      "x": 1.7809,
+      "y": 0.7239,
+      "cluster": 10,
+      "distance": 2.6013
+    },
+    {
+      "session_id": "b0c2d8185dae4d53aa0d604bc43dbe09",
+      "x": -0.7557,
+      "y": -1.5461,
+      "cluster": 8,
+      "distance": 3.0117
+    },
+    {
+      "session_id": "7bd773ff43874dd38df4e2c3ec1459ce",
+      "x": -1.5447,
+      "y": 1.8284,
+      "cluster": 6,
+      "distance": 2.4132
+    },
+    {
+      "session_id": "3e12444777b54d0fbf7e11977cf0db04",
+      "x": 1.8109,
+      "y": 1.1451,
+      "cluster": 1,
+      "distance": 2.4285
+    },
+    {
+      "session_id": "5e5d4db91ee040f9a80d24e4cb19be63",
+      "x": -1.2036,
+      "y": 1.6652,
+      "cluster": 2,
+      "distance": 3.5665
+    },
+    {
+      "session_id": "215c195d2e6d4ae3a2c6e79deb88d943",
+      "x": -1.2582,
+      "y": -1.2899,
+      "cluster": 0,
+      "distance": 3.527
+    },
+    {
+      "session_id": "65dc9af4c8474f78af3450ec5e7fd479",
+      "x": 1.2054,
+      "y": 0.8746,
+      "cluster": 10,
+      "distance": 2.33
+    },
+    {
+      "session_id": "eced77367e194fdb8a65e7c3d882b8d1",
+      "x": 2.7182,
+      "y": -1.3286,
+      "cluster": 5,
+      "distance": 1.4237
+    },
+    {
+      "session_id": "1e034245181d4e7c9492ceac763121fe",
+      "x": 2.6218,
+      "y": -1.1243,
+      "cluster": 9,
+      "distance": 1.3644
+    },
+    {
+      "session_id": "939db0e0c5ca40368fb82b06a2d5a488",
+      "x": -3.4961,
+      "y": -0.2216,
+      "cluster": 4,
+      "distance": 2.7978
+    },
+    {
+      "session_id": "a00fd7a5be644ab3838b92d9db29dfa2",
+      "x": 1.3064,
+      "y": -1.385,
+      "cluster": 10,
+      "distance": 1.4635
+    },
+    {
+      "session_id": "25d70de991214e46a79b46c185a27f61",
+      "x": 3.1072,
+      "y": 0.7874,
+      "cluster": 1,
+      "distance": 2.3838
+    },
+    {
+      "session_id": "d2344a185188468295e1a69a79bf6cc9",
+      "x": 0.1709,
+      "y": 1.7546,
+      "cluster": 6,
+      "distance": 3.0915
+    },
+    {
+      "session_id": "27cb9072036c47d3854fa7638345e65c",
+      "x": 2.6753,
+      "y": -1.325,
+      "cluster": 5,
+      "distance": 1.2522
+    },
+    {
+      "session_id": "e314de6fe93e449ebbba9ba0769d6f22",
+      "x": 1.8412,
+      "y": 1.025,
+      "cluster": 1,
+      "distance": 2.7838
+    },
+    {
+      "session_id": "693c8f837604456d8412ee57b99f1acb",
+      "x": 0.8775,
+      "y": 0.167,
+      "cluster": 3,
+      "distance": 3.1692
+    },
+    {
+      "session_id": "6cd43ee42f9445f5a244d0f1ab713942",
+      "x": -0.7888,
+      "y": -0.6319,
+      "cluster": 8,
+      "distance": 1.8949
+    },
+    {
+      "session_id": "f6cb58a010d343e18e180600e141bc44",
+      "x": 0.4434,
+      "y": -2.1039,
+      "cluster": 8,
+      "distance": 2.6995
+    },
+    {
+      "session_id": "e89e7d85a690412585e78b6487d90e3c",
+      "x": 1.4312,
+      "y": -2.3237,
+      "cluster": 10,
+      "distance": 3.1289
+    },
+    {
+      "session_id": "b8ef04fd039c48ec970063421a7a82fd",
+      "x": 0.2865,
+      "y": 1.9029,
+      "cluster": 3,
+      "distance": 2.5276
+    },
+    {
+      "session_id": "2894c41076194b7f90182242d9c3d61c",
+      "x": -1.8078,
+      "y": 2.0084,
+      "cluster": 2,
+      "distance": 3.7879
+    },
+    {
+      "session_id": "f2a6b8a000b94b83952aa245138b8fca",
+      "x": -3.4817,
+      "y": -1.1623,
+      "cluster": 0,
+      "distance": 1.9433
+    },
+    {
+      "session_id": "c62854730cd44facb423d2895a6f198f",
+      "x": -2.8351,
+      "y": -0.2323,
+      "cluster": 7,
+      "distance": 2.2539
+    },
+    {
+      "session_id": "c2b9c9ac5e844d0ca91ce532610a5081",
+      "x": -1.7806,
+      "y": -0.2778,
+      "cluster": 7,
+      "distance": 2.0878
+    },
+    {
+      "session_id": "ce0476ca395a40bf80edce2fb992960f",
+      "x": -3.2637,
+      "y": -1.2497,
+      "cluster": 12,
+      "distance": 2.3391
+    },
+    {
+      "session_id": "00d50c03d8364d988323df1a77356e30",
+      "x": 2.735,
+      "y": 0.9544,
+      "cluster": 3,
+      "distance": 2.8501
+    },
+    {
+      "session_id": "f86df7c6b5bd4ecda188308aa0189208",
+      "x": -2.3001,
+      "y": 2.0049,
+      "cluster": 2,
+      "distance": 1.2526
+    },
+    {
+      "session_id": "cb47bbd04d244e66832218bedd17a47e",
+      "x": -4.0099,
+      "y": -1.7071,
+      "cluster": 12,
+      "distance": 2.6573
+    },
+    {
+      "session_id": "40d06a79e7ec42548851152f58f8e6d6",
+      "x": -0.5827,
+      "y": -2.5944,
+      "cluster": 14,
+      "distance": 1.7239
+    },
+    {
+      "session_id": "450686b91d9249078f3d503dfa1679f2",
+      "x": -0.7199,
+      "y": -0.6376,
+      "cluster": 8,
+      "distance": 1.8339
+    },
+    {
+      "session_id": "2b25134849d34be8b1e51483c99ee560",
+      "x": 2.0698,
+      "y": 1.0169,
+      "cluster": 1,
+      "distance": 2.1661
+    },
+    {
+      "session_id": "a3947927732e4af0bb19d64df83a9306",
+      "x": 1.9027,
+      "y": 1.2003,
+      "cluster": 3,
+      "distance": 2.0892
+    },
+    {
+      "session_id": "fbce75d998934bf2a240a1ca38bbf7e0",
+      "x": 1.1186,
+      "y": 1.0868,
+      "cluster": 5,
+      "distance": 3.3141
+    },
+    {
+      "session_id": "7709c4d12987487d91bf7f7420a27cc9",
+      "x": 1.3225,
+      "y": 1.0128,
+      "cluster": 1,
+      "distance": 2.4506
+    },
+    {
+      "session_id": "8cc06232b4964a1987f15a288bb187f4",
+      "x": -2.9508,
+      "y": -1.4056,
+      "cluster": 0,
+      "distance": 3.0968
+    },
+    {
+      "session_id": "48735fc271454e24ae2573504bc644c2",
+      "x": 1.6697,
+      "y": -1.1447,
+      "cluster": 9,
+      "distance": 1.8169
+    },
+    {
+      "session_id": "fb159de801ee498a8fc966809cc7148c",
+      "x": 1.6644,
+      "y": -2.0619,
+      "cluster": 13,
+      "distance": 0.939
+    },
+    {
+      "session_id": "6c086a8b22dd4113879306e5a16b04f0",
+      "x": 1.5596,
+      "y": 1.3022,
+      "cluster": 3,
+      "distance": 2.2581
+    },
+    {
+      "session_id": "f33c4276ae9f47cea032ca7e0803e150",
+      "x": -3.6167,
+      "y": -2.6551,
+      "cluster": 0,
+      "distance": 4.1508
+    },
+    {
+      "session_id": "bc788c5e6cc749f0bfa14c5d406fdf04",
+      "x": -1.3169,
+      "y": -0.3674,
+      "cluster": 7,
+      "distance": 2.5231
+    },
+    {
+      "session_id": "a7c14b1471124f13acd25f8df7a5ec41",
+      "x": -0.6714,
+      "y": -0.3324,
+      "cluster": 7,
+      "distance": 2.8381
+    },
+    {
+      "session_id": "1b692e43f52d4ac08ff18a57bfdd424c",
+      "x": 1.1708,
+      "y": 1.0254,
+      "cluster": 1,
+      "distance": 2.7713
+    },
+    {
+      "session_id": "041682ac2c1c4ceb8708e9507bcd286b",
+      "x": 2.5985,
+      "y": -1.3187,
+      "cluster": 5,
+      "distance": 1.0994
+    },
+    {
+      "session_id": "e38d569361e7435a92821f46eaf6c099",
+      "x": 1.6538,
+      "y": 0.9854,
+      "cluster": 1,
+      "distance": 3.2195
+    },
+    {
+      "session_id": "01be3b75f38a4e73ac16940f1bc0cbb0",
+      "x": 0.8824,
+      "y": -2.0272,
+      "cluster": 9,
+      "distance": 2.9366
+    },
+    {
+      "session_id": "ba5809ce3afa4715b286193603b45897",
+      "x": -2.2176,
+      "y": -0.2409,
+      "cluster": 7,
+      "distance": 2.6555
+    },
+    {
+      "session_id": "49b62efd190b442ca6b49d56fc08b358",
+      "x": 0.2706,
+      "y": -0.6205,
+      "cluster": 8,
+      "distance": 2.2955
+    },
+    {
+      "session_id": "f8822cff23d14b0f96793f94338ec8cb",
+      "x": 0.9645,
+      "y": 0.0018,
+      "cluster": 1,
+      "distance": 4.2027
+    },
+    {
+      "session_id": "7ca959e41ec24711b9295f177ced23b9",
+      "x": -1.3976,
+      "y": -1.6091,
+      "cluster": 8,
+      "distance": 2.2319
+    },
+    {
+      "session_id": "3811b47c38bd4918b3acc18486210aee",
+      "x": 1.7819,
+      "y": -1.0742,
+      "cluster": 9,
+      "distance": 1.7519
+    },
+    {
+      "session_id": "703508a58f6343b9b53ba5ccf8fca2ed",
+      "x": 0.4516,
+      "y": 1.5127,
+      "cluster": 6,
+      "distance": 2.7459
+    },
+    {
+      "session_id": "9ae0ea3c136d4571aaeb706941ca16b3",
+      "x": -1.7211,
+      "y": 2.0017,
+      "cluster": 2,
+      "distance": 2.1333
+    },
+    {
+      "session_id": "b3bdf23223374cb08bb0a26918381584",
+      "x": -0.0129,
+      "y": 1.772,
+      "cluster": 6,
+      "distance": 2.4351
+    },
+    {
+      "session_id": "15ff11680aca47de9984a16971757ee2",
+      "x": 1.2455,
+      "y": -1.0847,
+      "cluster": 9,
+      "distance": 3.7001
+    },
+    {
+      "session_id": "107f49385ab548279284feae717f1963",
+      "x": 0.8747,
+      "y": -2.1064,
+      "cluster": 8,
+      "distance": 2.5456
+    },
+    {
+      "session_id": "e89535c8af654a39a2534055668c3223",
+      "x": 0.5258,
+      "y": 0.6257,
+      "cluster": 11,
+      "distance": 1.765
+    },
+    {
+      "session_id": "53126902ca37498e838c8993219a9dbd",
+      "x": 1.4195,
+      "y": -1.3944,
+      "cluster": 10,
+      "distance": 1.5238
+    },
+    {
+      "session_id": "d28bbd93c0ed45a1bcbc46c7235da0f5",
+      "x": 2.0262,
+      "y": 0.974,
+      "cluster": 1,
+      "distance": 1.7812
+    },
+    {
+      "session_id": "a0fa4c4b4fb549d18ba7b20fd94433d7",
+      "x": -2.186,
+      "y": 1.9069,
+      "cluster": 6,
+      "distance": 2.8688
+    },
+    {
+      "session_id": "df63ce5f24c94d1bb3e78453d84c6bc2",
+      "x": -0.9008,
+      "y": 1.7459,
+      "cluster": 6,
+      "distance": 3.73
+    },
+    {
+      "session_id": "a72a64f04cfd4b00859e388892e66781",
+      "x": 1.2925,
+      "y": -0.7307,
+      "cluster": 9,
+      "distance": 2.1181
+    },
+    {
+      "session_id": "3ef73ebc178b4ca6ac53ef8076c99596",
+      "x": 2.4237,
+      "y": 0.7775,
+      "cluster": 1,
+      "distance": 3.0652
+    },
+    {
+      "session_id": "af043eb276b145029bbd9a41b6b3fcd4",
+      "x": 0.6741,
+      "y": -1.0925,
+      "cluster": 9,
+      "distance": 2.5509
+    },
+    {
+      "session_id": "04c5c7d8f2174f8d8b4b6a8c6500b5ff",
+      "x": -0.507,
+      "y": 1.4821,
+      "cluster": 6,
+      "distance": 2.6776
+    },
+    {
+      "session_id": "a6c49d6fe8ec48e3bb6cdf8c38be80d1",
+      "x": -1.4094,
+      "y": 1.6845,
+      "cluster": 2,
+      "distance": 2.3702
+    },
+    {
+      "session_id": "be11ae2085a24996b820a140148df8f6",
+      "x": 3.1754,
+      "y": 0.978,
+      "cluster": 1,
+      "distance": 1.9998
+    },
+    {
+      "session_id": "7d785de9687f4c4ca4673f7e919c0f8a",
+      "x": -0.257,
+      "y": 1.7125,
+      "cluster": 6,
+      "distance": 2.1226
+    },
+    {
+      "session_id": "eb807613e3174832915101eef86b58b8",
+      "x": -1.3352,
+      "y": -2.6325,
+      "cluster": 14,
+      "distance": 2.4457
+    },
+    {
+      "session_id": "c177d449b85c4ac2ad7fed4f279a0335",
+      "x": -2.6897,
+      "y": 2.0625,
+      "cluster": 2,
+      "distance": 1.5775
+    },
+    {
+      "session_id": "d4a19f25c671491e9560b160710928cb",
+      "x": -1.9509,
+      "y": -0.2413,
+      "cluster": 7,
+      "distance": 1.3825
+    },
+    {
+      "session_id": "5861e63d8bbf43e7ad80c5fc8afec6dc",
+      "x": -2.2292,
+      "y": 2.0214,
+      "cluster": 2,
+      "distance": 1.375
+    },
+    {
+      "session_id": "b0b0fa99d4324bffafbf8b31dca1bc0d",
+      "x": -2.2601,
+      "y": 1.8459,
+      "cluster": 6,
+      "distance": 3.9059
+    },
+    {
+      "session_id": "579b69b090d247019b3436b62c28be65",
+      "x": -2.9032,
+      "y": 1.0503,
+      "cluster": 2,
+      "distance": 3.3538
+    },
+    {
+      "session_id": "e76434f36fd4423ea51ea5050924a1dc",
+      "x": -2.9655,
+      "y": 2.063,
+      "cluster": 2,
+      "distance": 1.8465
+    },
+    {
+      "session_id": "afd1c084561a4cb28fdb4514d906f3a6",
+      "x": -2.6288,
+      "y": -0.2747,
+      "cluster": 7,
+      "distance": 2.0452
+    },
+    {
+      "session_id": "a3b2f32ce46744caa4446aaea657181e",
+      "x": 1.8043,
+      "y": 1.1286,
+      "cluster": 3,
+      "distance": 1.642
+    },
+    {
+      "session_id": "de8fb45f9b2f4b03857d50c2bbd631ed",
+      "x": 1.8209,
+      "y": 0.4016,
+      "cluster": 11,
+      "distance": 3.0786
+    },
+    {
+      "session_id": "8d9ea70a0abb4635a82fd33b341ff630",
+      "x": 1.6516,
+      "y": 1.1412,
+      "cluster": 3,
+      "distance": 1.7214
+    },
+    {
+      "session_id": "a387c0a5d55f4ceb8637a6c22896f363",
+      "x": 1.4993,
+      "y": 0.8834,
+      "cluster": 10,
+      "distance": 2.2528
+    },
+    {
+      "session_id": "42ca13c6f6fb420782e906a191c796c2",
+      "x": 1.5998,
+      "y": -0.7453,
+      "cluster": 9,
+      "distance": 2.3399
+    },
+    {
+      "session_id": "c416510748ff445cad2a38a124c10f2c",
+      "x": 0.2284,
+      "y": -0.3767,
+      "cluster": 7,
+      "distance": 2.4466
+    },
+    {
+      "session_id": "f35d4b14a649479da2f9c85002bc4c42",
+      "x": -0.374,
+      "y": -2.0441,
+      "cluster": 4,
+      "distance": 3.72
+    },
+    {
+      "session_id": "4d92969de686404497407f9cf91aec9a",
+      "x": 0.7065,
+      "y": 1.7319,
+      "cluster": 6,
+      "distance": 1.8772
+    },
+    {
+      "session_id": "541e3fced36a408487d2ab94eec307ec",
+      "x": -1.9326,
+      "y": 2.0192,
+      "cluster": 2,
+      "distance": 1.1755
+    },
+    {
+      "session_id": "da4fc2a7c55e44ceb5a92a67b30b589b",
+      "x": -2.2984,
+      "y": -1.3245,
+      "cluster": 12,
+      "distance": 2.8628
+    },
+    {
+      "session_id": "d02d7fa96a674d66bf09429a473bb7c8",
+      "x": 2.0801,
+      "y": 0.9695,
+      "cluster": 1,
+      "distance": 1.7328
+    },
+    {
+      "session_id": "78d21eebb82144949b3c4a20cc0115c9",
+      "x": -3.4717,
+      "y": -1.2094,
+      "cluster": 4,
+      "distance": 1.8261
+    },
+    {
+      "session_id": "286377a487d94d48a8066da772118a27",
+      "x": 2.5155,
+      "y": -1.3342,
+      "cluster": 5,
+      "distance": 1.0726
+    },
+    {
+      "session_id": "cf430bde7c3a48818147b33ae4ede5a9",
+      "x": 1.9869,
+      "y": 1.1933,
+      "cluster": 3,
+      "distance": 2.0653
+    },
+    {
+      "session_id": "66d97e9173f243ee8698458c2c50b739",
+      "x": 1.8917,
+      "y": -1.0833,
+      "cluster": 9,
+      "distance": 1.7804
+    },
+    {
+      "session_id": "ab13f0a3bfd14a37b1080b9cb3c5520d",
+      "x": 1.9033,
+      "y": 0.9733,
+      "cluster": 1,
+      "distance": 1.7549
+    },
+    {
+      "session_id": "6173d6ec7ef44c4fb4ba853de18ced9c",
+      "x": -2.9163,
+      "y": -1.1674,
+      "cluster": 0,
+      "distance": 2.4206
+    },
+    {
+      "session_id": "d6963687e4974733813d3df0ca8db6c6",
+      "x": 1.0882,
+      "y": 0.5986,
+      "cluster": 11,
+      "distance": 2.3274
+    },
+    {
+      "session_id": "f18c509eb4294ab095ae3b0f4cf435b0",
+      "x": 2.7041,
+      "y": 1.1533,
+      "cluster": 3,
+      "distance": 1.5048
+    },
+    {
+      "session_id": "a67ab1b4dff04cec984f0fc14b5baccd",
+      "x": -2.2275,
+      "y": 1.8715,
+      "cluster": 2,
+      "distance": 3.9016
+    },
+    {
+      "session_id": "378340b335a948b69528dbcb9ec3ced4",
+      "x": -0.3466,
+      "y": 1.8732,
+      "cluster": 6,
+      "distance": 1.7679
+    },
+    {
+      "session_id": "a156b6fdcdf9494cbbf3f87bc7380baf",
+      "x": 1.7456,
+      "y": 1.2133,
+      "cluster": 3,
+      "distance": 2.5395
+    },
+    {
+      "session_id": "4f4c0a574b734e28b6c4ad5dc3cad018",
+      "x": -2.3449,
+      "y": -1.1818,
+      "cluster": 12,
+      "distance": 3.2843
+    },
+    {
+      "session_id": "f21ad0f1d9fc471da0447493c67a0dba",
+      "x": -2.4372,
+      "y": -0.8856,
+      "cluster": 12,
+      "distance": 4.1434
+    },
+    {
+      "session_id": "04f142a1fc694e75a7207b37db80e374",
+      "x": -2.3736,
+      "y": -1.5307,
+      "cluster": 12,
+      "distance": 2.7477
+    },
+    {
+      "session_id": "f9caad4957c3480588da049a5bb1d2fe",
+      "x": 2.7614,
+      "y": 0.7828,
+      "cluster": 1,
+      "distance": 2.3706
+    },
+    {
+      "session_id": "adf407e0889d4248896e3ed74c5a30be",
+      "x": 1.5708,
+      "y": -1.1365,
+      "cluster": 9,
+      "distance": 1.8068
+    },
+    {
+      "session_id": "e5bec18bb314417a9cc3dc2cdc618c5b",
+      "x": 1.0463,
+      "y": -1.6824,
+      "cluster": 14,
+      "distance": 2.3626
+    },
+    {
+      "session_id": "06f2d7629c794f609181775eeaf2e3cc",
+      "x": -0.7131,
+      "y": -1.9316,
+      "cluster": 8,
+      "distance": 2.6889
+    },
+    {
+      "session_id": "ade20d50e0f146dab10aa6b6eb456869",
+      "x": 1.7619,
+      "y": 1.0316,
+      "cluster": 1,
+      "distance": 2.9709
+    },
+    {
+      "session_id": "bd04916d8caa4ca4b0c96ec648019e57",
+      "x": 2.3345,
+      "y": -1.1114,
+      "cluster": 9,
+      "distance": 1.6656
+    },
+    {
+      "session_id": "30374fe9c9e245cfbc3e397a07a94cba",
+      "x": 1.92,
+      "y": 0.9828,
+      "cluster": 1,
+      "distance": 2.0878
+    },
+    {
+      "session_id": "3a823191fac548fb83c1c07d8e688739",
+      "x": 0.1121,
+      "y": -0.3894,
+      "cluster": 7,
+      "distance": 2.3294
+    },
+    {
+      "session_id": "c7cc6d1be05a4a4b9ff7cefabfbca566",
+      "x": 1.6573,
+      "y": -2.072,
+      "cluster": 9,
+      "distance": 2.4433
+    },
+    {
+      "session_id": "ae88e3a8d2474e698e96536ea380aded",
+      "x": 0.7762,
+      "y": -3.0159,
+      "cluster": 13,
+      "distance": 2.1897
+    },
+    {
+      "session_id": "0eb0fb9cb5254deebeaa807f28e9c228",
+      "x": -0.1605,
+      "y": -0.6064,
+      "cluster": 8,
+      "distance": 3.2136
+    },
+    {
+      "session_id": "dd0f5ecb76e7485185ec026a8b1e4af5",
+      "x": -4.0016,
+      "y": -1.255,
+      "cluster": 4,
+      "distance": 1.9353
+    },
+    {
+      "session_id": "c1484e4c4b5c4c4299b5986eb5e53c45",
+      "x": 2.7122,
+      "y": -1.3281,
+      "cluster": 5,
+      "distance": 1.397
+    },
+    {
+      "session_id": "b28b736aa97043aea2ef8c2f8ce67c2f",
+      "x": 2.373,
+      "y": 0.9452,
+      "cluster": 1,
+      "distance": 2.6772
+    },
+    {
+      "session_id": "222cc55d8a704d52a16c92291a4d53bc",
+      "x": -0.6402,
+      "y": -1.5726,
+      "cluster": 8,
+      "distance": 2.0967
+    },
+    {
+      "session_id": "bad0443d8cab4cbbb3bd3f48822b0c1c",
+      "x": 0.327,
+      "y": 0.6422,
+      "cluster": 11,
+      "distance": 1.9638
+    },
+    {
+      "session_id": "04ad5e56b9a6461bba37b142e1015ca9",
+      "x": 0.3164,
+      "y": 1.731,
+      "cluster": 6,
+      "distance": 1.7929
+    },
+    {
+      "session_id": "55eef3f82fe447c68476409bb23cfa20",
+      "x": 0.7743,
+      "y": -2.0981,
+      "cluster": 8,
+      "distance": 2.5031
+    },
+    {
+      "session_id": "ae1068912edc4441bc82b8c921f4148f",
+      "x": -2.7304,
+      "y": -0.5252,
+      "cluster": 10,
+      "distance": 4.0753
+    },
+    {
+      "session_id": "a0a974cba2034ed3b242a20ec3098fe2",
+      "x": -0.3867,
+      "y": 1.8765,
+      "cluster": 6,
+      "distance": 1.6061
+    },
+    {
+      "session_id": "4e1dca1a9d0546a6bcf24ef2063e1166",
+      "x": 0.3135,
+      "y": -2.6493,
+      "cluster": 14,
+      "distance": 1.4406
+    },
+    {
+      "session_id": "bcdc10e578dd491b8c56895f9755e79e",
+      "x": 0.9586,
+      "y": 0.4536,
+      "cluster": 11,
+      "distance": 2.2207
+    },
+    {
+      "session_id": "b62f3384dcdd4d73a6378a843c3f28de",
+      "x": 0.3234,
+      "y": 1.8999,
+      "cluster": 3,
+      "distance": 2.4921
+    },
+    {
+      "session_id": "ef678f6b0c7947fbb237e1ec1d680cb7",
+      "x": 0.2742,
+      "y": -2.646,
+      "cluster": 14,
+      "distance": 1.3033
+    },
+    {
+      "session_id": "651f635ca0444a4d9ad90eeb5ebfd002",
+      "x": -1.9287,
+      "y": -0.2879,
+      "cluster": 7,
+      "distance": 2.0745
+    },
+    {
+      "session_id": "c6e1f57155b8470cacda6634df86b56a",
+      "x": -2.8071,
+      "y": -2.0839,
+      "cluster": 0,
+      "distance": 4.6755
+    },
+    {
+      "session_id": "9a4785fab45f4cfa8ee97d2e8cffe1fb",
+      "x": 0.8084,
+      "y": 1.3583,
+      "cluster": 1,
+      "distance": 2.5902
+    },
+    {
+      "session_id": "0fa0dab6bb114579a16a409d4cd6a0ba",
+      "x": 1.7902,
+      "y": -2.083,
+      "cluster": 9,
+      "distance": 2.4747
+    },
+    {
+      "session_id": "933ea4e00078430c96099fa5d914fb1d",
+      "x": -2.8148,
+      "y": 2.0505,
+      "cluster": 2,
+      "distance": 1.6559
+    },
+    {
+      "session_id": "dc49bfd49a424932a04c13864e7ed627",
+      "x": 2.0886,
+      "y": 1.105,
+      "cluster": 3,
+      "distance": 2.9026
+    },
+    {
+      "session_id": "44d350866deb40f388a0e5b4ca4b69d6",
+      "x": -2.7538,
+      "y": -0.9041,
+      "cluster": 12,
+      "distance": 4.1475
+    },
+    {
+      "session_id": "ec18b68ee3f54139b4dd22f2e43c8eea",
+      "x": -2.5582,
+      "y": -1.2082,
+      "cluster": 4,
+      "distance": 2.6557
+    },
+    {
+      "session_id": "e75380c6b9354b93b6900db9327881da",
+      "x": -3.6252,
+      "y": -1.172,
+      "cluster": 12,
+      "distance": 1.9009
+    },
+    {
+      "session_id": "24710f7df6d141bb848036fcbdf47dbb",
+      "x": 0.7181,
+      "y": 1.7085,
+      "cluster": 6,
+      "distance": 2.2173
+    },
+    {
+      "session_id": "303a1901451a48d08cfdf31da9377e81",
+      "x": -4.4634,
+      "y": 1.0822,
+      "cluster": 4,
+      "distance": 2.953
+    },
+    {
+      "session_id": "dd000c419def470091318791f23bd03f",
+      "x": -0.8565,
+      "y": 1.8483,
+      "cluster": 6,
+      "distance": 1.4917
+    },
+    {
+      "session_id": "23989aa8d6ef4e45900aa8b63a276463",
+      "x": 1.539,
+      "y": -0.9806,
+      "cluster": 9,
+      "distance": 2.4941
+    },
+    {
+      "session_id": "600a496e5b974bc683d0a8a29b9fe45e",
+      "x": 0.6048,
+      "y": 0.4497,
+      "cluster": 11,
+      "distance": 2.3203
+    },
+    {
+      "session_id": "c9dab6ba887947c3b052314e14bb5429",
+      "x": -0.5396,
+      "y": 1.8559,
+      "cluster": 6,
+      "distance": 1.9286
+    },
+    {
+      "session_id": "b12ea1752fac4b92ad0d4e2f39b9ab63",
+      "x": -1.7587,
+      "y": -0.5819,
+      "cluster": 7,
+      "distance": 3.1845
+    },
+    {
+      "session_id": "72b756fbbc4347049fbdab23bf08441f",
+      "x": 0.3356,
+      "y": -2.6511,
+      "cluster": 14,
+      "distance": 1.5344
+    },
+    {
+      "session_id": "9c2fd7a7eecb483a8a6a0fb9f1ee079f",
+      "x": 0.3378,
+      "y": 1.8987,
+      "cluster": 3,
+      "distance": 2.4856
+    },
+    {
+      "session_id": "06bc9b68a9f04cd18fcb251028682303",
+      "x": 2.7558,
+      "y": -1.3317,
+      "cluster": 5,
+      "distance": 1.6061
+    },
+    {
+      "session_id": "77777127302c402aa870f4f40c7136bd",
+      "x": 0.8588,
+      "y": -1.0969,
+      "cluster": 9,
+      "distance": 2.3428
+    },
+    {
+      "session_id": "b366200caba6432e9d483a987e6b8e29",
+      "x": -2.8008,
+      "y": 2.0493,
+      "cluster": 2,
+      "distance": 1.672
+    },
+    {
+      "session_id": "24134ec72978448c93fa3f21678877a7",
+      "x": 0.4445,
+      "y": 0.6325,
+      "cluster": 11,
+      "distance": 1.7145
+    },
+    {
+      "session_id": "c0377a740d1f4f4db20b80c5dede8cf6",
+      "x": 0.2564,
+      "y": -1.6364,
+      "cluster": 14,
+      "distance": 2.491
+    },
+    {
+      "session_id": "90543c735d8447498043756645b1f348",
+      "x": 0.1644,
+      "y": 1.913,
+      "cluster": 3,
+      "distance": 2.8197
+    },
+    {
+      "session_id": "bbb3e7699148409780f1d9077aeb6046",
+      "x": 0.2753,
+      "y": -0.3806,
+      "cluster": 7,
+      "distance": 2.4695
+    },
+    {
+      "session_id": "f05c98d99d744950823c46a97a88310a",
+      "x": 1.6464,
+      "y": -1.0629,
+      "cluster": 9,
+      "distance": 2.1469
+    },
+    {
+      "session_id": "2f1d2bd814444ff9b8cc75e505460b7f",
+      "x": 3.0731,
+      "y": 0.7902,
+      "cluster": 1,
+      "distance": 2.3694
+    },
+    {
+      "session_id": "ee0f87c71a8344bf9c171963139e9929",
+      "x": 0.3145,
+      "y": 1.9006,
+      "cluster": 3,
+      "distance": 2.4983
+    },
+    {
+      "session_id": "68c46093d2b146f3be8337889bae11ac",
+      "x": 1.4546,
+      "y": -1.1698,
+      "cluster": 5,
+      "distance": 1.5475
+    },
+    {
+      "session_id": "2f665bb3d202479aaffd31e5f09f470e",
+      "x": -2.3375,
+      "y": -0.2764,
+      "cluster": 7,
+      "distance": 1.4094
+    },
+    {
+      "session_id": "48713c37c04b4f40ab30d29d70a3fbe3",
+      "x": -0.8095,
+      "y": 1.8783,
+      "cluster": 6,
+      "distance": 1.2676
+    },
+    {
+      "session_id": "68a54ff54440453399a7cf25f197a8c3",
+      "x": -1.7938,
+      "y": 2.0301,
+      "cluster": 2,
+      "distance": 1.2699
+    },
+    {
+      "session_id": "8a84113ac7c14227b2f955cca7e0d79c",
+      "x": 1.443,
+      "y": -1.1689,
+      "cluster": 5,
+      "distance": 1.5381
+    },
+    {
+      "session_id": "83f90145d4974841a7157b632f51620b",
+      "x": -0.2264,
+      "y": -0.5902,
+      "cluster": 5,
+      "distance": 4.2403
+    },
+    {
+      "session_id": "df5b97fade854d168782dc0a0b884996",
+      "x": 1.4739,
+      "y": -1.1285,
+      "cluster": 9,
+      "distance": 2.0441
+    },
+    {
+      "session_id": "1015f5ee3ebd479b873861e6916ac637",
+      "x": 2.6957,
+      "y": 0.7882,
+      "cluster": 1,
+      "distance": 2.4942
+    },
+    {
+      "session_id": "55b71cce8f5a44bfb225e56a54c6dc9a",
+      "x": 1.8558,
+      "y": -2.0669,
+      "cluster": 13,
+      "distance": 0.9512
+    },
+    {
+      "session_id": "9c502597d6fc455c90c3afeb39a18981",
+      "x": -2.8573,
+      "y": 2.0655,
+      "cluster": 2,
+      "distance": 1.6572
+    },
+    {
+      "session_id": "d489a16f315a41d99fa844edbc86a84b",
+      "x": 1.948,
+      "y": 0.6266,
+      "cluster": 11,
+      "distance": 3.3096
+    },
+    {
+      "session_id": "23890db0bb5240ffa308a53455c46bbb",
+      "x": 1.6675,
+      "y": -2.0728,
+      "cluster": 9,
+      "distance": 2.4328
+    },
+    {
+      "session_id": "1559999e27864159a983d43a66931307",
+      "x": 3.0731,
+      "y": 0.7902,
+      "cluster": 1,
+      "distance": 2.3694
+    },
+    {
+      "session_id": "4de4b050da6249bb8f6733f65ff9c70e",
+      "x": -1.4992,
+      "y": -1.2699,
+      "cluster": 0,
+      "distance": 3.2366
+    },
+    {
+      "session_id": "6667959252924bf1820355112081d20e",
+      "x": 1.8057,
+      "y": -1.0761,
+      "cluster": 9,
+      "distance": 1.7287
+    },
+    {
+      "session_id": "3da97c9c415b4dab8d73108e00a98f48",
+      "x": 1.3124,
+      "y": 1.5521,
+      "cluster": 3,
+      "distance": 2.2364
+    },
+    {
+      "session_id": "3d0d62fed9aa44b3a55ba3d02c9dc9fc",
+      "x": 2.7171,
+      "y": -1.1322,
+      "cluster": 9,
+      "distance": 1.7176
+    },
+    {
+      "session_id": "fd5d1061a6a24d4d945bb3e53b7eb4fc",
+      "x": 2.5841,
+      "y": 0.9446,
+      "cluster": 3,
+      "distance": 2.8539
+    },
+    {
+      "session_id": "4b23755bcd4042c891a634e494929543",
+      "x": -0.931,
+      "y": -2.0875,
+      "cluster": 4,
+      "distance": 3.2568
+    },
+    {
+      "session_id": "2d0611082d3e4aeba1e9c4deb431ed5e",
+      "x": -2.7942,
+      "y": -0.2133,
+      "cluster": 7,
+      "distance": 2.1732
+    },
+    {
+      "session_id": "ac29e9379a8440838dd7f915fd531bb0",
+      "x": -2.0112,
+      "y": 2.0257,
+      "cluster": 2,
+      "distance": 1.1606
+    },
+    {
+      "session_id": "fb9ed0ae7d944852aa7a9ea782f87526",
+      "x": 2.1762,
+      "y": 1.1776,
+      "cluster": 3,
+      "distance": 2.5764
+    },
+    {
+      "session_id": "6833cd0145bc49b6b1b9a55f81831cd9",
+      "x": 1.8484,
+      "y": 1.1249,
+      "cluster": 3,
+      "distance": 1.7477
+    },
+    {
+      "session_id": "c2d621423e714194a1a9518319419f83",
+      "x": 0.3588,
+      "y": -1.2134,
+      "cluster": 5,
+      "distance": 2.7906
+    }
+  ],
+  "clusters": [
+    {
+      "id": 0,
+      "size": 10,
+      "representative": "2210e172216e43d0a45d372083a4ce2a",
+      "profile": "roles: 10 shopper · avg 1.5 turns · avg 9.0 tool calls · tools in at least half: list_my_orders, get_policy, get_order"
+    },
+    {
+      "id": 1,
+      "size": 30,
+      "representative": "d02d7fa96a674d66bf09429a473bb7c8",
+      "profile": "roles: 30 merchant · avg 1.6 turns · avg 1.4 tool calls · tools in at least half: none"
+    },
+    {
+      "id": 2,
+      "size": 25,
+      "representative": "ac29e9379a8440838dd7f915fd531bb0",
+      "profile": "roles: 25 support · avg 1.4 turns · avg 5.6 tool calls · tools in at least half: get_policy, get_order, get_store_info"
+    },
+    {
+      "id": 3,
+      "size": 27,
+      "representative": "f18c509eb4294ab095ae3b0f4cf435b0",
+      "profile": "roles: 27 support · avg 1.3 turns · avg 1.4 tool calls · tools in at least half: none"
+    },
+    {
+      "id": 4,
+      "size": 9,
+      "representative": "78d21eebb82144949b3c4a20cc0115c9",
+      "profile": "roles: 7 shopper, 2 support · avg 3.4 turns · avg 8.6 tool calls · tools in at least half: get_order, find_order, get_policy"
+    },
+    {
+      "id": 5,
+      "size": 18,
+      "representative": "286377a487d94d48a8066da772118a27",
+      "profile": "roles: 17 shopper, 1 support · avg 1.4 turns · avg 2.7 tool calls · tools in at least half: search_products"
+    },
+    {
+      "id": 6,
+      "size": 22,
+      "representative": "48713c37c04b4f40ab30d29d70a3fbe3",
+      "profile": "roles: 22 merchant · avg 1.6 turns · avg 4.4 tool calls · tools in at least half: get_policy, search_help_center, get_store_info"
+    },
+    {
+      "id": 7,
+      "size": 23,
+      "representative": "d4a19f25c671491e9560b160710928cb",
+      "profile": "roles: 23 shopper · avg 1.2 turns · avg 5.1 tool calls · tools in at least half: get_policy, search_help_center, get_store_info"
+    },
+    {
+      "id": 8,
+      "size": 13,
+      "representative": "450686b91d9249078f3d503dfa1679f2",
+      "profile": "roles: 13 shopper · avg 1.3 turns · avg 2.8 tool calls · tools in at least half: get_store_info, get_order, get_policy"
+    },
+    {
+      "id": 9,
+      "size": 31,
+      "representative": "1e034245181d4e7c9492ceac763121fe",
+      "profile": "roles: 31 shopper · avg 1.3 turns · avg 1.0 tool calls · tools in at least half: none"
+    },
+    {
+      "id": 10,
+      "size": 7,
+      "representative": "a00fd7a5be644ab3838b92d9db29dfa2",
+      "profile": "roles: 4 shopper, 2 support, 1 merchant · avg 1.3 turns · avg 3.0 tool calls · tools in at least half: cancel_order, get_order"
+    },
+    {
+      "id": 11,
+      "size": 9,
+      "representative": "24134ec72978448c93fa3f21678877a7",
+      "profile": "roles: 5 support, 4 merchant · avg 1.1 turns · avg 3.0 tool calls · tools in at least half: issue_refund, get_order, escalate_to_human"
+    },
+    {
+      "id": 12,
+      "size": 15,
+      "representative": "e75380c6b9354b93b6900db9327881da",
+      "profile": "roles: 15 shopper · avg 1.4 turns · avg 7.0 tool calls · tools in at least half: search_help_center, get_order, get_policy"
+    },
+    {
+      "id": 13,
+      "size": 4,
+      "representative": "fb159de801ee498a8fc966809cc7148c",
+      "profile": "roles: 4 shopper · avg 1.5 turns · avg 1.2 tool calls · tools in at least half: list_my_orders"
+    },
+    {
+      "id": 14,
+      "size": 8,
+      "representative": "ef678f6b0c7947fbb237e1ec1d680cb7",
+      "profile": "roles: 8 shopper · avg 1.4 turns · avg 3.9 tool calls · tools in at least half: get_order, issue_refund, find_order"
+    }
+  ],
+  "features": [
+    "turns",
+    "tool_calls",
+    "distinct_tools",
+    "user_chars",
+    "role=shopper",
+    "role=merchant",
+    "role=support",
+    "tool=cancel_order",
+    "tool=escalate_to_human",
+    "tool=find_order",
+    "tool=get_order",
+    "tool=get_policy",
+    "tool=get_store_info",
+    "tool=issue_refund",
+    "tool=list_my_orders",
+    "tool=search_help_center",
+    "tool=search_products"
+  ],
+  "feature_groups": [
+    "size",
+    "role",
+    "tools"
+  ],
+  "excluded_prefixes": [
+    "smoke-",
+    "pilot-"
+  ],
+  "k": 15,
+  "seed": 0,
+  "built_at": "2026-10-28T16:23:16.636629+00:00"
+}

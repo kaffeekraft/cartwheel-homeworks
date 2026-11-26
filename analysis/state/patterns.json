@@ -1,1 +1,1152 @@
-{"modes": []}
+{
+  "modes": [
+    {
+      "name": "wrong_world_date",
+      "status": "confirmed",
+      "definition": "The agent reasons from a 'today' other than the platform date 2026-07-01 (stated or implied), or contradicts the order's refund_eligible field, so a deadline, window, payout or eligibility claim is wrong.",
+      "requirement_source": "RESP-7: reason about dates from the current date the application provides; never guess; refund_eligible is authoritative",
+      "boundary": "Fail: wrong explicit 'today', 'the window has passed now' when it has not on 2026-07-01, or eligibility contradicting refund_eligible. Pass: only repeats record dates, or date-based claims hold on 2026-07-01.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "2361e25d8a2928176edf4b6de8237a9f",
+        "c0179230b3997387974e9f39edeefc47",
+        "20c83b051be761fbcd083fdb63750c8c",
+        "1daac9b39b0a31a16fb397fbf39af363",
+        "a7bc7d4919af12f368bcbf65b76e5726",
+        "937c34bbf82eb80729807203abf92b2e"
+      ],
+      "created_from_annotations": [
+        "ann-mvseglxu-8xhk",
+        "ann-mvselj62-7qnq",
+        "ann-mvt8k3sz-9mdm",
+        "ann-mvt91mdm-9aur",
+        "ann-mvsdcy21-bbbo",
+        "ann-mvsctx93-qw27"
+      ],
+      "positives": [
+        "48713c37c04b4f40ab30d29d70a3fbe3",
+        "ac29e9379a8440838dd7f915fd531bb0",
+        "939db0e0c5ca40368fb82b06a2d5a488",
+        "541e3fced36a408487d2ab94eec307ec",
+        "78d21eebb82144949b3c4a20cc0115c9",
+        "450686b91d9249078f3d503dfa1679f2",
+        "b2440f69297c419cb8a334663d1c4be2",
+        "df108d2354c14613a2b81325a42ed82d"
+      ],
+      "close_negatives": [
+        "3b72ad69a063495c99a983c9d471ca6c",
+        "5e5d4db91ee040f9a80d24e4cb19be63",
+        "ef945fcd04b44cd7b68be94e5d994fc7",
+        "4c45cf3aeacf4d97931b9eefac9dbd75",
+        "9ae0ea3c136d4571aaeb706941ca16b3",
+        "222cc55d8a704d52a16c92291a4d53bc"
+      ],
+      "example_trace_ids": [
+        "2361e25d8a2928176edf4b6de8237a9f",
+        "c0179230b3997387974e9f39edeefc47",
+        "20c83b051be761fbcd083fdb63750c8c",
+        "1daac9b39b0a31a16fb397fbf39af363",
+        "a7bc7d4919af12f368bcbf65b76e5726",
+        "937c34bbf82eb80729807203abf92b2e",
+        "35e0d333372e04f609a7f8deff2c9460",
+        "8ee1e1e21043ba47950c29df722981e3"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "close negatives added from batch 2",
+          "reason": "date math correct on 2026-07-01"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +1 positive (b2440f69)",
+          "reason": "delivered 2026-06-28 called outside the 30-day window"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +2 close negatives",
+          "reason": "4c45cf3a last day 2026-07-01 correct; 9ae0ea3c named the missing delivery date and computed no deadline"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +1 close negative",
+          "reason": "deadline 2026-04-19 computed from the record; no claim about today"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search side find: +1 positive (accepted suggestion)",
+          "reason": "delivered 2026-05-20 = 42 days on 2026-07-01, inside the 60-day dispute window; agent says outside"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (8)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'RESP-3 + proposed revision: date reasoning uses the platform date; refund_eligible from get_order is authoritative' -> 'RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative'",
+          "reason": "proposed revision added to SPEC.md"
+        },
+        {
+          "ts": "2026-11-26T10:30:21.247971+00:00",
+          "change": "requirement_source: 'RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative' -> 'RESP-7: reason about dates from the current date the application provides; never guess; refund_eligible is authoritative'",
+          "reason": "RESP-7 reworded to be deployment-independent; definition keeps 2026-07-01 because it labels seeded-world traces"
+        }
+      ],
+      "evaluator_note": "code check for written-out dates after 2026-07-01 and the refund_eligible contradiction; LLM judge for implied 'now' claims",
+      "agentdebug_mapping": "Memory/Hallucination (False Memory): \"filling missing gaps with fabricated info\" (today's date is not given to the agent)"
+    },
+    {
+      "name": "unverified_order_match",
+      "status": "confirmed",
+      "definition": "The agent treats a found order as the one the user meant (states it as fact or acts on it) without the user confirming it, when the user's description fits more than one order or the chosen order does not fit the description.",
+      "requirement_source": "RESP-8: when no order number is given and several orders fit, list the candidates and let the user choose; a single match needs no confirmation",
+      "boundary": "Fail: several orders fit the user's description and the agent picks one without listing the candidates and letting the user choose, even if the answer would hold for the other orders; or the chosen order contradicts the description (e.g. a wrong-item complaint answered with an undelivered order). Pass: only one order fits (the user gave the order number, or the lookup returned a single match), or the agent lists all candidates and asks. A write that follows is labeled separately under write_without_confirmation; both modes can be present. Data errors the agent cannot see (order 8003 store mismatch) are tool gaps, not this mode.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "46c396ddb3f011fd9cfc1104dd03c4aa",
+        "85726914911d6c51986ac38e878b46fb"
+      ],
+      "created_from_annotations": [
+        "ann-mw4qdj6t-javk",
+        "ann-mw85z0qc-0hs0"
+      ],
+      "positives": [
+        "f2a6b8a000b94b83952aa245138b8fca",
+        "f33c4276ae9f47cea032ca7e0803e150",
+        "215c195d2e6d4ae3a2c6e79deb88d943",
+        "fb159de801ee498a8fc966809cc7148c"
+      ],
+      "close_negatives": [
+        "107f49385ab548279284feae717f1963",
+        "5289a39a466640a7820e8534268b3780",
+        "5861e63d8bbf43e7ad80c5fc8afec6dc",
+        "d02d7fa96a674d66bf09429a473bb7c8",
+        "9e9a564d95bb4a6c9b226498bddc1723",
+        "8d9ea70a0abb4635a82fd33b341ff630",
+        "1b8a27611ae2408b8583b3ed9686e44b",
+        "55eef3f82fe447c68476409bb23cfa20",
+        "222cc55d8a704d52a16c92291a4d53bc",
+        "46b55a51305b4791a0f4812d7229f3a2",
+        "55b71cce8f5a44bfb225e56a54c6dc9a",
+        "6173d6ec7ef44c4fb4ba853de18ced9c",
+        "8cc06232b4964a1987f15a288bb187f4",
+        "ae88e3a8d2474e698e96536ea380aded",
+        "c6e1f57155b8470cacda6634df86b56a",
+        "df108d2354c14613a2b81325a42ed82d"
+      ],
+      "example_trace_ids": [
+        "46c396ddb3f011fd9cfc1104dd03c4aa",
+        "85726914911d6c51986ac38e878b46fb",
+        "2291919ad99fd3c0fab663e9b74ef47a",
+        "6bcfd0d59f88d6adc7bd0c83b1a4f636"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "4187829e, e75380c6, 04f142a1 moved to write_without_confirmation",
+          "reason": "tiebreak: if a write followed, the note counts for write_without_confirmation"
+        },
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "107f4938, 5289a39a, d02d7fa9 pending re-judgment: order and product were correct (checked in the database)",
+          "reason": "outcome rule: a failure is something the user sees or a wrong data change; an unchecked step that ends correctly is not a failure"
+        },
+        {
+          "ts": "2026-11-01T20:39:04.182351+00:00",
+          "change": "107f4938, 5289a39a, d02d7fa9 re-judged no failure -> close negatives; 0 positives",
+          "reason": "outcome rule: order and product were correct (database)"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +2 positives (f2a6b8a0, f33c4276), +1 close negative (9e9a564d); definition and boundary revised",
+          "reason": "student: with several candidate orders the agent must list them and let the user choose; whether the answer was right for the other orders is unknown because the conversation ends. Earlier close negatives (107f4938, 5289a39a, 5861e63d, d02d7fa9) all had a single candidate, so they stay close negatives"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "tiebreak narrowed",
+          "reason": "the tiebreak decides where an open code is grouped; it no longer removes a case from this mode when the chosen order was ambiguous or wrong"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +4 close negatives",
+          "reason": "order number given or a single find_order match; agent named the order it used"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search: +1 positive (accepted suggestion)",
+          "reason": "most recent order #569 picked from 20 orders for \"still not here\", ticket opened, no choice offered"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search: +6 close negatives (rejected suggestions)",
+          "reason": "agent listed the candidates or asked which order before acting"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (3)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-22T15:23:50.125179+00:00",
+          "change": "fb159de8 added as positive",
+          "reason": "agent picked the most recent of 20 orders without listing the candidates; student decision against the existing boundary"
+        },
+        {
+          "ts": "2026-11-22T16:06:53.017701+00:00",
+          "change": "df108d23 added as close negative",
+          "reason": "shopper has 19 orders but names the store; only one order (#5571) is from Bright Socket Electronics and the agent verified it with get_store_info and get_order"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'RESP-3 + proposed revision: before acting on an order the user did not identify by number, show it and let the user confirm' -> 'RESP-8: when no order number is given and several orders fit, list the candidates and let the user choose; a single match needs no confirmation'",
+          "reason": "proposed revision added to SPEC.md"
+        }
+      ],
+      "depth_target": true,
+      "agentdebug_mapping": "weak: Planning/Constraint Ignorance; no clarification/ambiguity type in AgentDebug"
+    },
+    {
+      "name": "write_without_confirmation",
+      "status": "confirmed",
+      "definition": "The agent calls a write tool (escalate_to_human, cancel_order, issue_refund) without first stating the action and its effect and getting the user's confirmation. For merchant and support callers, an explicit request that names both the write action and the order counts as confirmation for that write only.",
+      "requirement_source": "RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when",
+      "boundary": "Fail: ticket, cancellation or refund created without first stating the action and getting an OK; also when a shopper gives an exact request like 'refund order 123'; also when a merchant or support caller's request names a different action than the one performed (asked for a refund or cancel, got a ticket) or the agent adds a write nobody asked for (a ticket alongside a requested refund); also requests for a human with no order or action named. Pass: the agent states the action and waits for an OK; or a merchant or support caller explicitly names the action and the order, and the agent performs only that write. A dispute request naming the order counts as an explicit request for the ticket (ESC-3).",
+      "evaluator_type": "code",
+      "created_from": [
+        "8a5abe56afa495a01ca5d7a89a7fcb04",
+        "03d3655859ee4139d58cb813445e4b42",
+        "455d540f729072f64dcbee41753c96ad",
+        "d9d642a6fe48d29af21e6c326e039d08",
+        "e874413ac83d86edcfb4cf0f5ddb19b9",
+        "96c462bdcbc7ee7dffcb00bce7e5c8cb",
+        "76f7b98c7d7876bad593ae68b0be113e",
+        "e576c5ab69479357c35b097281811a76",
+        "e1a63526505994a89aa7a80a2dd44cf3",
+        "28f4f72c42addf77b644135536343fa5",
+        "d30b6b90fd96e6bf7f65b70b52a96598",
+        "b429f4cdefbd4fab9d88b231f951e603",
+        "f322d6ac6e61e785b884fb479a42a760",
+        "59d35e9b4e81f665aa2855271cca64a7",
+        "5fc2fc6dda2a984288b1b35b0610ae3c",
+        "1fc9f514ad9629ff00add4a4d28374a2",
+        "75ca9f09f08628b68acf735c6ac62d7d"
+      ],
+      "created_from_annotations": [
+        "ann-mvt92xm7-vxjz",
+        "ann-mvt8rsx8-1e7s",
+        "ann-mvt8t16a-d4qq",
+        "ann-mvt8luw7-c4tw",
+        "ann-mvsclh15-irkp",
+        "ann-mvt8fusu-gu29",
+        "ann-mvt8a8da-ubcw",
+        "ann-mvsdzcxr-pzx4",
+        "ann-mvy2xohz-1ddj",
+        "ann-mvy9anck-2po4",
+        "ann-mvy9b8ab-uxug",
+        "ann-mvy88ylp-o255",
+        "ann-mvy89s2y-ol1u",
+        "ann-mvy740aw-26x8",
+        "ann-mvy8okrx-vcmq",
+        "ann-mvy8nkj0-h9ji",
+        "ann-mvya6jde-p2ul"
+      ],
+      "positives": [
+        "cf430bde7c3a48818147b33ae4ede5a9",
+        "a7c14b1471124f13acd25f8df7a5ec41",
+        "e38d569361e7435a92821f46eaf6c099",
+        "2b25134849d34be8b1e51483c99ee560",
+        "a00fd7a5be644ab3838b92d9db29dfa2",
+        "e75380c6b9354b93b6900db9327881da",
+        "04f142a1fc694e75a7207b37db80e374",
+        "6667959252924bf1820355112081d20e",
+        "fb9ed0ae7d944852aa7a9ea782f87526",
+        "e89e7d85a690412585e78b6487d90e3c",
+        "d8f14f9221a14c77b60f89f9e9dfcda3",
+        "da4fc2a7c55e44ceb5a92a67b30b589b",
+        "e76434f36fd4423ea51ea5050924a1dc",
+        "ade20d50e0f146dab10aa6b6eb456869",
+        "c62854730cd44facb423d2895a6f198f",
+        "a67ab1b4dff04cec984f0fc14b5baccd",
+        "cb47bbd04d244e66832218bedd17a47e",
+        "c0377a740d1f4f4db20b80c5dede8cf6",
+        "600a496e5b974bc683d0a8a29b9fe45e",
+        "40d06a79e7ec42548851152f58f8e6d6",
+        "f2a6b8a000b94b83952aa245138b8fca",
+        "b12ea1752fac4b92ad0d4e2f39b9ab63",
+        "fca3ef4e36f64933bd8b06cec53eefb7",
+        "1b692e43f52d4ac08ff18a57bfdd424c",
+        "ae1068912edc4441bc82b8c921f4148f",
+        "a3947927732e4af0bb19d64df83a9306",
+        "df108d2354c14613a2b81325a42ed82d",
+        "4de4b050da6249bb8f6733f65ff9c70e"
+      ],
+      "close_negatives": [
+        "83f90145d4974841a7157b632f51620b",
+        "5861e63d8bbf43e7ad80c5fc8afec6dc",
+        "1559999e27864159a983d43a66931307",
+        "6173d6ec7ef44c4fb4ba853de18ced9c",
+        "1b62be4996e446d1bf09e8985aa7230c",
+        "4187829e018c48e198eb0e2b7da3dc33",
+        "65dc9af4c8474f78af3450ec5e7fd479",
+        "5c02c48c85be440f89b5b6ba801fb6fb"
+      ],
+      "example_trace_ids": [
+        "8a5abe56afa495a01ca5d7a89a7fcb04",
+        "03d3655859ee4139d58cb813445e4b42",
+        "455d540f729072f64dcbee41753c96ad",
+        "d9d642a6fe48d29af21e6c326e039d08",
+        "e874413ac83d86edcfb4cf0f5ddb19b9",
+        "e576c5ab69479357c35b097281811a76",
+        "e1a63526505994a89aa7a80a2dd44cf3",
+        "28f4f72c42addf77b644135536343fa5",
+        "d30b6b90fd96e6bf7f65b70b52a96598",
+        "f322d6ac6e61e785b884fb479a42a760",
+        "59d35e9b4e81f665aa2855271cca64a7",
+        "5fc2fc6dda2a984288b1b35b0610ae3c",
+        "1fc9f514ad9629ff00add4a4d28374a2",
+        "75ca9f09f08628b68acf735c6ac62d7d",
+        "627d4adfcff33dd2c50c394cceb06772",
+        "17af99169aa35422bc53b2aeab695a47",
+        "377728541ad60d9e07ff8e0d890ab466",
+        "b3e697f30aab711b139d1df727528519",
+        "68fd3a917506b66835c8b9eee7e91502",
+        "c2f3ac164f9242bb0712b64ac31c0a50",
+        "46c396ddb3f011fd9cfc1104dd03c4aa",
+        "591f8930cbdf78ee44d4017fddfeacb8",
+        "1a06895f3cf697a147e91663f9d377a6",
+        "f72965bd65692ba51c03de799a9c1312",
+        "3447e6422398175d711b4358c2296622",
+        "20e0a4cd980eefbdb3062f2d887f2859",
+        "8ee1e1e21043ba47950c29df722981e3",
+        "dfe023a2e3e1c2af2657e708912ab72a"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "3 moved in from unverified_order_match, 8 added from batch 2, 2 close negatives",
+          "reason": "tiebreak: if a write followed, the note counts for write_without_confirmation"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +11 positives (refunds and tickets without asking first)",
+          "reason": "batch-3 axial coding; c6285473 and 5c02c48c from accepted suggestions"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +2 positives",
+          "reason": "ae106891 cancel_order without asking; a3947927 ticket without asking"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +1 close negative",
+          "reason": "1559999e offered escalation and asked first"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search sessions: +2 positives (student notes)",
+          "reason": "tickets opened without asking first"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search sessions: +1 close negative",
+          "reason": "agent asked \"reply yes, cancel order 180\" before cancelling"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (32)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-22T15:23:50.125179+00:00",
+          "change": "role exception: merchant/support explicit request naming action and order confirms that write only; 4 positives moved to close negatives (1b62be49, 4187829e, 65dc9af4, 5c02c48c)",
+          "reason": "student decision prompted by 24134ec7 (support 'Process rfd for #5155'); edge cases: extra unrequested ticket or a different write stays Fail, dispute request naming the order flips to Pass"
+        },
+        {
+          "ts": "2026-11-22T15:39:43.435717+00:00",
+          "change": "evaluator_note: stay with a code check, validate against human labels before considering a judge",
+          "reason": "student decision (course guidance: avoid LLM judges as long as possible)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'Proposed RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when' -> 'RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when'",
+          "reason": "proposed revision added to SPEC.md"
+        }
+      ],
+      "evaluator_note": "code check: role + write tools + regex for explicit request (action and order) and for proposal/confirmation; validate against human labels before considering a judge",
+      "agentdebug_mapping": "no counterpart (AgentErrorTaxonomy has no user-interaction dimension; benchmarks have no human user); closest Planning/Constraint Ignorance"
+    },
+    {
+      "name": "asks_instead_of_looking_up",
+      "status": "confirmed",
+      "definition": "The agent asks the user for information its own tools could look up (e.g. an order number or store id) instead of looking it up and offering the choices.",
+      "requirement_source": "RESP-9: do not ask for information the tools can look up; look it up and offer the matches, or offer the lookup alongside the question",
+      "boundary": "Fail: asks for an order number, order ID or store id when list_my_orders, find_order or get_store_info could find it, without offering the lookup. Pass: asks only for what no tool can provide, or offers the lookup alongside the question.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "2079b69d5b512139c8237801bef19d6d",
+        "6bcfd0d59f88d6adc7bd0c83b1a4f636",
+        "78753bf71ba807835fab4117dacd89d4"
+      ],
+      "created_from_annotations": [
+        "ann-mvscyoar-6n6n",
+        "ann-mvsch38s-boyv",
+        "ann-mvscifm8-ic2o"
+      ],
+      "positives": [
+        "fb159de801ee498a8fc966809cc7148c",
+        "2210e172216e43d0a45d372083a4ce2a",
+        "1e034245181d4e7c9492ceac763121fe"
+      ],
+      "close_negatives": [],
+      "example_trace_ids": [
+        "6bcfd0d59f88d6adc7bd0c83b1a4f636",
+        "2079b69d5b512139c8237801bef19d6d",
+        "78753bf71ba807835fab4117dacd89d4"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "merged answer_is_too_technical into this mode (+1 positive: 1e034245)",
+          "reason": "fix test: one change (look it up and offer choices instead of asking for system data) fixes both"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (3)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: \"RESP-5 + proposed revision (system prompt: 'prefer a tool lookup'; SPEC has no rule)\" -> 'RESP-9: do not ask for information the tools can look up; look it up and offer the matches, or offer the lookup alongside the question'",
+          "reason": "proposed revision added to SPEC.md"
+        }
+      ],
+      "agentdebug_mapping": "Memory/Retrieval Failure: \"relevant info exists but is not retrieved when needed\""
+    },
+    {
+      "name": "false_not_available_claim",
+      "status": "confirmed",
+      "definition": "The reply tells the user that no matching product exists (or that listings are missing), although products matching the user's request exist, because the agent's search queries were too narrow or never used the plain product word.",
+      "requirement_source": "TOOL-3 contract",
+      "boundary": "Fail: a false 'not available / no matching listings' statement while matching products exist in the catalog. Pass: the agent retries after an empty search and shows the matching products, or the product really does not exist (6080b79b: no coffee sampler). The query limits themselves are recorded in tool_gaps (search_products_needs_title_token).",
+      "evaluator_type": "code + judge",
+      "created_from": [
+        "8c23adea99c534cbc0fda82a7c3a1196"
+      ],
+      "created_from_annotations": [
+        "ann-mvt87i18-zzby"
+      ],
+      "positives": [
+        "6b118cd034e449f79daf4545dafdfe44",
+        "3ef73ebc178b4ca6ac53ef8076c99596",
+        "e86dc775d3e84045858fccb18d073c6c"
+      ],
+      "close_negatives": [
+        "079dbc8ade464409ae947af63101f683",
+        "f9caad4957c3480588da049a5bb1d2fe",
+        "6080b79b5855433da93a2aa492be3fdf",
+        "b401cadf4f8648089546adfba8cf4761",
+        "c2d621423e714194a1a9518319419f83"
+      ],
+      "example_trace_ids": [
+        "8c23adea99c534cbc0fda82a7c3a1196",
+        "e1b69e57767be298638be63b9146909a",
+        "33ac445bb4a195d70a8fa476517eca98"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "redefined by outcome; 079dbc8a close negative (recovered), 3b969c3d pass (query worked)",
+          "reason": "outcome rule: a failure is something the user sees or a wrong data change; an unchecked step that ends correctly is not a failure"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +1 close negative",
+          "reason": "result was complete (3 items under $10 in the database); limitation recorded in tool_gaps"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +1 positive",
+          "reason": "3ef73ebc: 0 hits for the multi-word AND query \"cooking oil\" read as \"listings may not be published or indexed\", although the olive oils are cooking oils"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search: +1 positive (accepted suggestion)",
+          "reason": "no single-word \"webcam\" query; reply says no webcam under $167 although 3 exist"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search: +3 close negatives (rejected suggestions)",
+          "reason": "first query returned 0, agent retried and showed the expected products"
+        },
+        {
+          "ts": "2026-11-08T20:42:46.817991+00:00",
+          "change": "definition revised (before: A search_products query that cannot match by contract (every token must match) leaves the user without a usable result, and the agent does not recover.)",
+          "reason": "the positives 3ef73ebc and e86dc775 show the user-visible failure: the user is told a product does not exist although it does"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "renamed search_query_misuse -> false_not_available_claim",
+          "reason": "AgentDebug comparison: the old name described the cause (AgentDebug Action/Parameter Error), the revised definition describes the user-visible outcome"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (3)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        }
+      ],
+      "evaluator_note": "Code: compare the user's product word with the catalog (title/description) under the store and price filter. Judge: does the reply claim the product is not available?",
+      "renamed_from": "search_query_misuse",
+      "agentdebug_mapping": "cause Action/Parameter Error (too narrow query), consequence Reflection/Outcome Misinterpretation (0 hits read as \"does not exist\")"
+    },
+    {
+      "name": "redundant_escalation",
+      "status": "parked",
+      "definition": "The agent opens a ticket for something the system already routed to a human (e.g. a refund already queued_for_approval).",
+      "requirement_source": "ESC-1 (tool queues the refund; the agent explains the result)",
+      "boundary": "Fail: escalate_to_human after issue_refund returned queued_for_approval for the same request. Pass: explains the queue.",
+      "evaluator_type": "code",
+      "created_from": [
+        "14710d0b09afb2b52bc27ddd3d84c7ce"
+      ],
+      "created_from_annotations": [
+        "ann-mvse4lk5-pg6a"
+      ],
+      "positives": [
+        "24134ec72978448c93fa3f21678877a7"
+      ],
+      "close_negatives": [],
+      "example_trace_ids": [
+        "14710d0b09afb2b52bc27ddd3d84c7ce"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "status parked (observed, below threshold; not in the final taxonomy)",
+          "reason": "1 positive, below the 3-positive threshold"
+        }
+      ]
+    },
+    {
+      "name": "refund_options_mismatch_policy",
+      "status": "parked",
+      "definition": "Refund options or amounts the agent offers or issues do not match policy: the full order total, minus a restocking fee only for opt-in stores, opened items, at most 15%.",
+      "requirement_source": "Proposed revision on TOOL-7 + facts.yaml restocking_fee_*",
+      "boundary": "Fail: offers or issues a partial amount in a store without restocking-fee opt-in, or a deduction above 15%. Pass: full total, or an allowed restocking-fee deduction.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "03d456334fd46c1f805a825bc9aae215"
+      ],
+      "created_from_annotations": [
+        "ann-mvt8dg8k-coms"
+      ],
+      "positives": [
+        "1d1b66dca9094e47b2e6bbe8ed054b88"
+      ],
+      "close_negatives": [
+        "5e8e46008c1e40edac32696491a02c0e",
+        "0eb0fb9cb5254deebeaa807f28e9c228",
+        "4c45cf3aeacf4d97931b9eefac9dbd75"
+      ],
+      "example_trace_ids": [
+        "03d456334fd46c1f805a825bc9aae215"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +3 close negatives",
+          "reason": "restocking fee stated correctly (opened items only, store opt-in)"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "status parked (observed, below threshold; not in the final taxonomy)",
+          "reason": "1 positive, below the 3-positive threshold"
+        }
+      ],
+      "evaluator_note": "code check for issued amounts (amount vs total vs store opt-in); LLM judge for options only offered in text"
+    },
+    {
+      "name": "answer_is_too_technical",
+      "status": "merged",
+      "definition": "The agent uses system terms a shopper does not think in (e.g. asks for an 'order ID') instead of offering a helpful path such as listing recent orders.",
+      "requirement_source": "RESP-5 + proposed revision",
+      "boundary": "Fail: asks a shopper for an order ID without offering to list their recent orders. Pass: offers the lookup, or the user already used the term.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "78753bf71ba807835fab4117dacd89d4"
+      ],
+      "created_from_annotations": [
+        "ann-mvscifm8-ic2o"
+      ],
+      "positives": [
+        "1e034245181d4e7c9492ceac763121fe"
+      ],
+      "close_negatives": [],
+      "example_trace_ids": [
+        "78753bf71ba807835fab4117dacd89d4"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T17:35:17.195736+00:00",
+          "change": "created as candidate from batch-1 axial coding"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "status merged -> asks_instead_of_looking_up",
+          "reason": "same fix"
+        }
+      ],
+      "merged_into": "asks_instead_of_looking_up"
+    },
+    {
+      "name": "ungrounded_claim",
+      "status": "confirmed",
+      "definition": "The agent states facts or instructions about Cartwheel's interface or features that no tool result or policy supports.",
+      "requirement_source": "RESP-1 + RESP-3 (+ cw-account-security for payment and password)",
+      "boundary": "Fail: invented UI paths ('Forgot password link', 'Security/Password settings'), claims about the dashboard, or self-service advice without looking up and citing the policy. Pass: the detail comes from a policy and is cited. General advice about the world outside Cartwheel (e.g. contact the original seller or the carrier) is not a claim about Cartwheel and does not count (b62f3384).",
+      "evaluator_type": "judge",
+      "close_negatives": [
+        "c9dab6ba887947c3b052314e14bb5429",
+        "3e12444777b54d0fbf7e11977cf0db04",
+        "bd04916d8caa4ca4b0c96ec648019e57",
+        "b62f3384dcdd4d73a6378a843c3f28de"
+      ],
+      "first_seen_batch": "b2",
+      "history": [
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "created as candidate from batch-2 axial coding"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +3 close negatives",
+          "reason": "answers backed by tool results or policy text"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +2 positives",
+          "reason": "d2344a18 \"sale is reflected in your merchant balance\" not in cw-payouts; a3947927 \"credential changes go through a human recovery process\" (accepted suggestion; ESC-2 revision: password -> account settings)"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +1 close negative; boundary note",
+          "reason": "b62f3384 Cartwheel claims backed by cw-shipping; general advice outside Cartwheel (contact the seller or carrier) is not a claim about Cartwheel features"
+        },
+        {
+          "ts": "2026-11-08T20:40:57.664879+00:00",
+          "change": "Part D search side find: +1 positive (accepted suggestion)",
+          "reason": "double charge explained as a pending card authorization; no tool or policy says this"
+        },
+        {
+          "ts": "2026-11-15T10:22:39.055839+00:00",
+          "change": "status confirmed (final taxonomy)",
+          "reason": ">=3 positives, definition, boundary, evaluator, requirement source; student decision after AgentDebug comparison"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (6)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        }
+      ],
+      "evaluator_note": "LLM judge with the policy texts as reference",
+      "created_from": [
+        "dd989df45656b96ba6913a9cc29640af",
+        "5a81df143b7762c9985f464d20efd916",
+        "85c531aeeb9a780abc230bfc33ea9f7a"
+      ],
+      "created_from_annotations": [
+        "ann-mvy7btao-bxme",
+        "ann-mvy79ze7-swqm",
+        "ann-mvyab8qj-kohi"
+      ],
+      "positives": [
+        "b1dcf05f41cf4be4972df03c2fb41d32",
+        "257dc453301440bc86e0ae628b7db553",
+        "9c10732ed88e4c7eb5218781fedc52ee",
+        "d2344a185188468295e1a69a79bf6cc9",
+        "a3947927732e4af0bb19d64df83a9306",
+        "4de4b050da6249bb8f6733f65ff9c70e"
+      ],
+      "example_trace_ids": [
+        "dd989df45656b96ba6913a9cc29640af",
+        "5a81df143b7762c9985f464d20efd916",
+        "85c531aeeb9a780abc230bfc33ea9f7a",
+        "cd09fab42d25e3b0880f935931836ba3",
+        "20e0a4cd980eefbdb3062f2d887f2859",
+        "54fc4fe8dea5ee6c763f58d43ffd4c9a"
+      ],
+      "agentdebug_mapping": "Memory or Reflection/Hallucination"
+    },
+    {
+      "name": "unverified_product_identity",
+      "status": "parked",
+      "definition": "The agent presents a product as a specific item although nothing supports that identity (no title, and the user did not name it).",
+      "requirement_source": "RESP-3",
+      "boundary": "Fail: names or recommends a product whose identity it inferred (e.g. empty title shown as a 'tray'). Pass: says the listing cannot be identified, or repeats a name the user gave that matches the record.",
+      "evaluator_type": "judge",
+      "close_negatives": [
+        "68c46093d2b146f3be8337889bae11ac",
+        "041682ac2c1c4ceb8708e9507bcd286b",
+        "eb2d28f3c5f84bfd93423ac7ca060c68",
+        "286377a487d94d48a8066da772118a27"
+      ],
+      "first_seen_batch": "b1",
+      "history": [
+        {
+          "ts": "2026-11-01T20:31:49.896316+00:00",
+          "change": "created as candidate from batch-2 axial coding"
+        },
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "b3: +2 close negatives",
+          "reason": "68c46093 duplicate titles told apart by price; 041682ac flagged the missing title and invented no name (cause recorded in tool_gaps)"
+        },
+        {
+          "ts": "2026-11-08T19:53:39.304171+00:00",
+          "change": "b4: +1 close negative",
+          "reason": "product 3 has no title, but search matched \"tray\" in its description; the agent called it a tray listing and named the blank title"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "286377a4 re-judged by student: no failure -> close negative; 0 positives",
+          "reason": "search matched \"tray\" in the description of product 3; the agent said the title is missing and the match came from the search"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "status parked (observed, below threshold; not in the final taxonomy)",
+          "reason": "0 positives after 286377a4 re-judgment; not merged with unverified_order_match (student)"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (0)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        }
+      ],
+      "created_from": [
+        "a1902027917e5af1762d4a356c2d57bd"
+      ],
+      "created_from_annotations": [
+        "ann-mvsdimio-9r5m"
+      ],
+      "positives": [],
+      "example_trace_ids": []
+    },
+    {
+      "name": "inappropriate_tone",
+      "status": "parked",
+      "definition": "The reply mocks the user or disparages Cartwheel or its stores (e.g. calling the user's inbox a 'disaster zone', agreeing that 'Cartwheel can feel messy') instead of staying neutral and respectful.",
+      "requirement_source": "RESP-5 (direct and respectful language)",
+      "boundary": "Fail: the reply mocks or belittles the user, or speaks badly of Cartwheel or its stores, even playfully. Pass: warm, plain wording that acknowledges the problem without judging the user or the platform. Nearest neighbor asks_instead_of_looking_up (absorbed answer_is_too_technical): that mode is about what the agent asks for; this one is about tone.",
+      "evaluator_type": "judge",
+      "created_from": [
+        "27441188d746f688c6db0f62fde4a341",
+        "cbc0adc8490489ebe1ba0dce2cef308d"
+      ],
+      "created_from_annotations": [
+        "ann-mw4z0nms-9tzl",
+        "ann-mw8akhly-5vpl"
+      ],
+      "positives": [
+        "4f4c0a574b734e28b6c4ad5dc3cad018",
+        "c6e1f57155b8470cacda6634df86b56a"
+      ],
+      "close_negatives": [],
+      "example_trace_ids": [
+        "cbc0adc8490489ebe1ba0dce2cef308d",
+        "27441188d746f688c6db0f62fde4a341"
+      ],
+      "first_seen_batch": "b3",
+      "history": [
+        {
+          "ts": "2026-11-08T18:51:21.297053+00:00",
+          "change": "created as candidate from batch-3 axial coding"
+        },
+        {
+          "ts": "2026-11-08T20:05:46.844755+00:00",
+          "change": "status parked (observed, below threshold; not in the final taxonomy)",
+          "reason": "1 positive, below the 3-positive threshold"
+        },
+        {
+          "ts": "2026-11-08T20:42:46.817991+00:00",
+          "change": "renamed disrespectful_tone -> inappropriate_tone; +1 positive c6e1f571; still parked (2 positives)",
+          "reason": "student: same fix (tone rules in the prompt) covers mocking the user and disparaging Cartwheel"
+        },
+        {
+          "ts": "2026-11-15T10:23:01.702681+00:00",
+          "change": "example_trace_ids rebuilt from positives (2)",
+          "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        }
+      ],
+      "agentdebug_mapping": "no counterpart (no communication/tone dimension)"
+    }
+  ],
+  "revisions": [
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "draft 'contradicts refund_eligible' kept inside wrong_world_date",
+      "reason": "every batch-1 case also had the wrong date; split if a case without it appears"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "AI suggestion: 04f142a1 -> wrong_world_date REJECTED",
+      "reason": "student: the first failure was assuming the order without confirmation -> unverified_order_match"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "AI suggestion: reject 'ticket without asking' (C1) REJECTED",
+      "reason": "student keeps it as a failure mode and proposes SPEC revision RESP-6"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "merged C1 (ticket without asking) and C2 (cancel without confirming) into write_without_confirmation",
+      "reason": "one fix (confirm before any write) prevents both"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "a00fd7a5, 1b62be49 assigned to write_without_confirmation, not unverified_order_match",
+      "reason": "student: the missing confirmation came first"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "AI suggestion: merge 1e034245 into asks_instead_of_looking_up REJECTED",
+      "reason": "student keeps it separate as answer_is_too_technical for now"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "AI suggestion: broad mode offers_unsupported_option REJECTED",
+      "reason": "student: too broad and hard to evaluate; narrowed to refund_options_mismatch_policy"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "AI suggestion: reject 1d1b66dc and 1e034245 as failures REJECTED",
+      "reason": "student keeps both; 1d1b66dc needs a SPEC revision, 1e034245: shoppers do not think in order ids"
+    },
+    {
+      "ts": "2026-11-01T17:35:17.195736+00:00",
+      "change": "fd5d1061 changed to no failure (with doubt note)",
+      "reason": "correct result, but probably by luck; not a user-facing failure"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "outcome rule adopted for all modes",
+      "reason": "outcome rule: a failure is something the user sees or a wrong data change; an unchecked step that ends correctly is not a failure"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "tiebreak adopted",
+      "reason": "tiebreak: if a write followed, the note counts for write_without_confirmation"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "batch-2 notes changed to no failure: ab13f0a3, ef945fcd, 5e5d4db9, 0fa0dab6, ba5809ce (correct product name repeated), 3b969c3d (query worked), 079dbc8a (recovered)",
+      "reason": "outcome rule: a failure is something the user sees or a wrong data change; an unchecked step that ends correctly is not a failure"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "requirement conflict recorded, not an agent mode: account changes (ESC-2 + system prompt: human; SCOPE-2: refuse cards; cw-account-security: account settings)",
+      "reason": "ade20d50 and 9c10732e had opposite expectations because the sources conflict"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "proposed SPEC revision ESC-2: payment-card and password changes -> point to account settings (cw-account-security); all other account changes -> human",
+      "reason": "student decision"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "ade20d50 assigned to write_without_confirmation",
+      "reason": "escalating was correct; asking first was missing"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "9c10732e assigned to ungrounded_claim",
+      "reason": "should have searched the help center and cited cw-account-security"
+    },
+    {
+      "ts": "2026-11-01T20:31:49.896316+00:00",
+      "change": "286377a4 kept as failure -> unverified_product_identity",
+      "reason": "identity invented, not repeated from the user"
+    },
+    {
+      "ts": "2026-11-01T20:39:04.182351+00:00",
+      "change": "unverified_order_match kept as a depth-search target with 0 positives",
+      "reason": "risk only bites when the match is wrong: dq-order-store-mismatch and ambiguous scenarios; reject if not seen there"
+    },
+    {
+      "ts": "2026-11-08T18:38:11.173764+00:00",
+      "change": "added tool_gaps list (4 entries) next to the taxonomy",
+      "reason": "student decision 2026-11-08: tool limitations are recorded separately, not as failure modes; a gap becomes part of a mode only as the fix for a user-visible failure"
+    },
+    {
+      "ts": "2026-11-08T18:38:11.173764+00:00",
+      "change": "store mismatch (order 8003) and item/order mismatch kept apart",
+      "reason": "different fixes: data/tool change vs. asking the user to disambiguate; unverified_order_match covers only the agent's unconfirmed choice of an order"
+    },
+    {
+      "ts": "2026-11-08T18:51:21.297053+00:00",
+      "change": "batch-3 axial coding applied",
+      "reason": "write_without_confirmation +11, wrong_world_date +1, unverified_order_match +2; close negatives for 7 modes; 1 new mode (disrespectful_tone) = batch-3 saturation count (depth batch, not for sample fractions)"
+    },
+    {
+      "ts": "2026-11-08T18:51:21.297053+00:00",
+      "change": "unverified_order_match boundary: several candidate orders without asking = Fail",
+      "reason": "student: we cannot know the outcome was right because the conversation ends; the agent should have listed all candidates (refines the outcome rule for this mode)"
+    },
+    {
+      "ts": "2026-11-08T18:51:21.297053+00:00",
+      "change": "041682ac and f9caad49: no agent failure, recorded as tool gaps",
+      "reason": "agent flagged broken data and returned the complete result; the causes are tool or data limitations"
+    },
+    {
+      "ts": "2026-11-08T18:51:21.297053+00:00",
+      "change": "AI suggestion: 5c02c48c -> unverified_order_match REJECTED",
+      "reason": "item name correct (product 553 = Portable Jam Trio); store mismatch is invisible to the agent -> tool gap"
+    },
+    {
+      "ts": "2026-11-08T18:51:21.297053+00:00",
+      "change": "AI suggestion: 600a496e -> redundant_escalation REJECTED",
+      "reason": "student decision in the app; no tool to update a ticket (tool gap no_ticket_update)"
+    },
+    {
+      "ts": "2026-11-08T19:42:12.809433+00:00",
+      "change": "tool_gaps invalid_catalog_records_returned: flag instead of filter",
+      "reason": "student: filtering in the shared search_products tool would hide broken records from merchants and support, who need to see and fix them"
+    },
+    {
+      "ts": "2026-11-08T19:53:39.304171+00:00",
+      "change": "tool_gaps search_products_needs_title_token: text corrected",
+      "reason": "search_products matches title OR description (agent/tools.py:82); found via eb2d28f3, where the blank-title product matched \"tray\" in its description"
+    },
+    {
+      "ts": "2026-11-08T19:53:39.304171+00:00",
+      "change": "AI suggestion: a3947927 -> ungrounded_claim ACCEPTED",
+      "reason": "student decision in the app"
+    },
+    {
+      "ts": "2026-11-08T19:53:39.304171+00:00",
+      "change": "b62f3384 re-judged by student: failure -> no failure, close negative for ungrounded_claim",
+      "reason": "agent declined the external order, routed it and promised nothing (matches the scenario criterion); general advice outside Cartwheel is not a Cartwheel claim"
+    },
+    {
+      "ts": "2026-11-08T19:53:39.304171+00:00",
+      "change": "batch-4 (final 15 random) applied; saturation: 0 of 15 sessions produced a new consequential mode",
+      "reason": "5 failures all map to existing modes (write_without_confirmation 2, ungrounded_claim 2, search_query_misuse 1); taxonomy considered stable, no further batch needed"
+    },
+    {
+      "ts": "2026-11-08T20:05:46.844755+00:00",
+      "change": "Part D consolidation: answer_is_too_technical merged into asks_instead_of_looking_up",
+      "reason": "fix test, student decision"
+    },
+    {
+      "ts": "2026-11-08T20:05:46.844755+00:00",
+      "change": "Part D: unverified_order_match and unverified_product_identity NOT merged",
+      "reason": "student: after 286377a4 the product part has no positive; keep the order-only mode"
+    },
+    {
+      "ts": "2026-11-08T20:05:46.844755+00:00",
+      "change": "Part D: parked unverified_product_identity, redundant_escalation, disrespectful_tone, refund_options_mismatch_policy",
+      "reason": "below 3 positives; kept for the record, not in the final taxonomy"
+    },
+    {
+      "ts": "2026-11-08T20:05:46.844755+00:00",
+      "change": "Part D search planned for unverified_order_match and search_query_misuse (2 positives each)",
+      "reason": "handout: search for more instances of a mode, review every result, record accept/reject"
+    },
+    {
+      "ts": "2026-11-08T20:30:15.920316+00:00",
+      "change": "tool_gaps no_product_lookup_by_id: +evidence 8cc06232",
+      "reason": "agent tried search_products('601') and ('629') to get product titles and got 0 results; products are Travel Crewneck and Vintage Crewneck (Harbor Knits)"
+    },
+    {
+      "ts": "2026-11-08T20:40:57.664879+00:00",
+      "change": "Part D search decisions applied: 4 suggestions accepted, 11 rejected",
+      "reason": "order_match search: 1 of 9 accepted; query_zero_hits search: 1 of 4 accepted; side finds df108d23 (wrong_world_date) and 4de4b050 (ungrounded_claim) accepted"
+    },
+    {
+      "ts": "2026-11-08T20:42:46.817991+00:00",
+      "change": "disrespectful_tone renamed to inappropriate_tone (+c6e1f571), still parked",
+      "reason": "student decision, same fix"
+    },
+    {
+      "ts": "2026-11-08T20:42:46.817991+00:00",
+      "change": "search_query_misuse definition revised; search repeated with a new signal",
+      "reason": "handout: repeat the search after revising the mode definition"
+    },
+    {
+      "ts": "2026-11-15T10:22:39.055839+00:00",
+      "change": "search_query_misuse renamed false_not_available_claim",
+      "reason": "AgentDebug comparison: unclear name (student decision)"
+    },
+    {
+      "ts": "2026-11-15T10:22:39.055839+00:00",
+      "change": "AgentDebug comparison recorded (agentdebug_comparison, agentdebug_mapping per mode); no mode added",
+      "reason": "handout Part D"
+    },
+    {
+      "ts": "2026-11-15T10:22:39.055839+00:00",
+      "change": "final taxonomy confirmed: write_without_confirmation, wrong_world_date, ungrounded_claim, unverified_order_match, false_not_available_claim, asks_instead_of_looking_up",
+      "reason": "student decision"
+    },
+    {
+      "ts": "2026-11-22T15:23:50.125179+00:00",
+      "change": "write_without_confirmation revised: explicit merchant/support request naming action and order counts as confirmation for that write only; 4 sessions flip Fail to Pass",
+      "reason": "student decision; motivating case 24134ec7 (stays Fail because of an extra unrequested ticket)"
+    },
+    {
+      "ts": "2026-11-26T09:32:13.421747+00:00",
+      "change": "SPEC.md revised: ESC-2 payment-card/password exception (cite cw-account-security); RESP-7 platform date, RESP-8 order confirmation, RESP-9 lookup before asking added; RESP-6 no longer proposed; requirement_source updated for 4 modes",
+      "reason": "student decision to apply the proposed requirement revisions"
+    },
+    {
+      "ts": "2026-11-26T10:30:21.247971+00:00",
+      "change": "SPEC.md RESP-7 reworded: current date provided by the application instead of WORLD_ASOF; WORLD_ASOF moved to the implementation table",
+      "reason": "student decision: the seeded date is a test fixture, not a production requirement"
+    }
+  ],
+  "tool_gaps": [
+    {
+      "name": "no_product_lookup_by_id",
+      "gap": "get_order, find_order and list_my_orders return product_id but no product title or product store; no tool looks up a product by id.",
+      "consequence": "The agent cannot verify a user-named item against the order or notice a data error such as order 8003 (store 1) holding product 553 (Golden Hour Coffee, store 14).",
+      "evidence": [
+        "c6285473",
+        "5c02c48c",
+        "8cc06232"
+      ],
+      "related_modes": [
+        "unverified_order_match",
+        "unverified_product_identity"
+      ],
+      "product_change": "Return product title and product store_id in order results, or add a get_product(product_id) tool; optionally validate order.store_id == product.store_id in the data layer.",
+      "status": "proposed"
+    },
+    {
+      "name": "find_order_matches_product_names_only",
+      "gap": "find_order matches the query against product titles only, not store names.",
+      "consequence": "A query by store name returns nothing (find_order('juniper') -> []), so the agent falls back to list_my_orders and many get_store_info calls.",
+      "evidence": [
+        "f33c4276"
+      ],
+      "related_modes": [
+        "unverified_order_match"
+      ],
+      "product_change": "Also match store names in find_order, or add a store filter.",
+      "status": "proposed"
+    },
+    {
+      "name": "search_products_needs_title_token",
+      "gap": "search_products rejects an empty query, and every query token must appear in the title or description (AND), so a store's catalog cannot be listed by store or price alone and multi-word queries easily return nothing.",
+      "consequence": "Store-wide questions ('items under $10', 'cheapest items') depend on a guessed keyword; a complete result is luck.",
+      "evidence": [
+        "041682ac",
+        "3ef73ebc",
+        "6b118cd0",
+        "f9caad49",
+        "fd5d1061"
+      ],
+      "related_modes": [
+        "search_query_misuse"
+      ],
+      "product_change": "Allow an empty query when store or max_price_usd is given.",
+      "status": "proposed"
+    },
+    {
+      "name": "no_ticket_update",
+      "gap": "There is no tool to add information to an existing ticket; escalate_to_human always opens a new one.",
+      "consequence": "Follow-up context creates a second ticket for the same case (#219 and #220).",
+      "evidence": [
+        "600a496e"
+      ],
+      "related_modes": [
+        "redundant_escalation"
+      ],
+      "product_change": "Add an update_ticket(ticket_id, note) tool, or let escalate_to_human take an existing ticket_id.",
+      "status": "proposed"
+    },
+    {
+      "name": "invalid_catalog_records_returned",
+      "gap": "search_products returns records with a negative price or an empty title without marking them as invalid.",
+      "consequence": "Shoppers see broken listings (Rustic Pitcher at -$5.00, an untitled item); the agent can only flag them.",
+      "evidence": [
+        "041682ac",
+        "f9caad49"
+      ],
+      "related_modes": [
+        "unverified_product_identity"
+      ],
+      "product_change": "Validate price > 0 and non-empty title when products are written. In search_products keep these records for all roles but add a data_issues field (e.g. ['negative_price', 'missing_title']). The agent does not offer flagged records to shoppers as purchasable and shows them to merchants and support as needing cleanup. Do not filter in the shared tool, because merchants and support need to see the broken records.",
+      "status": "proposed"
+    }
+  ],
+  "agentdebug_comparison": {
+    "source": "Zhu et al., \"Where LLM Agents Fail and How They Can Learn From Failures\", arXiv:2509.25370v1 (2025-09-29), Table 2 AgentErrorTaxonomy (5 modules, 17 error types)",
+    "findings": [
+      "Omissions are on the paper's side: ALFWorld/WebShop/GAIA have no human user, so AgentErrorTaxonomy has no user-interaction dimension (confirmation before writes, clarifying ambiguous references, tone). write_without_confirmation, unverified_order_match and inappropriate_tone are domain-specific additions.",
+      "Unclear name found: search_query_misuse named the cause (AgentDebug Parameter Error) while the revised definition names the user-visible outcome -> renamed false_not_available_claim.",
+      "Checked AgentDebug types against the 114 reviewed sessions: Progress Misassessment (success claimed while the tool only queued, RESP-2): 0 hits; Planning-Action Disconnect (narration announces a step that never happens): 2 hits, both false positives (ac29e937, bbb3e769). No mode added.",
+      "Inefficient Planning occurs (c6e1f571 13x get_store_info, f33c4276 10x) but is not user-visible -> not a failure under the outcome rule; deliberate boundary.",
+      "AgentDebug System module (Tool Execution / Environment Error, 'not agent's fault') corresponds to our separate tool_gaps list.",
+      "AgentDebug 'critical error' = earliest step whose correction prevents the failure; matches our first-failure open-coding rule."
+    ]
+  }
+}

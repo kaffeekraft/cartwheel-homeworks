@@ -1,1 +1,1841 @@
-{"annotations": []}
+{
+  "annotations": [
+    {
+      "id": "ann-mvsch38s-boyv",
+      "session_id": "2210e172216e43d0a45d372083a4ce2a",
+      "trace_id": "2079b69d5b512139c8237801bef19d6d",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I found your recent orders but need to confirm which store ID belongs to Bright Socket Electronics so I can identify the exact order",
+      "note": "unclear if all orders have been loaded",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T16:44:28.204Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvscifm8-ic2o",
+      "session_id": "1e034245181d4e7c9492ceac763121fe",
+      "trace_id": "78753bf71ba807835fab4117dacd89d4",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "order ID",
+      "note": "too technical",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T16:45:30.896Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsclh15-irkp",
+      "session_id": "a00fd7a5be644ab3838b92d9db29dfa2",
+      "trace_id": "e874413ac83d86edcfb4cf0f5ddb19b9",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "Order #7038 is still only marked \u201cplaced\u201d with no shipped date, so I\u2019m going to submit the cancellation now before it ships",
+      "note": "the order numbers match, but its unclear which product it is and from which store. the agent executes a write action without confirmation.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T16:47:52.697Z",
+      "history": [
+        {
+          "note": "the order numbers match, but its unclear which product it is and from which store.",
+          "ts": "2026-10-28T16:47:52.697Z"
+        }
+      ],
+      "edited_at": "2026-10-29T07:24:10.868Z"
+    },
+    {
+      "id": "ann-mvsctx93-qw27",
+      "session_id": "450686b91d9249078f3d503dfa1679f2",
+      "trace_id": "937c34bbf82eb80729807203abf92b2e",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "So, under the standard Northwind Books return policy, **you can\u2019t still return it now** because the return window has passed.",
+      "note": "the tool sad its refund eligible and the agent decided its not",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T16:54:26.967Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvscyoar-6n6n",
+      "session_id": "fb159de801ee498a8fc966809cc7148c",
+      "trace_id": "6bcfd0d59f88d6adc7bd0c83b1a4f636",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "If you don\u2019t have the order number handy, I can look up your recent orders for you.",
+      "note": "it could have looked anyway and presented a list from which the user could choose.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T16:58:08.643Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsd3pyo-mp5v",
+      "session_id": "d4a19f25c671491e9560b160710928cb",
+      "trace_id": "56090097e48aa442c902f0122864a028",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-10-28T17:02:04.080Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsdcy21-bbbo",
+      "session_id": "78d21eebb82144949b3c4a20cc0115c9",
+      "trace_id": "a7bc7d4919af12f368bcbf65b76e5726",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "Are you still in the standard return window?** **No** \u2014 based on today\u2019s date (**October 20, 2026**)",
+      "note": "the tool sad the order is eligible for a refund and the agent said its not.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T17:09:14.473Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsdk52l-d63w",
+      "session_id": "f18c509eb4294ab095ae3b0f4cf435b0",
+      "trace_id": "8ef72757980c3240ad9aa793ca087915",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-10-28T17:14:50.157Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsdozx5-q5zf",
+      "session_id": "ef678f6b0c7947fbb237e1ec1d680cb7",
+      "trace_id": "fd2c1980ebf7356d8e07ef7b29a5deaa",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-10-28T17:18:36.762Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvsdzcxr-pzx4",
+      "session_id": "e75380c6b9354b93b6900db9327881da",
+      "trace_id": "e576c5ab69479357c35b097281811a76",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I found a matching order,",
+      "note": "the agent didn\u00b4t let the user confirm that this is the right order.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T17:26:40.191Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvse4lk5-pg6a",
+      "session_id": "24134ec72978448c93fa3f21678877a7",
+      "trace_id": "14710d0b09afb2b52bc27ddd3d84c7ce",
+      "turn": 1,
+      "anchor": "t1-s4",
+      "quote": "\u2019ll open a human support ticket so an agent can review and complete the refund",
+      "note": "its allready queued for approval. ? ESC-1 so that is allready a form of escalation.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T17:30:44.645Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvseglxu-8xhk",
+      "session_id": "48713c37c04b4f40ab30d29d70a3fbe3",
+      "trace_id": "2361e25d8a2928176edf4b6de8237a9f",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "Because Cartwheel payouts run **weekly on Fridays**, a refund issued today \u2014 **Tuesday, October 20, 2026**",
+      "note": "it guessed today.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T17:40:05.010Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvselj62-7qnq",
+      "session_id": "ac29e9379a8440838dd7f915fd531bb0",
+      "trace_id": "c0179230b3997387974e9f39edeefc47",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "**2026-04-29**, so it is well outside the 30-day window now.",
+      "note": "making assumptions about the today date.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-28T17:43:54.698Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt87i18-zzby",
+      "session_id": "6b118cd034e449f79daf4545dafdfe44",
+      "trace_id": "8c23adea99c534cbc0fda82a7c3a1196",
+      "turn": 1,
+      "anchor": "t1-s1",
+      "quote": "dinnerware set bowls dishes pottery ceramic set",
+      "note": "query is to long and will never match against product titles. wrong usage of the tool.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:32:48.524Z",
+      "history": [
+        {
+          "note": "query is to long and will never match against product titles.",
+          "ts": "2026-10-29T07:32:48.524Z"
+        }
+      ],
+      "edited_at": "2026-10-29T07:33:15.254Z"
+    },
+    {
+      "id": "ann-mvt8dg8k-coms",
+      "session_id": "1d1b66dca9094e47b2e6bbe8ed054b88",
+      "trace_id": "03d456334fd46c1f805a825bc9aae215",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "1. Refund amount \u2014 full $96.50 or a partial amount",
+      "note": "the agent invented the option to refund a partial amount.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:37:26.132Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt8k3sz-9mdm",
+      "session_id": "939db0e0c5ca40368fb82b06a2d5a488",
+      "trace_id": "20c83b051be761fbcd083fdb63750c8c",
+      "turn": 1,
+      "anchor": "t1-s6",
+      "quote": "I found a possible policy-versus-order-record mismatch",
+      "note": "agent assumes a today date and is not using 2026-07-01 which is the correct today date and therefor there is no mismatch.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:42:36.611Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt8luw7-c4tw",
+      "session_id": "2b25134849d34be8b1e51483c99ee560",
+      "trace_id": "d9d642a6fe48d29af21e6c326e039d08",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019ll open a support ticket for a human agent now because you asked to speak with one directly.",
+      "note": "agent performed a write action without a user confirmation. agent should have told the user that the only way to talk to a human is by creating a escalation ticket.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:43:58.375Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt8mhz1-1d9l",
+      "session_id": "6c086a8b22dd4113879306e5a16b04f0",
+      "trace_id": "055467cdb755a6dc5a8b917cadd21ec3",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-10-29T07:44:28.285Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt8rsx8-1e7s",
+      "session_id": "a7c14b1471124f13acd25f8df7a5ec41",
+      "trace_id": "03d3655859ee4139d58cb813445e4b42",
+      "turn": 2,
+      "anchor": "t2-s0",
+      "quote": "so I\u2019m going to escalate this as an account-specific privacy/access question for a human support agent to review",
+      "note": "agent performed a write action with asking the user to confirm this first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:48:35.756Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt8t16a-d4qq",
+      "session_id": "e38d569361e7435a92821f46eaf6c099",
+      "trace_id": "455d540f729072f64dcbee41753c96ad",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I\u2019ll open a ticket so a human can verify whether this order belongs to your store and handle any approved refund",
+      "note": "agent performed write action with asking the user to confirm this first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:49:33.106Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt91mdm-9aur",
+      "session_id": "541e3fced36a408487d2ab94eec307ec",
+      "trace_id": "1daac9b39b0a31a16fb397fbf39af363",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "No \u2014 order **3291** from **Copperline Tools** can\u2019t still be returned through the normal return flow.\n\nDetails I found:\n\n- **Order status:** Delivered  \n- **Delivered on:** **2026-05-25**  \n- **Current refund eligibility:** **Not eligible**  \n- **Copperline Tools return window:** **30 days** \u2014 it\u2019s using Cartwheel\u2019s platform default return window.  \n- Cartwheel\u2019s default policy says items can be returned **within 30 days of delivery**, counted from the delivery date, unless a store override applies (**cw-returns**).\n\nSo the return window would have expired around **2026-06-24**, and today is **2026-10-20**, so it\u2019s well outside the normal return period.",
+      "note": "that is correct, but the option for a dispute is still available and the agent did not offer that option. also it assumed the wrong today date \"2026-10-20\" when the correct today date is \"2026-07-01\" which is within the dispute window of 60 days from the delivery date.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:56:13.834Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvt92xm7-vxjz",
+      "session_id": "cf430bde7c3a48818147b33ae4ede5a9",
+      "trace_id": "8a5abe56afa495a01ca5d7a89a7fcb04",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "I\u2019ve opened a human support ticket for this account name change: **#204**.",
+      "note": "agent performed a write action without asking the user to confirm it first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-10-29T07:57:15.055Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy2xohz-1ddj",
+      "session_id": "04f142a1fc694e75a7207b37db80e374",
+      "trace_id": "e1a63526505994a89aa7a80a2dd44cf3",
+      "turn": 1,
+      "anchor": "t1-s4",
+      "quote": "I\u2019ll check Cartwheel\u2019s refund policy so I can cite the relevant policy if I need to explain refund limits or timing.",
+      "note": "agent assumed it found the correct order without letting the user confirm it first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T17:04:03.143Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy37jro-qghg",
+      "session_id": "fd5d1061a6a24d4d945bb3e53b7eb4fc",
+      "trace_id": "4aa7951d132d1db8dc9618a30fee7427",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "i doubt this will always work, because in this case it was luck the search results did contain the product with no title.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T17:11:43.572Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T17:11:43.572Z"
+        }
+      ],
+      "edited_at": "2026-11-01T17:12:40.466Z"
+    },
+    {
+      "id": "ann-mvy6t7it-yh45",
+      "session_id": "e55e0d2e663049fcaad38bd1811c6219",
+      "trace_id": "c0e299d690c9573d060205024419e256",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T18:52:32.981Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy71lkm-y06n",
+      "session_id": "0b137c553b4f4a2b9e560ba5ff46632f",
+      "trace_id": "1e22d83a41afc6ff82ae8288fb2e211f",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T18:59:04.438Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy740aw-26x8",
+      "session_id": "d8f14f9221a14c77b60f89f9e9dfcda3",
+      "trace_id": "59d35e9b4e81f665aa2855271cca64a7",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I found a matching delivered order",
+      "note": "agent didn\u00b4t confirm it found the right order.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:00:56.840Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy79ze7-swqm",
+      "session_id": "257dc453301440bc86e0ae628b7db553",
+      "trace_id": "5a81df143b7762c9985f464d20efd916",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "this is exactly the kind of dashboard setting that can be confusing.",
+      "note": "the agent doesn\u00b4t have any information about the dashboard and is talking badly about cartwheels software.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:05:35.599Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy7btao-bxme",
+      "session_id": "b1dcf05f41cf4be4972df03c2fb41d32",
+      "trace_id": "dd989df45656b96ba6913a9cc29640af",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "or security, I can\u2019t help with password or other credential changes in chat. Please use the **Forgot password** link on the Cartwheel sign-in page",
+      "note": "agent just made that up. it should have looked up the the help center",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:07:01.008Z",
+      "history": [
+        {
+          "note": "agent just made that up. it should have looked up the policy cw-account-security.",
+          "ts": "2026-11-01T19:07:01.008Z"
+        }
+      ],
+      "edited_at": "2026-11-01T19:08:44.596Z"
+    },
+    {
+      "id": "ann-mvy7kis2-k5qy",
+      "session_id": "5d1d9d9d3ea043738069738076e2c35f",
+      "trace_id": "123a45b09bfca87b1f5459bbb8906919",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:13:47.282Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy7lbw6-eo5i",
+      "session_id": "10fb1f53a87c4016bda38dfeca355d26",
+      "trace_id": "c02cc4e5cd140f481321ce29f4158702",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:14:25.014Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy7qz25-xwvi",
+      "session_id": "3b72ad69a063495c99a983c9d471ca6c",
+      "trace_id": "304b6be5b2b3dfd2e18bce009bcfdbec",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "to me that is a close negative for wrong_world_date, because it did nothing wrong, but by the end it sad \u201cSo even if it felt like \u201cabout a month,\u201d this order is well past Meridian Cycles\u2019 21-day return window.\u201d The simulted world date of today (2026-07-01) is exacly a month ago and the model was propably comparing it to 2026-11-01.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:18:48.317Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T19:18:48.317Z"
+        }
+      ],
+      "edited_at": "2026-11-01T19:24:06.699Z"
+    },
+    {
+      "id": "ann-mvy7yfp8-91g6",
+      "session_id": "0a70d83ca39b4bd9a3e89ba383e27b40",
+      "trace_id": "9686722551b0c0e1fef3158e5004ba55",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:24:36.476Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy88ylp-o255",
+      "session_id": "65dc9af4c8474f78af3450ec5e7fd479",
+      "trace_id": "b429f4cdefbd4fab9d88b231f951e603",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "Order #6213 is still in \u201cplaced\u201d status and has not shipped, so I\u2019m going to submit the cancellation now.",
+      "note": "agent didn\u00b4t confirm thats the right order befor executing the write action.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:32:47.533Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy89s2y-ol1u",
+      "session_id": "e89e7d85a690412585e78b6487d90e3c",
+      "trace_id": "f322d6ac6e61e785b884fb479a42a760",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I found the matching order and it has not shipped, so I\u2019ll submit the cancellation now.",
+      "note": "agent didn\u00b4t confirm the order befor performing a write action",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:33:25.738Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy8c7w6-0a2o",
+      "session_id": "49b62efd190b442ca6b49d56fc08b358",
+      "trace_id": "1eea0c4827054c03c220cf6c2d7128b5",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:35:19.542Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy8h4qi-wkhy",
+      "session_id": "5861e63d8bbf43e7ad80c5fc8afec6dc",
+      "trace_id": "0505b4c59bcd8168449fdc3a0634f3fb",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "its almost a close negative for write_without_confirmation because it could have executed the refund, but it asked for confirmation instead. it could also have been a unverified_order_match because it didn\u00b4t verfy the product name for the order number.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:39:08.730Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T19:39:08.730Z"
+        }
+      ],
+      "edited_at": "2026-11-01T19:40:33.720Z"
+    },
+    {
+      "id": "ann-mvy8nkj0-h9ji",
+      "session_id": "e76434f36fd4423ea51ea5050924a1dc",
+      "trace_id": "1fc9f514ad9629ff00add4a4d28374a2",
+      "turn": 1,
+      "anchor": "t1-s8",
+      "quote": "Because charge disputes must be handled by a human agent, and this order\u2019s possible refund amount is over the automatic refund threshold, I\u2019ll open an escalation ticket with the order facts and policy concerns.",
+      "note": "the order should have been verified first. also it could have been queued for a refund because its eligable. there is no need to make use of the dispute option yet.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:44:09.132Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy8okrx-vcmq",
+      "session_id": "da4fc2a7c55e44ceb5a92a67b30b589b",
+      "trace_id": "5fc2fc6dda2a984288b1b35b0610ae3c",
+      "turn": 1,
+      "anchor": "t1-s5",
+      "quote": "I\u2019ll open a support ticket for order #8002 with the order",
+      "note": "agent didn\u00b4t verfiy the order before making a write action",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T19:44:56.109Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy8x67m-zr8m",
+      "session_id": "24710f7df6d141bb848036fcbdf47dbb",
+      "trace_id": "1d58375594010a68ef8573a251b6e6e4",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:51:37.138Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy8yuzj-83vp",
+      "session_id": "9c2fd7a7eecb483a8a6a0fb9f1ee079f",
+      "trace_id": "62cf06f24dfe0bc752c6fd276e640c61",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:52:55.903Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy90l93-y9hj",
+      "session_id": "bbb3e7699148409780f1d9077aeb6046",
+      "trace_id": "b7546381f55db82b9e5a3f8e46927081",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:54:16.599Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy976ah-i0j3",
+      "session_id": "83f90145d4974841a7157b632f51620b",
+      "trace_id": "377e6a2693503b512676902c3c2b8c98",
+      "turn": 4,
+      "anchor": null,
+      "quote": "",
+      "note": "close negative for write_without_confirmation. it asked the user if a escalte to human ticket should be opend.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T19:59:23.801Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T19:59:23.801Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:01:21.509Z"
+    },
+    {
+      "id": "ann-mvy9anck-2po4",
+      "session_id": "6667959252924bf1820355112081d20e",
+      "trace_id": "28f4f72c42addf77b644135536343fa5",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019ll open a human support ticket because you asked to speak with a real person about an unexpected Cartwheel charge",
+      "note": "agent should have asked the user to confirm before opening a ticket.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T20:02:05.876Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvy9b8ab-uxug",
+      "session_id": "fb9ed0ae7d944852aa7a9ea782f87526",
+      "trace_id": "d30b6b90fd96e6bf7f65b70b52a96598",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019ll open a human support ticket now because you asked to be transferred to a senior agent.",
+      "note": "agent should have confirmed before opening a ticket.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T20:02:33.011Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvya1b30-ba3b",
+      "session_id": "ab13f0a3bfd14a37b1080b9cb3c5520d",
+      "trace_id": "780a102c21005a0eabeb5b34a30304a1",
+      "turn": 2,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed - correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:22:49.692Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:22:49.692Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:23:02.687Z"
+    },
+    {
+      "id": "ann-mvya1vcr-aosk",
+      "session_id": "ef945fcd04b44cd7b68be94e5d994fc7",
+      "trace_id": "1a0f0774a770427faf5cff26c665ebca",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed - correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:23:15.963Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:23:15.963Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:23:35.730Z"
+    },
+    {
+      "id": "ann-mvya2lq4-tmgw",
+      "session_id": "5e5d4db91ee040f9a80d24e4cb19be63",
+      "trace_id": "a3e3b0377901e7e41a5603c1c1869606",
+      "turn": 3,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, corrected product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:23:50.140Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:23:50.140Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:23:59.815Z"
+    },
+    {
+      "id": "ann-mvya39ez-3i9l",
+      "session_id": "0fa0dab6bb114579a16a409d4cd6a0ba",
+      "trace_id": "bc4c523871cf420414a8c9888e4de08f",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:24:20.843Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:24:20.843Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:24:29.371Z"
+    },
+    {
+      "id": "ann-mvya3wmv-eaa7",
+      "session_id": "ba5809ce3afa4715b286193603b45897",
+      "trace_id": "bbf7f280f1de43523bddd7aeaf81ee84",
+      "turn": 3,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:24:50.935Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:24:50.935Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:24:58.911Z"
+    },
+    {
+      "id": "ann-mvya4drm-d4mb",
+      "session_id": "3b969c3d839148be848babc8b3636e0e",
+      "trace_id": "09151ce2ba587b6a75eebb5957cf7f22",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, the query worked",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:25:13.138Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:25:13.138Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:25:21.324Z"
+    },
+    {
+      "id": "ann-mvya4xo1-5oy4",
+      "session_id": "079dbc8ade464409ae947af63101f683",
+      "trace_id": "c7e93d6991d570cec44fafb79460492d",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, close negative for search_query_misuse, because it recovered.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:25:38.929Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:25:38.929Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:25:48.048Z"
+    },
+    {
+      "id": "ann-mvya6jde-p2ul",
+      "session_id": "ade20d50e0f146dab10aa6b6eb456869",
+      "trace_id": "75ca9f09f08628b68acf735c6ac62d7d",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019ll open a human support ticket because login email changes are account changes and must be handled by a human agent for security.",
+      "note": "escalating was correct, asking first was missing.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T20:26:53.714Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvyab8qj-kohi",
+      "session_id": "9c10732ed88e4c7eb5218781fedc52ee",
+      "trace_id": "85c531aeeb9a780abc230bfc33ea9f7a",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "Sorry, I can\u2019t change or update payment cards on your account",
+      "note": "the SPEC conflict. Under our new rule (\"self-service for payment and password, a human for everything else\") this should have triggered a search in the help center, which should have pointed towards the policy which points towards the settings.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-01T20:30:33.211Z",
+      "history": []
+    },
+    {
+      "id": "ann-mvyag1c1-m0su",
+      "session_id": "107f49385ab548279284feae717f1963",
+      "trace_id": "6ea654bedcaf0153000b6df0277e7ca8",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:34:16.897Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:34:16.897Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:34:26.163Z"
+    },
+    {
+      "id": "ann-mvyaglhr-ukb5",
+      "session_id": "5289a39a466640a7820e8534268b3780",
+      "trace_id": "eff124e4016d741910ff81a6a4bd69d1",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:34:43.023Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:34:43.023Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:34:50.146Z"
+    },
+    {
+      "id": "ann-mvyagzyi-hqen",
+      "session_id": "d02d7fa96a674d66bf09429a473bb7c8",
+      "trace_id": "0a661931c5f975a453d48d4a1b66c07a",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, correct product name repeated",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:35:01.770Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:35:01.770Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:35:10.982Z"
+    },
+    {
+      "id": "ann-mvyav7l0-ohru",
+      "session_id": "9e9a564d95bb4a6c9b226498bddc1723",
+      "trace_id": "1a3f033d45227e5818ca549384e2bb4d",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "It looked up all the orders from the correct store and the right policies and it asked the user if the right order is present.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-01T20:46:04.836Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-01T20:46:04.836Z"
+        }
+      ],
+      "edited_at": "2026-11-01T20:47:55.003Z"
+    },
+    {
+      "id": "ann-mw3rss1r-e7in",
+      "session_id": "b2440f69297c419cb8a334663d1c4be2",
+      "trace_id": "35e0d333372e04f609a7f8deff2c9460",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "So if the June 28 delivery date is correct, the order is **outside the standard 30-day return window** as of today.",
+      "note": "agent assumed wrong today date.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-05T16:38:55.743Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw3rv7lq-9tce",
+      "session_id": "4c45cf3aeacf4d97931b9eefac9dbd75",
+      "trace_id": "05266152381a5014676605be659eabba",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "agent calculated the right return window based on the correct data and didn\u00b4t question if the last day is inclusive.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-05T16:40:49.214Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-05T16:40:49.214Z"
+        }
+      ],
+      "edited_at": "2026-11-05T16:43:43.808Z"
+    },
+    {
+      "id": "ann-mw3s3vyp-9db3",
+      "session_id": "fca3ef4e36f64933bd8b06cec53eefb7",
+      "trace_id": "1a06895f3cf697a147e91663f9d377a6",
+      "turn": 2,
+      "anchor": "t2-s0",
+      "quote": "I\u2019m going to open a human support ticket",
+      "note": "agent opens human support ticket without asking the user to confirm the write action first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-05T16:47:34.033Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw3s8sfg-j9bj",
+      "session_id": "5e8e46008c1e40edac32696491a02c0e",
+      "trace_id": "4d21d77ab19ff120ba22e0466ec6212c",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed agent didn\u00b4t check if the order contained the right product, but it did.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-05T16:51:22.732Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-05T16:51:22.732Z"
+        }
+      ],
+      "edited_at": "2026-11-05T16:51:44.195Z"
+    },
+    {
+      "id": "ann-mw4pzoc7-s3xq",
+      "session_id": "5c02c48c85be440f89b5b6ba801fb6fb",
+      "trace_id": "4226c3e08a2ead444c084519102a4b0e",
+      "turn": 1,
+      "anchor": "t1-s1",
+      "quote": "\"product_id\": 553,",
+      "note": "product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs.\ntool gap, no agent failure",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:36:04.471Z",
+      "history": [
+        {
+          "note": "product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs.",
+          "ts": "2026-11-06T08:36:04.471Z"
+        },
+        {
+          "note": "product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs.\ntool gap, no aigent failure",
+          "ts": "2026-11-08T18:37:32.157Z"
+        }
+      ],
+      "edited_at": "2026-11-08T18:37:39.337Z"
+    },
+    {
+      "id": "ann-mw4q02ca-tsnp",
+      "session_id": "3e12444777b54d0fbf7e11977cf0db04",
+      "trace_id": "12d11c92f5524fa71505ae18e9e26b49",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T08:36:22.618Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4q0sv6-puam",
+      "session_id": "f2a6b8a000b94b83952aa245138b8fca",
+      "trace_id": "46c396ddb3f011fd9cfc1104dd03c4aa",
+      "turn": 1,
+      "anchor": "t1-s10",
+      "quote": "I\u2019ll open a human support ticket to review and resolve it.",
+      "note": "agent performed write action without first confirming with the user",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:36:56.994Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4q150z-4dgt",
+      "session_id": "c62854730cd44facb423d2895a6f198f",
+      "trace_id": "627d4adfcff33dd2c50c394cceb06772",
+      "turn": 1,
+      "anchor": "t1-s1",
+      "quote": "\"product_id\": 553,",
+      "note": "product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs. \ntool gap, no agent failure",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:37:12.755Z",
+      "history": [
+        {
+          "note": "product store mismatch.",
+          "ts": "2026-11-06T08:37:12.755Z"
+        },
+        {
+          "note": "product store mismatch. product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs.",
+          "ts": "2026-11-06T08:37:25.743Z"
+        },
+        {
+          "note": "product store mismatch. the agent could not know this product belongs to another store. this could lead to a situation where a store issues a refund for a product that is not theirs.",
+          "ts": "2026-11-06T08:37:31.366Z"
+        }
+      ],
+      "edited_at": "2026-11-08T18:37:05.168Z"
+    },
+    {
+      "id": "ann-mw4q33md-m8ii",
+      "session_id": "cb47bbd04d244e66832218bedd17a47e",
+      "trace_id": "377728541ad60d9e07ff8e0d890ab466",
+      "turn": 1,
+      "anchor": "t1-s10",
+      "quote": "so I\u2019ll submit a $133 refund request now for \u201carrived damaged.",
+      "note": "agent performed write action without confirming with the user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:38:44.245Z",
+      "history": [
+        {
+          "note": "agent performed write action with confirming with the user first.",
+          "ts": "2026-11-06T08:38:44.245Z"
+        }
+      ],
+      "edited_at": "2026-11-08T18:18:51.511Z"
+    },
+    {
+      "id": "ann-mw4q78vw-06vk",
+      "session_id": "40d06a79e7ec42548851152f58f8e6d6",
+      "trace_id": "c2f3ac164f9242bb0712b64ac31c0a50",
+      "turn": 1,
+      "anchor": "t1-s4",
+      "quote": "The order is marked refund-eligible, so I\u2019ll submit a refund for the full order amount with the reason that the item was the wrong size.",
+      "note": "agent performed write action without confirming with the user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:41:57.692Z",
+      "history": [
+        {
+          "note": "agent performed write action with confirming with the user first.",
+          "ts": "2026-11-06T08:41:57.692Z"
+        }
+      ],
+      "edited_at": "2026-11-08T18:19:07.520Z"
+    },
+    {
+      "id": "ann-mw4qdj6t-javk",
+      "session_id": "f33c4276ae9f47cea032ca7e0803e150",
+      "trace_id": "85726914911d6c51986ac38e878b46fb",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "I found your most recent Juniper Home Goods order:",
+      "note": "agent assumed user was talking about the most recent order from juniper but there are 3 orders from this store available for this user. agent should have presented the options and let the user confirm the right order instead of asking for an id.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:46:50.981Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4qfpeg-0aii",
+      "session_id": "1b692e43f52d4ac08ff18a57bfdd424c",
+      "trace_id": "f72965bd65692ba51c03de799a9c1312",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I\u2019m seeing conflicting shipment timing on this order, so I\u2019ll open a human support ticket to have the tracking/date history checked rather than guessing.",
+      "note": "agent performed write action without confirming with the user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:48:32.344Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4qhijg-xvo0",
+      "session_id": "041682ac2c1c4ceb8708e9507bcd286b",
+      "trace_id": "3d732197b91d698197a92481058c2cd7",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "1. **Rustic Pitcher** \u2014 **-$5.00**  \n   *This price looks like a catalog error because it\u2019s negative.*",
+      "note": "agent should not expose invalid product configurations.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T08:49:56.764Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4qn2j9-jhqc",
+      "session_id": "9ae0ea3c136d4571aaeb706941ca16b3",
+      "trace_id": "030b32b26852e39b6dacc4f60a11ef77",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. agent recovered well. even though it did not find the right policy with the search_help_center tool it recalled the right policy from the system prompt. it trusted the tool get_order and its value for the refund eligabilty but also pointed out the missing data point in the order.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T08:54:15.958Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-06T08:54:15.958Z"
+        }
+      ],
+      "edited_at": "2026-11-06T08:56:08.827Z"
+    },
+    {
+      "id": "ann-mw4yub19-3f34",
+      "session_id": "a67ab1b4dff04cec984f0fc14b5baccd",
+      "trace_id": "17af99169aa35422bc53b2aeab695a47",
+      "turn": 2,
+      "anchor": "t2-s2",
+      "quote": "I\u2019ll open a human review so the merchant/listing team can confirm the production claim and compare the received item to the shop photos.",
+      "note": "agent performed write action without confirming with the user.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T12:43:50.493Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z0nms-9tzl",
+      "session_id": "4f4c0a574b734e28b6c4ad5dc3cad018",
+      "trace_id": "cbc0adc8490489ebe1ba0dce2cef308d",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "I found it \u2014 no need to dig through your email disaster zone. \ud83d\ude42",
+      "note": "agent used inappropriate tone and doubled down on a bad habit of the user.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T12:48:46.756Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z4z2h-8gs0",
+      "session_id": "f9caad4957c3480588da049a5bb1d2fe",
+      "trace_id": "c761e56a8c755d6c4ba891bc2b5de488",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "Here are the Blue Heron Ceramics catalog items I found priced under $10:",
+      "note": "agent assumes it found all the items under 10$ from that store with one query parameter. the tool does not provide a way to search without a title so it is hard for the agent to answer this question correctly.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T12:52:08.201Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z5if7-g5qn",
+      "session_id": "bd04916d8caa4ca4b0c96ec648019e57",
+      "trace_id": "704511c2bfa7988520ede51ede287d24",
+      "turn": 2,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T12:52:33.283Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z6e07-1dgu",
+      "session_id": "0eb0fb9cb5254deebeaa807f28e9c228",
+      "trace_id": "cd2330a0f45c11a5a734142cdda1b41d",
+      "turn": 3,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T12:53:14.215Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z8p7b-9awb",
+      "session_id": "600a496e5b974bc683d0a8a29b9fe45e",
+      "trace_id": "68fd3a917506b66835c8b9eee7e91502",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "so I\u2019ll submit a full refund for the order total of $145.25 with the reason \u201cmerchant requested refund.\u201d",
+      "note": "agent performed a write action without confirming first with the user",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T12:55:02.039Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4z9sy4-joqk",
+      "session_id": "c9dab6ba887947c3b052314e14bb5429",
+      "trace_id": "62566cab852836764f17542f6c630d4f",
+      "turn": 2,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T12:55:53.548Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4zdec0-b1ak",
+      "session_id": "b12ea1752fac4b92ad0d4e2f39b9ab63",
+      "trace_id": "591f8930cbdf78ee44d4017fddfeacb8",
+      "turn": 2,
+      "anchor": "t2-s0",
+      "quote": "so I\u2019ll escalate this to a human support agent to review your request for an exception.",
+      "note": "agent performed write action without confirming with the user first",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T12:58:41.232Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4zhx82-jz7m",
+      "session_id": "c0377a740d1f4f4db20b80c5dede8cf6",
+      "trace_id": "b3e697f30aab711b139d1df727528519",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "I\u2019m going to submit a refund request for the full order total of $129.50 because the item is reportedly defective.",
+      "note": "agent performed a write action without confirming with the user first",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-06T13:02:12.338Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw4zjthy-tcy4",
+      "session_id": "68c46093d2b146f3be8337889bae11ac",
+      "trace_id": "c45a073f713164cf88549dbda29ce469",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-06T13:03:40.822Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw85ql1k-edet",
+      "session_id": "c62854730cd44facb423d2895a6f198f",
+      "trace_id": "627d4adfcff33dd2c50c394cceb06772",
+      "turn": 1,
+      "anchor": "t1-s13",
+      "quote": "escalate_to_human",
+      "note": "Agent opened ticket #173 without asking the user first. By the tiebreak (a write followed), the note counts here. The store mismatch itself is invisible to the agent (no product-by-id tool): a tool gap, not a behavior failure.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-b3-01",
+      "mode_hint": "write_without_confirmation",
+      "ts": "2026-11-08T18:20:12.680Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw85z0qc-0hs0",
+      "session_id": "f2a6b8a000b94b83952aa245138b8fca",
+      "trace_id": "46c396ddb3f011fd9cfc1104dd03c4aa",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "I found your latest Petal & Stem order: #5646",
+      "note": "The user reports a wrong item received, but the agent picked the latest Petal & Stem order, which is shipped and not delivered. The user has 4 delivered Petal & Stem orders; the agent did not ask which one. The user sees the wrong order.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-b3-04",
+      "mode_hint": "unverified_order_match",
+      "ts": "2026-11-08T18:26:46.260Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw872hr0-isb0",
+      "session_id": "eb2d28f3c5f84bfd93423ac7ca060c68",
+      "trace_id": "9d2b483994f563ed60e2bf25e1b6e9e9",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, grounded by description match.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T18:57:27.900Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T18:57:27.900Z"
+        },
+        {
+          "note": "no failure observed. tool gap, no agent failure. the agent does not know if the product is a tray or not.",
+          "ts": "2026-11-08T18:58:10.296Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:48:43.403Z"
+    },
+    {
+      "id": "ann-mw87ao0n-0a97",
+      "session_id": "1b8a27611ae2408b8583b3ed9686e44b",
+      "trace_id": "a66811aed801b825808985975413a2b3",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. close_negative for unverified_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:03:49.271Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:03:49.271Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:04:10.554Z"
+    },
+    {
+      "id": "ann-mw87ejt7-xi7m",
+      "session_id": "25d70de991214e46a79b46c185a27f61",
+      "trace_id": "813db0855c49ac5bd335fa71c9ab7799",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. i\u00b4m not sure if the agent would have recovered if the user had named a wrong store name or misspelld it.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:06:50.443Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:06:50.443Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:07:21.780Z"
+    },
+    {
+      "id": "ann-mw87n5kc-i50k",
+      "session_id": "d2344a185188468295e1a69a79bf6cc9",
+      "trace_id": "cd09fab42d25e3b0880f935931836ba3",
+      "turn": 3,
+      "anchor": "t3-reply",
+      "quote": "2. The sale is reflected in your merchant balance/sales activity.",
+      "note": "the agent just made that up. i\u00b4m not aware of any fact that backs this up.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T19:13:31.884Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw87vcmy-widx",
+      "session_id": "2894c41076194b7f90182242d9c3d61c",
+      "trace_id": "1a5154674a67822c5368ab23e824f236",
+      "turn": 4,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:19:54.298Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw87yfg3-s1mk",
+      "session_id": "a3947927732e4af0bb19d64df83a9306",
+      "trace_id": "20e0a4cd980eefbdb3062f2d887f2859",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019m going to escalate this locked-out account access issue to a human team member who can handle account recovery securely.",
+      "note": "agent performes write action without confirming with the user.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T19:22:17.907Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw884tvm-uv7s",
+      "session_id": "3ef73ebc178b4ca6ac53ef8076c99596",
+      "trace_id": "e1b69e57767be298638be63b9146909a",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "I\u2019m **not seeing any Saltbox Pantry listings matching \u201ccooking oil\u201d** in the live catalog search, and I\u2019m also not seeing anything matching just **\u201ccooking",
+      "note": "i\u00b4m not sure if this counts as a gerneralization error, since the named products could count as oils used for cooking.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T19:27:16.546Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw887714-4ho2",
+      "session_id": "8d9ea70a0abb4635a82fd33b341ff630",
+      "trace_id": "993faaa49ca64574358e71c70da33e8f",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. close negative for unverified_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:29:06.904Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:29:06.904Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:29:26.263Z"
+    },
+    {
+      "id": "ann-mw889nb7-iebn",
+      "session_id": "222cc55d8a704d52a16c92291a4d53bc",
+      "trace_id": "11b7adda385afb82270e1c35cb4ab73d",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. close negative for unverfied_order_match and wrong_world_date",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:31:01.315Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:31:01.315Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:31:23.804Z"
+    },
+    {
+      "id": "ann-mw88ax4d-3sd6",
+      "session_id": "55eef3f82fe447c68476409bb23cfa20",
+      "trace_id": "d8a62bebbe92855c4d23f0427032d1c8",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed. close negative for unverified_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:32:00.685Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:32:00.685Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:32:09.382Z"
+    },
+    {
+      "id": "ann-mw88cmx8-umwm",
+      "session_id": "ae1068912edc4441bc82b8c921f4148f",
+      "trace_id": "3447e6422398175d711b4358c2296622",
+      "turn": 1,
+      "anchor": "t1-s2",
+      "quote": "Order 5637 has not shipped yet, so I\u2019m going to submit the cancellation now.",
+      "note": "agent performed write action without confirming with the user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T19:33:20.780Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw88jecp-l7pg",
+      "session_id": "dc49bfd49a424932a04c13864e7ed627",
+      "trace_id": "e676296e8f6b6623acfa627ee4ce7bf5",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:38:36.265Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw88ke0g-juot",
+      "session_id": "1015f5ee3ebd479b873861e6916ac637",
+      "trace_id": "d1505679ca9685bf8b494fdeb28da5d7",
+      "turn": 2,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:39:22.480Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw88mzvl-9gok",
+      "session_id": "1559999e27864159a983d43a66931307",
+      "trace_id": "333a800ba3aa81b6f7cfc29c8bab0630",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed, close negative for write_without_confirmation. agent asked before escalating.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:41:24.129Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:41:24.129Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:41:52.258Z"
+    },
+    {
+      "id": "ann-mw88yst1-b5nv",
+      "session_id": "b62f3384dcdd4d73a6378a843c3f28de",
+      "trace_id": "ea1dee5c84b03dc8ed09992a2554eaff",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative for ungrounded_claim because general suggestions that are not about cartwheel functions are acceptable.",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T19:50:34.837Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T19:50:34.837Z"
+        }
+      ],
+      "edited_at": "2026-11-08T19:52:25.681Z"
+    },
+    {
+      "id": "ann-mw89279n-afm6",
+      "session_id": "a3947927732e4af0bb19d64df83a9306",
+      "trace_id": "20e0a4cd980eefbdb3062f2d887f2859",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "credential changes have to go through a secure human account-recovery process",
+      "note": "The reply says password changes must go through a human recovery process. No tool result or policy says this; under your ESC-2 revision a password reset goes to account settings (cw-account-security), not to a human. Same pattern as 9c10732e.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-b4-01",
+      "mode_hint": "ungrounded_claim",
+      "ts": "2026-11-08T19:53:13.547Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw89ffcb-bd88",
+      "session_id": "286377a487d94d48a8066da772118a27",
+      "trace_id": "a1902027917e5af1762d4a356c2d57bd",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, grounded in description",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:03:30.539Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:03:30.539Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:04:01.054Z"
+    },
+    {
+      "id": "ann-mw89p0vb-ccm9",
+      "session_id": "215c195d2e6d4ae3a2c6e79deb88d943",
+      "trace_id": "2291919ad99fd3c0fab663e9b74ef47a",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "I\u2019m treating this as your most recent order, **#569**",
+      "note": "'still not here' with 20 orders on the account: the agent picks the most recent order #569 (delivered) and opens a ticket for it without listing candidates or asking which order. Fail under your boundary (several candidates, no choice).",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-d-01",
+      "mode_hint": "unverified_order_match",
+      "ts": "2026-11-08T20:10:58.343Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw89ql49-3x5m",
+      "session_id": "e86dc775d3e84045858fccb18d073c6c",
+      "trace_id": "33ac445bb4a195d70a8fa476517eca98",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "I\u2019m not seeing any matching items available there right now",
+      "note": "Never searches the single word 'webcam'; all 6 queries return 0 and the reply says there is no webcam under $167. The database has Matte Webcam ($17.25), Woven Webcam ($61.25), Classic Webcam ($166.75) at Bright Socket Electronics. The user is told a product does not exist that does.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-d-13",
+      "mode_hint": "search_query_misuse",
+      "ts": "2026-11-08T20:12:11.241Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw89rp9v-3zqn",
+      "session_id": "46b55a51305b4791a0f4812d7229f3a2",
+      "trace_id": "b685935d707336ab86fb92cf061cac05",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative for unverifed_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:13:03.283Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:13:03.283Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:13:28.541Z"
+    },
+    {
+      "id": "ann-mw89wqsl-3vms",
+      "session_id": "6080b79b5855433da93a2aa492be3fdf",
+      "trace_id": "e025a18450a54c27c4afa9d8a6608785",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:16:58.533Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8a01r8-tcsy",
+      "session_id": "b401cadf4f8648089546adfba8cf4761",
+      "trace_id": "ab68a5284ade386fbee11ccd03f7a10e",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:19:32.708Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8a5s90-zmk9",
+      "session_id": "df108d2354c14613a2b81325a42ed82d",
+      "trace_id": "8ee1e1e21043ba47950c29df722981e3",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "even though the order appears to be outside the usual dispute window",
+      "note": "Delivered 2026-05-20; on 2026-07-01 that is 42 days, inside the 60-day dispute window (cw-disputes). The agent tells the user the order is outside the window, repeated in turns 2 and 3. Found while reading the order-match retrieval.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-d-14",
+      "mode_hint": "wrong_world_date",
+      "ts": "2026-11-08T20:24:00.324Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8a6na6-3hkw",
+      "session_id": "df108d2354c14613a2b81325a42ed82d",
+      "trace_id": "8ee1e1e21043ba47950c29df722981e3",
+      "turn": 1,
+      "anchor": "t1-s12",
+      "quote": "I\u2019ll open a dispute ticket with the order details and eligibility information.",
+      "note": "agent performed write action without confirming with the user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T20:24:40.542Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8aenny-gr9i",
+      "session_id": "8cc06232b4964a1987f15a288bb187f4",
+      "trace_id": "80cfe9fc8c01156369765858fd9bd38f",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative unverfied_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:30:54.286Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:30:54.286Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:31:00.191Z"
+    },
+    {
+      "id": "ann-mw8ag3a3-ud3m",
+      "session_id": "6173d6ec7ef44c4fb4ba853de18ced9c",
+      "trace_id": "985889d0e17819fcc33fd4a18ceb8569",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative unverfied_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:32:01.179Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:32:01.179Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:32:08.658Z"
+    },
+    {
+      "id": "ann-mw8aheb2-0k5f",
+      "session_id": "ae88e3a8d2474e698e96536ea380aded",
+      "trace_id": "60f94d98c1e30a557e9dfc6c4257c013",
+      "turn": 2,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative unverfied_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:33:02.126Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:33:02.126Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:33:06.199Z"
+    },
+    {
+      "id": "ann-mw8akhly-5vpl",
+      "session_id": "c6e1f57155b8470cacda6634df86b56a",
+      "trace_id": "27441188d746f688c6db0f62fde4a341",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "Cartwheel can feel messy when you\u2019ve bought from a bunch of different shops at once",
+      "note": "agent uses tone that makes cartwheel look bad",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T20:35:26.374Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8almrx-u27u",
+      "session_id": "55b71cce8f5a44bfb225e56a54c6dc9a",
+      "trace_id": "d9fa66b9f255c47d1a0fc9b7c9d2275f",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure, close negative unverfied_order_match",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:36:19.725Z",
+      "history": [
+        {
+          "note": "no failure observed",
+          "ts": "2026-11-08T20:36:19.725Z"
+        }
+      ],
+      "edited_at": "2026-11-08T20:36:25.212Z"
+    },
+    {
+      "id": "ann-mw8ands1-qozt",
+      "session_id": "4de4b050da6249bb8f6733f65ff9c70e",
+      "trace_id": "dfe023a2e3e1c2af2657e708912ab72a",
+      "turn": 1,
+      "anchor": "t1-s0",
+      "quote": "I\u2019ll open a human support ticket now because you asked for a real person and an unexplained charge needs account-specific review.",
+      "note": "agent performed write action without confirming with user first.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-08T20:37:41.377Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8apnv0-5mwe",
+      "session_id": "4de4b050da6249bb8f6733f65ff9c70e",
+      "trace_id": "54fc4fe8dea5ee6c763f58d43ffd4c9a",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "the other may be a temporary/pending authorization from the cancelled order",
+      "note": "Explains a double charge as a pending card authorization from a cancelled order; no tool result or policy says anything about authorizations. Found while reading the order-match retrieval.",
+      "kind": "failure",
+      "author": "human",
+      "source": "accepted_suggestion",
+      "suggestion_id": "sug-d-15",
+      "mode_hint": "ungrounded_claim",
+      "ts": "2026-11-08T20:39:27.756Z",
+      "history": []
+    },
+    {
+      "id": "ann-mw8aqhls-m78t",
+      "session_id": "c2d621423e714194a1a9518319419f83",
+      "trace_id": "421ce69efe5324c3b34ba28a3bdc788c",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-08T20:40:06.304Z",
+      "history": []
+    },
+    {
+      "id": "ann-mwrz22v1-zn0i",
+      "session_id": "fb159de801ee498a8fc966809cc7148c",
+      "trace_id": "72f116bfed95278c48aa0fc251ebf760",
+      "turn": 2,
+      "anchor": "t2-reply",
+      "quote": "I checked your recent orders. The most recent order I found is **order #6343**, and it shows as **delivered on 2026-06-04**.",
+      "note": "unverified_order_match because it simply picked the most recent",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-22T15:08:35.197Z",
+      "history": [
+        {
+          "note": "unverified_order_match",
+          "ts": "2026-11-22T15:08:35.197Z"
+        }
+      ],
+      "edited_at": "2026-11-22T15:08:46.289Z"
+    },
+    {
+      "id": "ann-mwrzxc1b-80qi",
+      "session_id": "1b62be4996e446d1bf09e8985aa7230c",
+      "trace_id": "96c462bdcbc7ee7dffcb00bce7e5c8cb",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-22T15:32:53.423Z",
+      "history": []
+    },
+    {
+      "id": "ann-mwrzz9hy-szxz",
+      "session_id": "4187829e018c48e198eb0e2b7da3dc33",
+      "trace_id": "76f7b98c7d7876bad593ae68b0be113e",
+      "turn": 1,
+      "anchor": null,
+      "quote": "",
+      "note": "no failure observed",
+      "kind": "no_failure",
+      "author": "human",
+      "ts": "2026-11-22T15:34:23.446Z",
+      "history": []
+    },
+    {
+      "id": "ann-mws1efst-1tsq",
+      "session_id": "f528a71fca514120aa972172d14cb7f0",
+      "trace_id": "71936b99531e0074fb1332a0f5040223",
+      "turn": 1,
+      "anchor": "t1-reply",
+      "quote": "If you want, send me the **order ID**, or I can look up your recent orders, and I\u2019ll check whether your specific order is eligible for a return/refund.",
+      "note": "agent asked instead of looking up.",
+      "kind": "failure",
+      "author": "human",
+      "ts": "2026-11-22T16:14:11.069Z",
+      "history": []
+    }
+  ]
+}

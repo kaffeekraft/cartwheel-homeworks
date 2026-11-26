@@ -1,0 +1,1408 @@
+{
+  "unit": "session",
+  "source": "langfuse",
+  "pool": {
+    "rule": "all cached sessions except scenario_id prefixes smoke- and pilot- (both support-0035 runs kept)",
+    "size": 251
+  },
+  "batches": {
+    "b1_cluster": {
+      "selected_at": "2026-10-28T16:23:32.130647+00:00",
+      "method": "one representative per cluster; graph k=15 seed=0 features=['size', 'role', 'tools']"
+    },
+    "b1_random": {
+      "selected_at": "2026-10-28T16:23:32.130664+00:00",
+      "method": "random.Random(4).sample(sorted pool minus b1_cluster, 15)"
+    },
+    "b2_intent": {
+      "selected_at": "2026-11-01T17:57:03.249222+00:00",
+      "method": "stratified by scenario tuple.intent over pool minus batch 1; 2 per intent + 1 for the 6 largest intents (cancellation, order_status, policy_question, product_search, refund, return_deadline); random.Random(5).sample within each stratum, strata in name order"
+    },
+    "b3_depth": {
+      "selected_at": "2026-11-01T20:38:56.447096+00:00",
+      "method": "purposive depth searches on pre-reading metadata (scenario tuple, data-quality case, tools called); searches run in order without replacement, random.Random(6) within each; not used for prevalence",
+      "searches": [
+        {
+          "name": "dq_store_mismatch",
+          "target_mode": "unverified_order_match",
+          "rule": "data-quality case dq-order-store-mismatch",
+          "n": 2
+        },
+        {
+          "name": "ambiguous",
+          "target_mode": "unverified_order_match",
+          "rule": "difficulty=ambiguous",
+          "n": 2
+        },
+        {
+          "name": "dq_missing_title",
+          "target_mode": "unverified_product_identity / search_query_misuse",
+          "rule": "dq-product-missing-title",
+          "n": 2
+        },
+        {
+          "name": "dq_duplicate_title",
+          "target_mode": "unverified_product_identity / search_query_misuse",
+          "rule": "dq-product-duplicate-title",
+          "n": 1
+        },
+        {
+          "name": "dq_invalid_price",
+          "target_mode": "unverified_product_identity / search_query_misuse",
+          "rule": "dq-product-invalid-price",
+          "n": 1
+        },
+        {
+          "name": "above_threshold",
+          "target_mode": "redundant_escalation",
+          "rule": "record_state=order_above_threshold",
+          "n": 3
+        },
+        {
+          "name": "restocking_fee",
+          "target_mode": "refund_options_mismatch_policy",
+          "rule": "applicable_policy in store-cascade-audio-policy, store-second-stitch-apparel-policy, cw-restocking-fees",
+          "n": 3
+        },
+        {
+          "name": "account_store_scope",
+          "target_mode": "ungrounded_claim",
+          "rule": "intent in account_change, store_info, out_of_scope",
+          "n": 3
+        },
+        {
+          "name": "shopper_order_lookup",
+          "target_mode": "asks_instead_of_looking_up / answer_is_too_technical",
+          "rule": "role=shopper and find_order or list_my_orders called",
+          "n": 3
+        },
+        {
+          "name": "late_write",
+          "target_mode": "write_without_confirmation (close negatives)",
+          "rule": "multi-turn, a write tool only in turn 2 or later",
+          "n": 3
+        },
+        {
+          "name": "dq_dates",
+          "target_mode": "wrong_world_date",
+          "rule": "dq-order-reversed-dates or dq-order-missing-delivery-date",
+          "n": 2
+        }
+      ]
+    },
+    "b4_random": {
+      "selected_at": "2026-11-08T18:54:17.732391+00:00",
+      "method": "random.Random(7).sample(sorted pool minus batches 1-3, 15); drawn after the taxonomy draft to check saturation"
+    },
+    "d_search": {
+      "selected_at": "2026-11-08T20:06:49.623524+00:00",
+      "method": "Part D searches over the 151 unreviewed pool sessions with deterministic filters on tool results (retrieval signal, not a label); every hit added; not used for sample fractions",
+      "searches": [
+        {
+          "name": "order_match",
+          "target_mode": "unverified_order_match",
+          "rule": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+          "n": 9
+        },
+        {
+          "name": "query_zero_hits",
+          "target_mode": "search_query_misuse",
+          "rule": "Part D search for search_query_misuse: search_products returned 0 results for a query of 2+ words",
+          "n": 4
+        },
+        {
+          "name": "not_available_claim",
+          "target_mode": "search_query_misuse (revised definition)",
+          "rule": "Part D repeat search for search_query_misuse (revised definition): search_products called and the reply contains a not-found phrase (not seeing/finding, couldn't/didn't find, no matching, don't see any, not available); pool = 138 unreviewed sessions; 1 hit",
+          "n": 1
+        }
+      ]
+    }
+  },
+  "sessions": {
+    "2210e172216e43d0a45d372083a4ce2a": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 0 (nearest centroid; 10 sessions)",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "2079b69d5b512139c8237801bef19d6d",
+        "430ff8e0d7219b980193b2f545c9b78b"
+      ]
+    },
+    "d02d7fa96a674d66bf09429a473bb7c8": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 1 (nearest centroid; 30 sessions)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "0a661931c5f975a453d48d4a1b66c07a"
+      ]
+    },
+    "ac29e9379a8440838dd7f915fd531bb0": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 2 (nearest centroid; 25 sessions)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "c0179230b3997387974e9f39edeefc47"
+      ]
+    },
+    "f18c509eb4294ab095ae3b0f4cf435b0": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 3 (nearest centroid; 27 sessions)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "8ef72757980c3240ad9aa793ca087915"
+      ]
+    },
+    "78d21eebb82144949b3c4a20cc0115c9": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 4 (nearest centroid; 9 sessions)",
+      "cluster": 4,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "a7bc7d4919af12f368bcbf65b76e5726",
+        "d8ae43e453415bc74acd8a2989c5274a",
+        "1f1ea6adfd0316e3ab8855db51d81e3f"
+      ]
+    },
+    "286377a487d94d48a8066da772118a27": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 5 (nearest centroid; 18 sessions)",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "a1902027917e5af1762d4a356c2d57bd"
+      ]
+    },
+    "48713c37c04b4f40ab30d29d70a3fbe3": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 6 (nearest centroid; 22 sessions)",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "ca1ddaed71bb3528d855c26f14ee4690",
+        "2361e25d8a2928176edf4b6de8237a9f"
+      ]
+    },
+    "d4a19f25c671491e9560b160710928cb": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 7 (nearest centroid; 23 sessions)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "56090097e48aa442c902f0122864a028"
+      ]
+    },
+    "450686b91d9249078f3d503dfa1679f2": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 8 (nearest centroid; 13 sessions)",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "937c34bbf82eb80729807203abf92b2e"
+      ]
+    },
+    "1e034245181d4e7c9492ceac763121fe": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 9 (nearest centroid; 31 sessions)",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "78753bf71ba807835fab4117dacd89d4"
+      ]
+    },
+    "a00fd7a5be644ab3838b92d9db29dfa2": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 10 (nearest centroid; 7 sessions)",
+      "cluster": 10,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "e874413ac83d86edcfb4cf0f5ddb19b9"
+      ]
+    },
+    "24134ec72978448c93fa3f21678877a7": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 11 (nearest centroid; 9 sessions)",
+      "cluster": 11,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "14710d0b09afb2b52bc27ddd3d84c7ce"
+      ]
+    },
+    "e75380c6b9354b93b6900db9327881da": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 12 (nearest centroid; 15 sessions)",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "e576c5ab69479357c35b097281811a76"
+      ]
+    },
+    "fb159de801ee498a8fc966809cc7148c": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 13 (nearest centroid; 4 sessions)",
+      "cluster": 13,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "6bcfd0d59f88d6adc7bd0c83b1a4f636",
+        "72f116bfed95278c48aa0fc251ebf760"
+      ]
+    },
+    "ef678f6b0c7947fbb237e1ec1d680cb7": {
+      "batch": "b1_cluster",
+      "reason": "representative of cluster 14 (nearest centroid; 8 sessions)",
+      "cluster": 14,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "fd2c1980ebf7356d8e07ef7b29a5deaa"
+      ]
+    },
+    "4187829e018c48e198eb0e2b7da3dc33": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "76f7b98c7d7876bad593ae68b0be113e"
+      ]
+    },
+    "541e3fced36a408487d2ab94eec307ec": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "1daac9b39b0a31a16fb397fbf39af363"
+      ]
+    },
+    "1d1b66dca9094e47b2e6bbe8ed054b88": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "03d456334fd46c1f805a825bc9aae215"
+      ]
+    },
+    "cf430bde7c3a48818147b33ae4ede5a9": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "8a5abe56afa495a01ca5d7a89a7fcb04"
+      ]
+    },
+    "6b118cd034e449f79daf4545dafdfe44": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "8c23adea99c534cbc0fda82a7c3a1196"
+      ]
+    },
+    "939db0e0c5ca40368fb82b06a2d5a488": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 4,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "20c83b051be761fbcd083fdb63750c8c",
+        "5fa6e431d0c1c889b400899df0e0e18f",
+        "9a5b5baf4c1635a75372f7c0718d9f85"
+      ]
+    },
+    "2b25134849d34be8b1e51483c99ee560": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "d9d642a6fe48d29af21e6c326e039d08",
+        "fc0ac5f377c780ffdee273fb1ed0d2b2"
+      ]
+    },
+    "1b62be4996e446d1bf09e8985aa7230c": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 10,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "96c462bdcbc7ee7dffcb00bce7e5c8cb"
+      ]
+    },
+    "107f49385ab548279284feae717f1963": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "6ea654bedcaf0153000b6df0277e7ca8"
+      ]
+    },
+    "04f142a1fc694e75a7207b37db80e374": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "e1a63526505994a89aa7a80a2dd44cf3"
+      ]
+    },
+    "6c086a8b22dd4113879306e5a16b04f0": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "055467cdb755a6dc5a8b917cadd21ec3"
+      ]
+    },
+    "a7c14b1471124f13acd25f8df7a5ec41": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "30bec90b7257ec2c0663e232038378d4",
+        "03d3655859ee4139d58cb813445e4b42"
+      ]
+    },
+    "fd5d1061a6a24d4d945bb3e53b7eb4fc": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "4aa7951d132d1db8dc9618a30fee7427"
+      ]
+    },
+    "5289a39a466640a7820e8534268b3780": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "eff124e4016d741910ff81a6a4bd69d1"
+      ]
+    },
+    "e38d569361e7435a92821f46eaf6c099": {
+      "batch": "b1_random",
+      "reason": "uniform random from pool minus cluster representatives (seed 4)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "455d540f729072f64dcbee41753c96ad"
+      ]
+    },
+    "ade20d50e0f146dab10aa6b6eb456869": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'account_change' (random within stratum, seed 5)",
+      "intent": "account_change",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 3,
+      "trace_ids": [
+        "75ca9f09f08628b68acf735c6ac62d7d",
+        "0e8580af836079328e191180c0c2bc2b",
+        "ea07a4d9895f2fff6c38397a54fb9b91"
+      ]
+    },
+    "b1dcf05f41cf4be4972df03c2fb41d32": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'account_change' (random within stratum, seed 5)",
+      "intent": "account_change",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "dd989df45656b96ba6913a9cc29640af"
+      ]
+    },
+    "65dc9af4c8474f78af3450ec5e7fd479": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'cancellation' (random within stratum, seed 5)",
+      "intent": "cancellation",
+      "cluster": 10,
+      "role": "support",
+      "turns": 2,
+      "trace_ids": [
+        "b429f4cdefbd4fab9d88b231f951e603",
+        "d5a7ee4bcb7ab24b0f596d18113fab13"
+      ]
+    },
+    "e89e7d85a690412585e78b6487d90e3c": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'cancellation' (random within stratum, seed 5)",
+      "intent": "cancellation",
+      "cluster": 10,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "f322d6ac6e61e785b884fb479a42a760"
+      ]
+    },
+    "ba5809ce3afa4715b286193603b45897": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'cancellation' (random within stratum, seed 5)",
+      "intent": "cancellation",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "11251c17109c21b1b2b139bb09225c33",
+        "2cde0696d805dda84d9074581d2d38e0",
+        "bbf7f280f1de43523bddd7aeaf81ee84"
+      ]
+    },
+    "e76434f36fd4423ea51ea5050924a1dc": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'dispute' (random within stratum, seed 5)",
+      "intent": "dispute",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "1fc9f514ad9629ff00add4a4d28374a2"
+      ]
+    },
+    "da4fc2a7c55e44ceb5a92a67b30b589b": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'dispute' (random within stratum, seed 5)",
+      "intent": "dispute",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "5fc2fc6dda2a984288b1b35b0610ae3c",
+        "fc3b101d6ec78ebc43512ed26f679790"
+      ]
+    },
+    "0fa0dab6bb114579a16a409d4cd6a0ba": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'order_status' (random within stratum, seed 5)",
+      "intent": "order_status",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "bc4c523871cf420414a8c9888e4de08f"
+      ]
+    },
+    "e55e0d2e663049fcaad38bd1811c6219": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'order_status' (random within stratum, seed 5)",
+      "intent": "order_status",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "c0e299d690c9573d060205024419e256"
+      ]
+    },
+    "ab13f0a3bfd14a37b1080b9cb3c5520d": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'order_status' (random within stratum, seed 5)",
+      "intent": "order_status",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "a96712e5729d58e7fc1c8f9c4de6f4de",
+        "780a102c21005a0eabeb5b34a30304a1"
+      ]
+    },
+    "9c10732ed88e4c7eb5218781fedc52ee": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'out_of_scope' (random within stratum, seed 5)",
+      "intent": "out_of_scope",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "85c531aeeb9a780abc230bfc33ea9f7a",
+        "11900d587aada339d4a7cce49cb8c31d",
+        "c425852d08d1007d298cc185019be62e"
+      ]
+    },
+    "0a70d83ca39b4bd9a3e89ba383e27b40": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'out_of_scope' (random within stratum, seed 5)",
+      "intent": "out_of_scope",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "9686722551b0c0e1fef3158e5004ba55"
+      ]
+    },
+    "24710f7df6d141bb848036fcbdf47dbb": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'payout_question' (random within stratum, seed 5)",
+      "intent": "payout_question",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "1d58375594010a68ef8573a251b6e6e4"
+      ]
+    },
+    "10fb1f53a87c4016bda38dfeca355d26": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'payout_question' (random within stratum, seed 5)",
+      "intent": "payout_question",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "c02cc4e5cd140f481321ce29f4158702"
+      ]
+    },
+    "9c2fd7a7eecb483a8a6a0fb9f1ee079f": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'policy_question' (random within stratum, seed 5)",
+      "intent": "policy_question",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "62cf06f24dfe0bc752c6fd276e640c61"
+      ]
+    },
+    "bbb3e7699148409780f1d9077aeb6046": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'policy_question' (random within stratum, seed 5)",
+      "intent": "policy_question",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "b7546381f55db82b9e5a3f8e46927081"
+      ]
+    },
+    "5d1d9d9d3ea043738069738076e2c35f": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'policy_question' (random within stratum, seed 5)",
+      "intent": "policy_question",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "123a45b09bfca87b1f5459bbb8906919"
+      ]
+    },
+    "3b969c3d839148be848babc8b3636e0e": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'product_search' (random within stratum, seed 5)",
+      "intent": "product_search",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "09151ce2ba587b6a75eebb5957cf7f22"
+      ]
+    },
+    "83f90145d4974841a7157b632f51620b": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'product_search' (random within stratum, seed 5)",
+      "intent": "product_search",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 4,
+      "trace_ids": [
+        "df0dc1473ffa2c143e006762b7c388a2",
+        "bbb0e2cb729bf4ee67a021c0744e4151",
+        "f2f5133681058e677fd70b559aba187d",
+        "377e6a2693503b512676902c3c2b8c98"
+      ]
+    },
+    "079dbc8ade464409ae947af63101f683": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'product_search' (random within stratum, seed 5)",
+      "intent": "product_search",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "c7e93d6991d570cec44fafb79460492d"
+      ]
+    },
+    "d8f14f9221a14c77b60f89f9e9dfcda3": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'refund' (random within stratum, seed 5)",
+      "intent": "refund",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "59d35e9b4e81f665aa2855271cca64a7"
+      ]
+    },
+    "5861e63d8bbf43e7ad80c5fc8afec6dc": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'refund' (random within stratum, seed 5)",
+      "intent": "refund",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "0505b4c59bcd8168449fdc3a0634f3fb"
+      ]
+    },
+    "0b137c553b4f4a2b9e560ba5ff46632f": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'refund' (random within stratum, seed 5)",
+      "intent": "refund",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "1e22d83a41afc6ff82ae8288fb2e211f"
+      ]
+    },
+    "6667959252924bf1820355112081d20e": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'request_human' (random within stratum, seed 5)",
+      "intent": "request_human",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "28f4f72c42addf77b644135536343fa5"
+      ]
+    },
+    "fb9ed0ae7d944852aa7a9ea782f87526": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'request_human' (random within stratum, seed 5)",
+      "intent": "request_human",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "d30b6b90fd96e6bf7f65b70b52a96598"
+      ]
+    },
+    "5e5d4db91ee040f9a80d24e4cb19be63": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'return_deadline' (random within stratum, seed 5)",
+      "intent": "return_deadline",
+      "cluster": 2,
+      "role": "support",
+      "turns": 3,
+      "trace_ids": [
+        "467cd0ce9f8acd7a63c5f45c05a8aaac",
+        "0749ae72f1c0eb92dfd463bcf3b0c7ae",
+        "a3e3b0377901e7e41a5603c1c1869606"
+      ]
+    },
+    "3b72ad69a063495c99a983c9d471ca6c": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'return_deadline' (random within stratum, seed 5)",
+      "intent": "return_deadline",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "304b6be5b2b3dfd2e18bce009bcfdbec"
+      ]
+    },
+    "ef945fcd04b44cd7b68be94e5d994fc7": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'return_deadline' (random within stratum, seed 5)",
+      "intent": "return_deadline",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "1a0f0774a770427faf5cff26c665ebca"
+      ]
+    },
+    "49b62efd190b442ca6b49d56fc08b358": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'store_info' (random within stratum, seed 5)",
+      "intent": "store_info",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "1eea0c4827054c03c220cf6c2d7128b5"
+      ]
+    },
+    "257dc453301440bc86e0ae628b7db553": {
+      "batch": "b2_intent",
+      "reason": "intent stratum 'store_info' (random within stratum, seed 5)",
+      "intent": "store_info",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "5a81df143b7762c9985f464d20efd916",
+        "1187ba7cae8d237e1b053deae2da38c0"
+      ]
+    },
+    "c62854730cd44facb423d2895a6f198f": {
+      "batch": "b3_depth",
+      "search": "dq_store_mismatch",
+      "target_mode": "unverified_order_match",
+      "reason": "depth search 'dq_store_mismatch' for unverified_order_match: data-quality case dq-order-store-mismatch (5 candidates, random, seed 6)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "627d4adfcff33dd2c50c394cceb06772"
+      ]
+    },
+    "5c02c48c85be440f89b5b6ba801fb6fb": {
+      "batch": "b3_depth",
+      "search": "dq_store_mismatch",
+      "target_mode": "unverified_order_match",
+      "reason": "depth search 'dq_store_mismatch' for unverified_order_match: data-quality case dq-order-store-mismatch (5 candidates, random, seed 6)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "4226c3e08a2ead444c084519102a4b0e"
+      ]
+    },
+    "f33c4276ae9f47cea032ca7e0803e150": {
+      "batch": "b3_depth",
+      "search": "ambiguous",
+      "target_mode": "unverified_order_match",
+      "reason": "depth search 'ambiguous' for unverified_order_match: difficulty=ambiguous (4 candidates, random, seed 6)",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "85726914911d6c51986ac38e878b46fb"
+      ]
+    },
+    "9e9a564d95bb4a6c9b226498bddc1723": {
+      "batch": "b3_depth",
+      "search": "ambiguous",
+      "target_mode": "unverified_order_match",
+      "reason": "depth search 'ambiguous' for unverified_order_match: difficulty=ambiguous (4 candidates, random, seed 6)",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "1a3f033d45227e5818ca549384e2bb4d"
+      ]
+    },
+    "041682ac2c1c4ceb8708e9507bcd286b": {
+      "batch": "b3_depth",
+      "search": "dq_missing_title",
+      "target_mode": "unverified_product_identity / search_query_misuse",
+      "reason": "depth search 'dq_missing_title' for unverified_product_identity / search_query_misuse: dq-product-missing-title (3 candidates, random, seed 6)",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "3d732197b91d698197a92481058c2cd7"
+      ]
+    },
+    "f9caad4957c3480588da049a5bb1d2fe": {
+      "batch": "b3_depth",
+      "search": "dq_missing_title",
+      "target_mode": "unverified_product_identity / search_query_misuse",
+      "reason": "depth search 'dq_missing_title' for unverified_product_identity / search_query_misuse: dq-product-missing-title (3 candidates, random, seed 6)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "c761e56a8c755d6c4ba891bc2b5de488",
+        "9629246909d8ff314cb0b8c624223b24"
+      ]
+    },
+    "68c46093d2b146f3be8337889bae11ac": {
+      "batch": "b3_depth",
+      "search": "dq_duplicate_title",
+      "target_mode": "unverified_product_identity / search_query_misuse",
+      "reason": "depth search 'dq_duplicate_title' for unverified_product_identity / search_query_misuse: dq-product-duplicate-title (5 candidates, random, seed 6)",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "c45a073f713164cf88549dbda29ce469"
+      ]
+    },
+    "a67ab1b4dff04cec984f0fc14b5baccd": {
+      "batch": "b3_depth",
+      "search": "dq_invalid_price",
+      "target_mode": "unverified_product_identity / search_query_misuse",
+      "reason": "depth search 'dq_invalid_price' for unverified_product_identity / search_query_misuse: dq-product-invalid-price (4 candidates, random, seed 6)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 2,
+      "trace_ids": [
+        "3a88724e5e33c6e28dc4586dc2c7a7b5",
+        "17af99169aa35422bc53b2aeab695a47"
+      ]
+    },
+    "cb47bbd04d244e66832218bedd17a47e": {
+      "batch": "b3_depth",
+      "search": "above_threshold",
+      "target_mode": "redundant_escalation",
+      "reason": "depth search 'above_threshold' for redundant_escalation: record_state=order_above_threshold (7 candidates, random, seed 6)",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "377728541ad60d9e07ff8e0d890ab466"
+      ]
+    },
+    "c0377a740d1f4f4db20b80c5dede8cf6": {
+      "batch": "b3_depth",
+      "search": "above_threshold",
+      "target_mode": "redundant_escalation",
+      "reason": "depth search 'above_threshold' for redundant_escalation: record_state=order_above_threshold (7 candidates, random, seed 6)",
+      "cluster": 14,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "b3e697f30aab711b139d1df727528519"
+      ]
+    },
+    "600a496e5b974bc683d0a8a29b9fe45e": {
+      "batch": "b3_depth",
+      "search": "above_threshold",
+      "target_mode": "redundant_escalation",
+      "reason": "depth search 'above_threshold' for redundant_escalation: record_state=order_above_threshold (7 candidates, random, seed 6)",
+      "cluster": 11,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "68fd3a917506b66835c8b9eee7e91502",
+        "18f8e1eeac95a53745371c135d55a3b7"
+      ]
+    },
+    "5e8e46008c1e40edac32696491a02c0e": {
+      "batch": "b3_depth",
+      "search": "restocking_fee",
+      "target_mode": "refund_options_mismatch_policy",
+      "reason": "depth search 'restocking_fee' for refund_options_mismatch_policy: applicable_policy in store-cascade-audio-policy, store-second-stitch-apparel-policy, cw-restocking-fees (10 candidates, random, seed 6)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "4d21d77ab19ff120ba22e0466ec6212c"
+      ]
+    },
+    "0eb0fb9cb5254deebeaa807f28e9c228": {
+      "batch": "b3_depth",
+      "search": "restocking_fee",
+      "target_mode": "refund_options_mismatch_policy",
+      "reason": "depth search 'restocking_fee' for refund_options_mismatch_policy: applicable_policy in store-cascade-audio-policy, store-second-stitch-apparel-policy, cw-restocking-fees (10 candidates, random, seed 6)",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "fad49c95085e58c590bb737d8c5c602d",
+        "862bd419aff205dba63721e8085f38c0",
+        "cd2330a0f45c11a5a734142cdda1b41d"
+      ]
+    },
+    "4c45cf3aeacf4d97931b9eefac9dbd75": {
+      "batch": "b3_depth",
+      "search": "restocking_fee",
+      "target_mode": "refund_options_mismatch_policy",
+      "reason": "depth search 'restocking_fee' for refund_options_mismatch_policy: applicable_policy in store-cascade-audio-policy, store-second-stitch-apparel-policy, cw-restocking-fees (10 candidates, random, seed 6)",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "05266152381a5014676605be659eabba"
+      ]
+    },
+    "c9dab6ba887947c3b052314e14bb5429": {
+      "batch": "b3_depth",
+      "search": "account_store_scope",
+      "target_mode": "ungrounded_claim",
+      "reason": "depth search 'account_store_scope' for ungrounded_claim: intent in account_change, store_info, out_of_scope (21 candidates, random, seed 6)",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "3d6512b7e7238a5cbdd5627e3ca7b6ae",
+        "62566cab852836764f17542f6c630d4f"
+      ]
+    },
+    "3e12444777b54d0fbf7e11977cf0db04": {
+      "batch": "b3_depth",
+      "search": "account_store_scope",
+      "target_mode": "ungrounded_claim",
+      "reason": "depth search 'account_store_scope' for ungrounded_claim: intent in account_change, store_info, out_of_scope (21 candidates, random, seed 6)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "12d11c92f5524fa71505ae18e9e26b49"
+      ]
+    },
+    "bd04916d8caa4ca4b0c96ec648019e57": {
+      "batch": "b3_depth",
+      "search": "account_store_scope",
+      "target_mode": "ungrounded_claim",
+      "reason": "depth search 'account_store_scope' for ungrounded_claim: intent in account_change, store_info, out_of_scope (21 candidates, random, seed 6)",
+      "cluster": 9,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "ac5927649c7c43f1aad9c91d06f75cf9",
+        "704511c2bfa7988520ede51ede287d24"
+      ]
+    },
+    "f2a6b8a000b94b83952aa245138b8fca": {
+      "batch": "b3_depth",
+      "search": "shopper_order_lookup",
+      "target_mode": "asks_instead_of_looking_up / answer_is_too_technical",
+      "reason": "depth search 'shopper_order_lookup' for asks_instead_of_looking_up / answer_is_too_technical: role=shopper and find_order or list_my_orders called (37 candidates, random, seed 6)",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "46c396ddb3f011fd9cfc1104dd03c4aa"
+      ]
+    },
+    "40d06a79e7ec42548851152f58f8e6d6": {
+      "batch": "b3_depth",
+      "search": "shopper_order_lookup",
+      "target_mode": "asks_instead_of_looking_up / answer_is_too_technical",
+      "reason": "depth search 'shopper_order_lookup' for asks_instead_of_looking_up / answer_is_too_technical: role=shopper and find_order or list_my_orders called (37 candidates, random, seed 6)",
+      "cluster": 14,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "c2f3ac164f9242bb0712b64ac31c0a50"
+      ]
+    },
+    "4f4c0a574b734e28b6c4ad5dc3cad018": {
+      "batch": "b3_depth",
+      "search": "shopper_order_lookup",
+      "target_mode": "asks_instead_of_looking_up / answer_is_too_technical",
+      "reason": "depth search 'shopper_order_lookup' for asks_instead_of_looking_up / answer_is_too_technical: role=shopper and find_order or list_my_orders called (37 candidates, random, seed 6)",
+      "cluster": 12,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "cbc0adc8490489ebe1ba0dce2cef308d"
+      ]
+    },
+    "b12ea1752fac4b92ad0d4e2f39b9ab63": {
+      "batch": "b3_depth",
+      "search": "late_write",
+      "target_mode": "write_without_confirmation (close negatives)",
+      "reason": "depth search 'late_write' for write_without_confirmation (close negatives): multi-turn, a write tool only in turn 2 or later (8 candidates, random, seed 6)",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "666fc7833b11e78a434094259d0394e6",
+        "591f8930cbdf78ee44d4017fddfeacb8"
+      ]
+    },
+    "b2440f69297c419cb8a334663d1c4be2": {
+      "batch": "b3_depth",
+      "search": "late_write",
+      "target_mode": "write_without_confirmation (close negatives)",
+      "reason": "depth search 'late_write' for write_without_confirmation (close negatives): multi-turn, a write tool only in turn 2 or later (8 candidates, random, seed 6)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 3,
+      "trace_ids": [
+        "35e0d333372e04f609a7f8deff2c9460",
+        "fb0191d940e7f155043dbf76ecda9204",
+        "019d1ba64dee2d7e430fbfa75c5a4b9a"
+      ]
+    },
+    "fca3ef4e36f64933bd8b06cec53eefb7": {
+      "batch": "b3_depth",
+      "search": "late_write",
+      "target_mode": "write_without_confirmation (close negatives)",
+      "reason": "depth search 'late_write' for write_without_confirmation (close negatives): multi-turn, a write tool only in turn 2 or later (8 candidates, random, seed 6)",
+      "cluster": 3,
+      "role": "support",
+      "turns": 3,
+      "trace_ids": [
+        "5099b0f6297187bc5f34f02c28475a69",
+        "1a06895f3cf697a147e91663f9d377a6",
+        "34fc5012ef62d17afc0b9ed90b21afd2"
+      ]
+    },
+    "1b692e43f52d4ac08ff18a57bfdd424c": {
+      "batch": "b3_depth",
+      "search": "dq_dates",
+      "target_mode": "wrong_world_date",
+      "reason": "depth search 'dq_dates' for wrong_world_date: dq-order-reversed-dates or dq-order-missing-delivery-date (8 candidates, random, seed 6)",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "f72965bd65692ba51c03de799a9c1312"
+      ]
+    },
+    "9ae0ea3c136d4571aaeb706941ca16b3": {
+      "batch": "b3_depth",
+      "search": "dq_dates",
+      "target_mode": "wrong_world_date",
+      "reason": "depth search 'dq_dates' for wrong_world_date: dq-order-reversed-dates or dq-order-missing-delivery-date (8 candidates, random, seed 6)",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "030b32b26852e39b6dacc4f60a11ef77"
+      ]
+    },
+    "8d9ea70a0abb4635a82fd33b341ff630": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "993faaa49ca64574358e71c70da33e8f"
+      ]
+    },
+    "3ef73ebc178b4ca6ac53ef8076c99596": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 3,
+      "trace_ids": [
+        "74891780752bfe1d8fc307c024b690a5",
+        "e1b69e57767be298638be63b9146909a",
+        "ac427b312826b464b4a191887661ffb9"
+      ]
+    },
+    "ae1068912edc4441bc82b8c921f4148f": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 10,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "3447e6422398175d711b4358c2296622",
+        "d7f286305cf8c88241147cae92d9aaea"
+      ]
+    },
+    "1559999e27864159a983d43a66931307": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "333a800ba3aa81b6f7cfc29c8bab0630"
+      ]
+    },
+    "222cc55d8a704d52a16c92291a4d53bc": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "11b7adda385afb82270e1c35cb4ab73d"
+      ]
+    },
+    "dc49bfd49a424932a04c13864e7ed627": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "e676296e8f6b6623acfa627ee4ce7bf5"
+      ]
+    },
+    "2894c41076194b7f90182242d9c3d61c": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 2,
+      "role": "support",
+      "turns": 4,
+      "trace_ids": [
+        "0bad9247a83f02dca806fe1cbb1f98dd",
+        "f6f07694e4c8ae272ccba5143e5cc326",
+        "d7052a940ce786403ce530cb7843d5cd",
+        "1a5154674a67822c5368ab23e824f236"
+      ]
+    },
+    "a3947927732e4af0bb19d64df83a9306": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "20e0a4cd980eefbdb3062f2d887f2859"
+      ]
+    },
+    "eb2d28f3c5f84bfd93423ac7ca060c68": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "9d2b483994f563ed60e2bf25e1b6e9e9"
+      ]
+    },
+    "1b8a27611ae2408b8583b3ed9686e44b": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 2,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "a66811aed801b825808985975413a2b3"
+      ]
+    },
+    "d2344a185188468295e1a69a79bf6cc9": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 6,
+      "role": "merchant",
+      "turns": 3,
+      "trace_ids": [
+        "546bf69783b8d2e71d589b6fa95ee259",
+        "de06ea56aeb073b608b9cd4b40502f90",
+        "cd09fab42d25e3b0880f935931836ba3"
+      ]
+    },
+    "55eef3f82fe447c68476409bb23cfa20": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 8,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "d8a62bebbe92855c4d23f0427032d1c8"
+      ]
+    },
+    "1015f5ee3ebd479b873861e6916ac637": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 2,
+      "trace_ids": [
+        "4a514a20ca001d1f02c360fa72a8e48d",
+        "d1505679ca9685bf8b494fdeb28da5d7"
+      ]
+    },
+    "25d70de991214e46a79b46c185a27f61": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 1,
+      "role": "merchant",
+      "turns": 1,
+      "trace_ids": [
+        "813db0855c49ac5bd335fa71c9ab7799"
+      ]
+    },
+    "b62f3384dcdd4d73a6378a843c3f28de": {
+      "batch": "b4_random",
+      "reason": "uniform random from pool minus batches 1-3 (166 sessions, seed 7); saturation check",
+      "cluster": 3,
+      "role": "support",
+      "turns": 1,
+      "trace_ids": [
+        "ea1dee5c84b03dc8ed09992a2554eaff"
+      ]
+    },
+    "215c195d2e6d4ae3a2c6e79deb88d943": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "200bdfc77970fcce164734e950a292e1",
+        "2291919ad99fd3c0fab663e9b74ef47a"
+      ]
+    },
+    "46b55a51305b4791a0f4812d7229f3a2": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 13,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "b685935d707336ab86fb92cf061cac05"
+      ]
+    },
+    "4de4b050da6249bb8f6733f65ff9c70e": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "dfe023a2e3e1c2af2657e708912ab72a",
+        "54fc4fe8dea5ee6c763f58d43ffd4c9a"
+      ]
+    },
+    "55b71cce8f5a44bfb225e56a54c6dc9a": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 13,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "d9fa66b9f255c47d1a0fc9b7c9d2275f"
+      ]
+    },
+    "6173d6ec7ef44c4fb4ba853de18ced9c": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "985889d0e17819fcc33fd4a18ceb8569"
+      ]
+    },
+    "8cc06232b4964a1987f15a288bb187f4": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "80cfe9fc8c01156369765858fd9bd38f"
+      ]
+    },
+    "ae88e3a8d2474e698e96536ea380aded": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 13,
+      "role": "shopper",
+      "turns": 2,
+      "trace_ids": [
+        "ee8cb8b2c44d3c10177b2b5a97437d3a",
+        "60f94d98c1e30a557e9dfc6c4257c013"
+      ]
+    },
+    "c6e1f57155b8470cacda6634df86b56a": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "27441188d746f688c6db0f62fde4a341"
+      ]
+    },
+    "df108d2354c14613a2b81325a42ed82d": {
+      "batch": "d_search",
+      "search": "order_match",
+      "reason": "Part D search for unverified_order_match: shopper, no order number in the message, list_my_orders returns >=2 orders from one store",
+      "cluster": 0,
+      "role": "shopper",
+      "turns": 3,
+      "trace_ids": [
+        "8ee1e1e21043ba47950c29df722981e3",
+        "9db14ba729b5c98080fd120584dfa667",
+        "4ccdfb5a836b332886ec03029c3590eb"
+      ]
+    },
+    "6080b79b5855433da93a2aa492be3fdf": {
+      "batch": "d_search",
+      "search": "query_zero_hits",
+      "reason": "Part D search for search_query_misuse: search_products returned 0 results for a query of 2+ words",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "e025a18450a54c27c4afa9d8a6608785"
+      ]
+    },
+    "b401cadf4f8648089546adfba8cf4761": {
+      "batch": "d_search",
+      "search": "query_zero_hits",
+      "reason": "Part D search for search_query_misuse: search_products returned 0 results for a query of 2+ words",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "ab68a5284ade386fbee11ccd03f7a10e"
+      ]
+    },
+    "c2d621423e714194a1a9518319419f83": {
+      "batch": "d_search",
+      "search": "query_zero_hits",
+      "reason": "Part D search for search_query_misuse: search_products returned 0 results for a query of 2+ words",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "421ce69efe5324c3b34ba28a3bdc788c"
+      ]
+    },
+    "e86dc775d3e84045858fccb18d073c6c": {
+      "batch": "d_search",
+      "search": "query_zero_hits",
+      "reason": "Part D search for search_query_misuse: search_products returned 0 results for a query of 2+ words",
+      "cluster": 5,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "33ac445bb4a195d70a8fa476517eca98"
+      ]
+    },
+    "f528a71fca514120aa972172d14cb7f0": {
+      "batch": "d_search",
+      "search": "not_available_claim",
+      "reason": "Part D repeat search for search_query_misuse (revised definition): search_products called and the reply contains a not-found phrase (not seeing/finding, couldn't/didn't find, no matching, don't see any, not available); pool = 138 unreviewed sessions; 1 hit",
+      "cluster": 7,
+      "role": "shopper",
+      "turns": 1,
+      "trace_ids": [
+        "71936b99531e0074fb1332a0f5040223"
+      ]
+    }
+  }
+}
