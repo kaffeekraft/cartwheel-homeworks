@@ -4,7 +4,7 @@
       "name": "wrong_world_date",
       "status": "confirmed",
       "definition": "The agent reasons from a 'today' other than the platform date 2026-07-01 (stated or implied), or contradicts the order's refund_eligible field, so a deadline, window, payout or eligibility claim is wrong.",
-      "requirement_source": "RESP-3 + proposed revision: date reasoning uses the platform date; refund_eligible from get_order is authoritative",
+      "requirement_source": "RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative",
       "boundary": "Fail: wrong explicit 'today', 'the window has passed now' when it has not on 2026-07-01, or eligibility contradicting refund_eligible. Pass: only repeats record dates, or date-based claims hold on 2026-07-01.",
       "evaluator_type": "judge",
       "created_from": [
@@ -91,6 +91,11 @@
           "ts": "2026-11-15T10:23:01.702681+00:00",
           "change": "example_trace_ids rebuilt from positives (8)",
           "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'RESP-3 + proposed revision: date reasoning uses the platform date; refund_eligible from get_order is authoritative' -> 'RESP-7: reason about dates from the platform date (WORLD_ASOF, 2026-07-01); refund_eligible from get_order is authoritative'",
+          "reason": "proposed revision added to SPEC.md"
         }
       ],
       "evaluator_note": "code check for written-out dates after 2026-07-01 and the refund_eligible contradiction; LLM judge for implied 'now' claims",
@@ -100,7 +105,7 @@
       "name": "unverified_order_match",
       "status": "confirmed",
       "definition": "The agent treats a found order as the one the user meant (states it as fact or acts on it) without the user confirming it, when the user's description fits more than one order or the chosen order does not fit the description.",
-      "requirement_source": "RESP-3 + proposed revision: before acting on an order the user did not identify by number, show it and let the user confirm",
+      "requirement_source": "RESP-8: when no order number is given and several orders fit, list the candidates and let the user choose; a single match needs no confirmation",
       "boundary": "Fail: several orders fit the user's description and the agent picks one without listing the candidates and letting the user choose, even if the answer would hold for the other orders; or the chosen order contradicts the description (e.g. a wrong-item complaint answered with an undelivered order). Pass: only one order fits (the user gave the order number, or the lookup returned a single match), or the agent lists all candidates and asks. A write that follows is labeled separately under write_without_confirmation; both modes can be present. Data errors the agent cannot see (order 8003 store mismatch) are tool gaps, not this mode.",
       "evaluator_type": "judge",
       "created_from": [
@@ -206,6 +211,11 @@
           "ts": "2026-11-22T16:06:53.017701+00:00",
           "change": "df108d23 added as close negative",
           "reason": "shopper has 19 orders but names the store; only one order (#5571) is from Bright Socket Electronics and the agent verified it with get_store_info and get_order"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'RESP-3 + proposed revision: before acting on an order the user did not identify by number, show it and let the user confirm' -> 'RESP-8: when no order number is given and several orders fit, list the candidates and let the user choose; a single match needs no confirmation'",
+          "reason": "proposed revision added to SPEC.md"
         }
       ],
       "depth_target": true,
@@ -215,7 +225,7 @@
       "name": "write_without_confirmation",
       "status": "confirmed",
       "definition": "The agent calls a write tool (escalate_to_human, cancel_order, issue_refund) without first stating the action and its effect and getting the user's confirmation. For merchant and support callers, an explicit request that names both the write action and the order counts as confirmation for that write only.",
-      "requirement_source": "Proposed RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when",
+      "requirement_source": "RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when",
       "boundary": "Fail: ticket, cancellation or refund created without first stating the action and getting an OK; also when a shopper gives an exact request like 'refund order 123'; also when a merchant or support caller's request names a different action than the one performed (asked for a refund or cancel, got a ticket) or the agent adds a write nobody asked for (a ticket alongside a requested refund); also requests for a human with no order or action named. Pass: the agent states the action and waits for an OK; or a merchant or support caller explicitly names the action and the order, and the agent performs only that write. A dispute request naming the order counts as an explicit request for the ticket (ESC-3).",
       "evaluator_type": "code",
       "created_from": [
@@ -381,6 +391,11 @@
           "ts": "2026-11-22T15:39:43.435717+00:00",
           "change": "evaluator_note: stay with a code check, validate against human labels before considering a judge",
           "reason": "student decision (course guidance: avoid LLM judges as long as possible)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: 'Proposed RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when' -> 'RESP-6: before any write action (TOOL-7, TOOL-8, TOOL-9) state the action and wait for confirmation; for merchant and support callers, an explicit request naming the action and the order confirms that write only; ESC rules decide whether, RESP-6 decides when'",
+          "reason": "proposed revision added to SPEC.md"
         }
       ],
       "evaluator_note": "code check: role + write tools + regex for explicit request (action and order) and for proposal/confirmation; validate against human labels before considering a judge",
@@ -390,7 +405,7 @@
       "name": "asks_instead_of_looking_up",
       "status": "confirmed",
       "definition": "The agent asks the user for information its own tools could look up (e.g. an order number or store id) instead of looking it up and offering the choices.",
-      "requirement_source": "RESP-5 + proposed revision (system prompt: 'prefer a tool lookup'; SPEC has no rule)",
+      "requirement_source": "RESP-9: do not ask for information the tools can look up; look it up and offer the matches, or offer the lookup alongside the question",
       "boundary": "Fail: asks for an order number, order ID or store id when list_my_orders, find_order or get_store_info could find it, without offering the lookup. Pass: asks only for what no tool can provide, or offers the lookup alongside the question.",
       "evaluator_type": "judge",
       "created_from": [
@@ -434,6 +449,11 @@
           "ts": "2026-11-15T10:23:01.702681+00:00",
           "change": "example_trace_ids rebuilt from positives (3)",
           "reason": "were stale since batch 1; one trace per positive session (the annotated turn)"
+        },
+        {
+          "ts": "2026-11-26T09:32:13.421747+00:00",
+          "change": "requirement_source: \"RESP-5 + proposed revision (system prompt: 'prefer a tool lookup'; SPEC has no rule)\" -> 'RESP-9: do not ask for information the tools can look up; look it up and offer the matches, or offer the lookup alongside the question'",
+          "reason": "proposed revision added to SPEC.md"
         }
       ],
       "agentdebug_mapping": "Memory/Retrieval Failure: \"relevant info exists but is not retrieved when needed\""
@@ -1026,6 +1046,11 @@
       "ts": "2026-11-22T15:23:50.125179+00:00",
       "change": "write_without_confirmation revised: explicit merchant/support request naming action and order counts as confirmation for that write only; 4 sessions flip Fail to Pass",
       "reason": "student decision; motivating case 24134ec7 (stays Fail because of an extra unrequested ticket)"
+    },
+    {
+      "ts": "2026-11-26T09:32:13.421747+00:00",
+      "change": "SPEC.md revised: ESC-2 payment-card/password exception (cite cw-account-security); RESP-7 platform date, RESP-8 order confirmation, RESP-9 lookup before asking added; RESP-6 no longer proposed; requirement_source updated for 4 modes",
+      "reason": "student decision to apply the proposed requirement revisions"
     }
   ],
   "tool_gaps": [

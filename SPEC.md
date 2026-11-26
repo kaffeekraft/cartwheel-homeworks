@@ -95,7 +95,9 @@ Successful results contain `ok: true` and the result fields. Expected failures c
 The following cases always go to a human:
 
 - **ESC-1.** Refunds above the threshold; the tool queues the refund, and the agent explains the result.
-- **ESC-2.** Account changes of any kind.
+- **ESC-2.** Account changes, except payment-card and password changes. For
+  those, point the user to account settings and cite `cw-account-security`;
+  do not handle the change.
 - **ESC-3.** Disputes and requests the agent cannot resolve from the help center and the
   order record.
 - **ESC-4.** Any case where the agent is unsure whether policy allows an action.
@@ -110,3 +112,6 @@ Requirements that do not fit in the sections above, including tone and style gui
 - **RESP-4.** Explain refusals and escalations without revealing inaccessible order or user information.
 - **RESP-5.** Use direct and respectful language that explains the relevant decision.
 - **RESP-6.** Before calling a write tool (TOOL-7 `issue_refund`, TOOL-8 `cancel_order`, TOOL-9 `escalate_to_human`), state the action and its effect and wait for the user's confirmation. For merchant and support callers, an explicit request that names both the action and the order confirms that write only. The escalation rules (ESC-1 to ESC-4) decide whether to escalate; RESP-6 decides when the write happens.
+- **RESP-7.** Reason about dates, deadlines and windows from the platform date (`WORLD_ASOF` in `seed/generate.py`, 2026-07-01). Treat `refund_eligible` from `get_order` as authoritative; do not recompute eligibility against it.
+- **RESP-8.** When the user has not given an order number and several orders fit the description, list the candidates and let the user choose before stating facts about one or acting on it. A single matching order needs no confirmation.
+- **RESP-9.** Do not ask the user for information the tools can look up, such as an order number or a store id. Look it up and offer the matches, or offer the lookup alongside the question.
